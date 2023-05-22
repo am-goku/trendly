@@ -1,0 +1,382 @@
+<style>
+  .addAddressBtn:hover {
+    transform: scale(1.02);
+  }
+</style>
+
+
+<div class="container-fluid pt-3">
+
+  <nav
+    style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+    aria-label="breadcrumb" class="pb-3">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Account</li>
+    </ol>
+  </nav>
+
+
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-4">
+
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+            {{#if user.image}}
+            <img src="/uploads/{{user.image}}" alt="Profile" class="rounded-circle">
+            {{else}}
+            <img src="/uploads/noProfileImage.jpg" alt="Profile" class="rounded-circle">
+            {{/if}}
+
+            <h2>{{user.name}}</h2>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-xl-8">
+
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab"
+                  data-bs-target="#profile-overview">Overview</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Address</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change
+                  Password</button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <br>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                  <div class="col-lg-9 col-md-8">{{user.name}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Country</div>
+                  <div class="col-lg-9 col-md-8">India</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Address</div>
+                  <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Phone</div>
+                  <div class="col-lg-9 col-md-8">{{user.phone}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8">{{user.email}}</div>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+
+                {{!-- EDIT PROFILE TAB --}}
+                <!-- Profile Edit Form -->
+                <form action="/updateProfile" method="post" enctype="multipart/form-data">
+                  <div class="row mb-3">
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                    <div class="col-md-8 col-lg-9">
+
+                      {{#if user.image}}
+                      <img src="/uploads/{{user.image}}" alt="Profile" class="rounded-circle">
+                      {{else}}
+                      <img src="/uploads/noProfileImage.jpg" alt="Profile" class="rounded-circle">
+                      {{/if}}
+
+                      <div class="pt-2">
+                        <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"
+                          style="height: 2rem;">
+                          <label for="userImage"><i class="bi bi-upload"></i></label>
+                          <input type="file" id="userImage" name="userImage" style="display: none;">
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                            class="bi bi-trash"></i></a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="name" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="name" type="text" class="form-control" id="name" value="{{user.name}}" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="phone" type="text" class="form-control" id="Phone" value="{{user.phone}}" readonly>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="email" type="email" class="form-control" id="Email" value="{{user.email}}">
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+              <!-- End Profile Edit Form/////////////////////////////////////////////////////// -->
+
+              <div class="tab-pane fade pt-3" id="profile-settings">
+
+                <!-- add Address tab -->
+                <div class=" card card-body mb-3" id="addAddressField" style="display: none;">
+                  <form method="post" action="/addAddress">
+                    <div class="row mb-3">
+                      <label for="name" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="name" type="text" class="form-control" id="fullname" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="phone" type="text" class="form-control" id="phone" minlength="10" maxlength="10"
+                          pattern="[0-9/]*" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="housename" class="col-md-4 col-lg-3 col-form-label">House No./Building Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="houseName" type="text" class="form-control" id="houseName" required>
+                      </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                      <label for="state" class="col-md-4 col-lg-3 col-form-label">State</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="state" type="text" class="form-control" id="state" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="city" class="col-md-4 col-lg-3 col-form-label">City</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="city" type="text" class="form-control" id="city" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="area" class="col-md-4 col-lg-3 col-form-label">Road name/Area/Colony</label>
+                      <div class="col-md-8 col-lg-9">
+                        <textarea name="area" class="form-control" id="area" required></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="pincode" class="col-md-4 col-lg-3 col-form-label">Pincode</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="pincode" type="text" class="form-control" id="pincode" pattern="[0-9/]*"
+                          minlength="6" required>
+                      </div>
+                      <span id="addressErr" style="color: #c60f0f; margin: 0.3rem 16.7rem; font-size: small; "></span>
+                    </div>
+
+                    <div class="text-center">
+                      <button style="background-color: #052c66; color: white;" onclick="return validate()"
+                        class="btn ">Add Address</button>
+                      <a style="color: white;" class="btn btn-danger" onclick="hideAddressField()">Cancel</a>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+                </div>
+
+                <div class="row">
+                  <div class="card col-sm-5 addAddressBtn" id="addAddressBtn"
+                    style="width: 18rem; margin-left: 1em; cursor: pointer; display: flex; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.666); transition: transform 0.2s ease-in-out;">
+                    <div class="card-body"
+                      style=" box-sizing: border-box; display: flex; justify-content: center; align-items: center;"
+                      onclick="showAddressField()">
+                      <h3><i class="bi bi-building-add"></i></h3><br>
+                      <h5>ADD ADDRESS</h5>
+                      {{!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                        the card's
+                        content.
+                      </p> --}}
+
+                    </div>
+                  </div> {{!-- Card to add new Address --}}
+
+                  {{#if address}}
+                  {{#each address}}
+                  <div class="card col-sm-5" style="width: 18rem; margin-left: 1em;">
+                    <div class="card-body" style=" box-sizing: border-box;">
+                      <h5 class="card-title">{{this.name}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{this.houseName}}</h6>
+                      <p class="card-text"> {{this.area}} , {{this.city}} , {{this.state}} , {{this.pincode}}.
+                        {{this.phone}}</p>
+                      <a href="/deleteAddress/{{this._id}}" class="card-link" style="color: #c60f0f;">Delete</a>
+                      <a href="#" class="card-link">Another link</a>
+                    </div>
+                  </div> {{!-- card to display address --}}
+                  {{/each}}
+                  {{/if}}
+                </div>
+
+              </div>
+
+              {{!-- area to chane and update password --}}
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+                <form action="" method="post">
+
+                  <div class="row mb-3">
+                    <label for="oldPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="oldPassword" type="password" class="form-control" id="oldPassword" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="newPassword" type="password" class="form-control" id="newPassword" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="confirmPassword" class="col-md-4 col-lg-3 col-form-label">Confirm Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="confirmPassword" type="password" class="form-control" id="confirmPassword" required>
+                    </div>
+                    <span id="passwordErr" style="color: #c60f0f; margin: 0.3rem 16.7rem; font-size: small; "></span>
+                  </div>
+
+                  <div class="text-center">
+                    <button onclick="return checkPassword()" class="btn btn-primary">Update</button>
+                  </div>
+
+                </form>
+              </div>
+
+
+            </div><!-- End Bordered Tabs -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  </main>
+
+</div>
+
+
+<script>
+
+
+  function validate() {
+    let name, phone, state, country, houseName, area;
+
+    name = document.getElementById("fullname").value.trim();
+    phone = document.getElementById("phone").value.trim();
+    state = document.getElementById("state").value.trim();
+    area = document.getElementById("area").value.trim();
+    houseName = document.getElementById("houseName").value.trim();
+    pincode = document.getElementById("pincode").value.trim();
+
+    if (name == "" || phone == "" || state == "" || area == "" || houseName == "" || pincode == "") {
+      document.getElementById('addressErr').innerText = 'All fields are mandatory';
+      return false;
+
+    } else {
+      return true;
+    }
+  }
+
+
+
+  //password matching function
+
+  function checkPassword() {
+    let oldPassword = document.getElementById("oldPassword").value.trim()
+    let newPassword = document.getElementById('newPassword').value.trim();
+    let confirmPassword = document.getElementById('confirmPassword').value.trim();
+    let click;
+
+    if (newPassword == '' || confirmPassword == '' || oldPassword == '') {
+      document.getElementById('passwordErr').innerText = 'Fields are empty';
+      return false;
+    } else if (newPassword !== confirmPassword) {
+      document.getElementById('passwordErr').innerText = "Password doesn't match";
+      return false;
+    } else {
+      $.ajax({
+        type: 'POST',
+        url: '/check-password',
+        data: {
+          oldPassword: oldPassword,
+          newPassword: newPassword
+        },
+        success: function (response) {
+          console.log(response);
+          if (!response.oldPasswordCheck) {
+            document.getElementById('passwordErr').innerText = "The old password doesn't match";
+            click = false;
+          } else if (response.samePasswords) {
+            document.getElementById('passwordErr').innerText = "Old password and new password can't be the same";
+            click = false;
+          } else {
+            click = true;
+          }
+        }
+      })
+      return click;
+    }
+
+
+
+  }
+
+
+
+
+  function showAddressField() {
+    document.getElementById('addAddressField').style.display = 'block';
+    document.getElementById('addAddressBtn').style.display = 'none';
+  }
+  function hideAddressField() {
+    document.getElementById('addAddressField').style.display = 'none';
+    document.getElementById('addAddressBtn').style.display = 'flex';
+  }
+
+
+
+
+
+</script>

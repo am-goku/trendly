@@ -1,0 +1,131 @@
+<main id="main" class="main">
+
+    <!-- Table with stripped rows -->
+
+    <button class="btn" id="addBtn" onclick="add()"
+        style="background-color: #012970; color: rgb(225, 222, 222); display: block;">Add Category</button>
+    <button class="btn" id="cancelBtn" onclick="cancel()"
+        style="background-color: #012970; color: rgb(225, 222, 222); display: none;">Cancel</button>
+    <br>
+
+    <div class="card p-3 bg-light w-25" id="add" style="width: 50%; display: none;">
+        <form action="/admin/addCategory" method="post">
+            <div class="form-group">
+                <label for="name">Category Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Category</button>
+        </form>
+    </div>
+
+
+    <table class="table table-striped" style="color: #012970; text-align: center;">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Categories</th>
+                <th scope="col">No. of Products</th>
+                <th scope="col">Options</th>
+                {{!-- <th scope="col">Start Date</th> --}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each category}}
+            <tr>
+                <th scope="row" class="index"></th>
+                <td>{{this.name}}</td>
+                <td>24</td>
+                <td><a href="/admin/category/delete/{{this._id}}" class="btn btn-secondary">Delete</a></td>
+                {{!-- <td>2016-05-25</td> --}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!--====== Newsletter Subscribe Modal ======-->
+    <div class="modal fade new-l" id="newsletter-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal--shadow">
+
+                <button class="btn new-l__dismiss fas fa-times" type="button" data-dismiss="modal"></button>
+                <div class="modal-body">
+                    <div class="row u-s-m-x-0">
+                        <div class="col-lg-6 new-l__col-1 u-s-p-x-0">
+
+                            <a class="new-l__img-wrap u-d-block" href="shop-side-version-2.html">
+
+                                <img class="u-img-fluid u-d-block" src="images/newsletter/newsletter.jpg" alt=""></a>
+                        </div>
+                        <div class="col-lg-6 new-l__col-2">
+                            <div class="new-l__section u-s-m-t-30">
+                                <div class="u-s-m-b-8 new-l--center">
+                                    <h3 class="new-l__h3">Newsletter</h3>
+                                </div>
+                                <div class="u-s-m-b-30 new-l--center">
+                                    <p class="new-l__p1">Sign up for emails to get the scoop on new arrivals, special
+                                        sales and more.</p>
+                                </div>
+                                <form class="new-l__form">
+                                    <div class="u-s-m-b-15">
+
+                                        <input class="news-l__input" type="text" placeholder="E-mail Address">
+                                    </div>
+                                    <div class="u-s-m-b-15">
+
+                                        <button class="btn btn--e-brand-b-2" type="submit">Sign up!</button>
+                                    </div>
+                                </form>
+                                <div class="u-s-m-b-15 new-l--center">
+                                    <p class="new-l__p2">By Signing up, you agree to receive Reshop
+                                        offers,<br />promotions and other commercial messages. You may unsubscribe at
+                                        any time.</p>
+                                </div>
+                                <div class="u-s-m-b-15 new-l--center">
+
+                                    <a class="new-l__link" data-dismiss="modal">No Thanks</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Newsletter Subscribe Modal ======-->
+
+    <!-- End Table with stripped rows -->
+</main>
+
+
+
+
+<script>
+    function add() {
+        const div = document.getElementById('add');
+        const addBtn = document.getElementById('addBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        div.style.display = 'block';
+        addBtn.style.display = 'none';
+        cancelBtn.style.display = 'block';
+    };
+
+    function cancel() {
+        const div = document.getElementById('add');
+        const addBtn = document.getElementById('addBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        div.style.display = 'none';
+        addBtn.style.display = 'block';
+        cancelBtn.style.display = 'none';
+    };
+
+</script>
+
+
+<script>
+    let index = document.getElementsByClassName('index');
+
+    for (let i = 0; i < index.length; i++) {
+        index[i].innerHTML = i + 1;
+    }
+</script>

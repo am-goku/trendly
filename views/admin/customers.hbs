@@ -1,0 +1,110 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item">Orders</li>
+                <li class="breadcrumb-item active"></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Customers</h5>
+
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Mobile</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Controll</th>
+                                    {{!-- <th scope="col">Optons</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each customers}}
+                                <tr>
+                                    <th scope="row" class="index"></th>
+                                    <td>{{this.name}}</td>
+                                    <td>{{this.phone}}</td>
+                                    {{#if this.activeStatus}}
+                                    <td id="active">Active</td>
+                                    {{else}}
+                                    <td id="inactive">Inactive</td>
+                                    {{/if}}
+                                    <td>
+                                        <input type="text" hidden value="{{this._id}}" id="idField">
+                                        {{#if this.blocked}}
+                                        <a class="btn btn-info" id="block" onclick="block()">Unblock</a>
+                                        {{else}}
+                                        <a class="btn btn-info" id="block" onclick="block()">Block</a>
+                                        {{/if}}
+                                    </td>
+                                    {{!-- <td>
+                                        <a class="btn btn-primary" href="/admin/customers/edit/{{this._id}}">Edit</a>
+                                        <a class="btn btn-danger" href="/admin/customers/delete/{{this._id}}">Delete</a>
+                                    </td> --}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    let index = document.getElementsByClassName('index');
+
+    for (let i = 0; i < index.length; i++) {
+        index[i].innerHTML = i + 1;
+    }
+</script>
+
+<script>
+    function block() {
+        let id = document.getElementById('idField').value;
+        let btn = document.getElementById('block').innerText;
+
+        $.ajax({
+            url: "/admin/customers/block?id=" + id,
+            method: "POST",
+            data: {
+                id: this._id
+            },
+            success: function(res){
+                console.log(res);
+
+                if(btn == 'Block'){
+                    document.getElementById('block').innerText = 'Unblock';
+                } else {
+                    document.getElementById('block').innerText = 'Block';
+                }
+                
+            }
+        })
+
+       console.log(id, btn);
+            
+    }
+
+</script>

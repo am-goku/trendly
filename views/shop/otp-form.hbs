@@ -1,0 +1,83 @@
+<!--================Login Box Area =================-->
+<section class="login_box_area section-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img"
+                    style="background-image: url('/img/logo/Screenshot 2023-04-02 082650.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                    {{!-- 000624 --}}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    {{#if resetPassword}}
+                    <h3>OTP Verification</h3>
+                    <form class="row login_form" action="/resetPassword/varifyOtp" method="post" id="contactForm">
+                        {{else}}
+                        <h3>Register</h3>
+                        <form class="row login_form" action="/otpVarification" method="post" id="contactForm">
+                            {{/if}}
+
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder=""
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = ''" readonly
+                                    value="{{phoneNumber}}">
+                            </div>
+                            <div class="col-md-12 form-group" style="text-align: left;">
+                                <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter OTP'" required>
+                                {{#if otpMsg}}
+                                <span
+                                    style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">{{otpMsg}}</span>
+                                {{/if}}
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <button type="submit" value="submit" class="button button-login w-100">Submit</button>
+                                <a id="resendOtp" onclick="resendOTP()">Resend OTP</a>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Login Box Area =================-->
+
+
+
+
+
+<script>
+
+    //    $(document).ready(function(){
+    //        $("#resendOtp".on("submit", function(event){
+    //            event.preventDefault();
+    //            let value = ("#phone");
+    //
+    //            $.ajax({
+    //                url: "/resendOtp",
+    //                method: "POST",
+    //                contentType: "application/json",
+    //                data: {
+    //                    phone: value
+    //                },
+    //                success: function(res){
+    //                    console.log(res);
+    //                }
+    //            })
+    //        }))
+    //    })
+    function resendOTP() {
+        const value = document.getElementById("phone").value;
+        $.ajax({
+            url: "/resendOtp?phone=" + value,
+            method: "POST",
+
+            success: function (res) {
+                console.log(res);
+            }
+        })
+    }
+
+</script>

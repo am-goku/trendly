@@ -1,0 +1,58 @@
+<!--================Login Box Area =================-->
+<div class="container pl-5 pr-5">
+<section class="login_box_area section-margin mt-3">
+    <div class="container" style="border-radius: 10%;">
+        <div class="row">
+            <div class="col-lg-6  ">
+                <div class="login_box_img d-none d-lg-block"
+                    style="background-image: url('/img/logo/Screenshot 2023-04-02 082650.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Log in to enter</h3>
+
+                    <form class="row login_form" action="/login" method="post" id="contactForm">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone / Email"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone / Email'">
+                        </div>
+                        <div class=" col-md-12 form-group" style="text-align: left;">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Password'" minlength="4" required>
+                            {{#if errMsg}}
+                            <span style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">Invalid
+                                Credentials</span>
+                            {{/if}}
+                            {{#if blocked}}
+                            <span style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">This
+                                account has been blocked</span>
+                            {{/if}}
+                        </div>
+
+
+                        <div class="col-md-12 form-group" >
+                            <button type="submit" value="submit" class="button button-login w-100" >Log In</button>
+                        </div>
+                    </form>
+                    <div style="text-align: center;">
+                            <a style="color: gray;" href="/forgotPassword" >Forgot Password?</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style="color: gray;" href="/register/phone">New Here?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<!--================End Login Box Area =================-->
+
+
+<script src="/js/formValidation.js"></script>
+
+
+<script>
+    
+</script>

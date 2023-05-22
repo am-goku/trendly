@@ -1,0 +1,50 @@
+<section class="container-fluid   p-5">
+
+    <div class="card">
+        <div class="card-header">
+            Featured
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Special title tdeatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <table class="table table-success table-stdiped">
+        <thead>
+            <th>No.</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+            {{#each order}}
+            <tr>
+                <td class="index"></td>
+                <td>{{order.product.productName}}</td>
+                <td>{{order.product.productPrice}}</td>
+                <td>{{order.quantity}}</td>
+                <td>5000</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    
+</section>
+
+
+
+
+
+
+
+{{!-- Script to add the serial No. --}}
+<script>
+    let index = document.getElementsByClassName('index');
+
+    for (let i = 0; i < index.length; i++) {
+        index[i].innerHTML = i + 1;
+    }
+</script>

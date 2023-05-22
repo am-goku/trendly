@@ -1,0 +1,40 @@
+<!-- Shoping Cart -->
+
+
+<section class="container-fluid p-5">
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+        aria-label="breadcrumb" class="pb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Order</li>
+        </ol>
+    </nav>
+    {{#each orders}}
+    <div class="card ">
+        <div class="card-header">
+            OrderId: {{this._id}}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text"><span style="color:black">{{#with (lookup this.products 0)}} {{product}} {{/with}}</span> + {{ this.no }} more items</p>
+            <p class="card-text">Amount. ₹ <span style="color: black;">{{this.totalAmount}}</span></p>
+            <p class="card-text">Payment. <span style="color: green;">{{this.paymentMethod}}</span></p>
+            <p class="card-text">Payment. <span style="color: rgb(208, 82, 10);">{{this.status}}</span></p>
+            <a href="/order/details?orderId={{this._id}}" class="btn btn-primary">See details</a>
+        </div>
+    </div>
+    {{/each}}
+
+    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm"
+        style="text-align: center; justify-content: center;">
+        <h6><a href="/products">Continue Shopping</a></h6>
+    </div>
+</section>
+
+
+<!-- Back to top -->
+<div class="btn-back-to-top" id="myBtn">
+    <span class="symbol-btn-back-to-top">
+        <i class="zmdi zmdi-chevron-up"></i>
+    </span>
+</div>

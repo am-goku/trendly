@@ -1,0 +1,95 @@
+<main id="main" class="main">
+
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">ADD PRODUCT</h5>
+
+    <!-- Multi Columns Form -->
+    <form class="row g-3" action="/addProducts" method="post" enctype="multipart/form-data">
+      <div class="col-md-10">
+        <label for="name" class="form-label">Product Title</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+
+      <div class="col-md-10">
+        <label for="description" class="form-label">Product Description</label>
+        <textarea type="text" class="form-control" id="description" name="description"></textarea>
+      </div>
+
+      <div class="col-md-5">
+        <label for="inputState" class="form-label">State</label>
+        <select id="inputState" class="form-select" onchange="selectCategory()">
+          <option value="" selected>Choose Category</option>
+          {{#each category}}
+            <option value="{{this._id}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+        <input type="hidden" name="categoryId" id="categoryId" value="">
+      </div>
+
+      <div class="col-md-5">
+        <label for="stock" class="form-label">Stock</label>
+        <input type="text" class="form-control" id="stock" name="stock" pattern="[0-9]*" required>
+      </div>
+
+      <div class="col-md-5">
+        <label for="price" class="form-label">Price</label>
+        <input type="text" class="form-control" id="price" name="price" pattern="[0-9]*" required>
+      </div>
+
+      <div class="col-md-5">
+        <label for="discount" class="form-label">Discount Percentage</label>
+        <input type="text" class="form-control" id="discount" name="discount" pattern="[0-9]*">
+      </div>
+
+      <div class="col-md-5">
+        <label for="image" class="form-label">Product Images</label>
+        <input type="file" class="form-control" id="image" name="productImage" >
+      </div>
+      
+      <div class="col-md-5">
+        <p id="err" style="color: brown;" class="ml-2"></p>
+      </div>
+      
+      
+      <div class="text-auto m-5">
+        <button onclick="return validate()" class="btn btn-primary">Add Product</button>
+        <button type="reset" class="btn btn-secondary">Reset</button>
+      </div>
+    </form><!-- End Multi Columns Form -->
+
+  </div>
+</div>
+
+</main>
+
+
+
+
+<script>
+  function selectCategory() {
+    var selectedCategory = document.getElementById("inputState").value;
+    document.getElementById("categoryId").value = selectedCategory;
+  }
+</script>
+
+<script>
+
+  function validate(){
+      let name = document.getElementById("name").value.trim();
+      let description = document.getElementById("description").value.trim();
+      let category = document.getElementById("cat").value.trim();
+      let price = document.getElementById("price").value.trim();
+      let stock = document.getElementById("stock").value.trim();
+
+      if(name == '' || description == '' || category == '' || price == '' || stock == ''){
+        document.getElementById('err').innerText = 'All fields are mandatory !';
+        return false;
+      } else {
+        return true;
+      }
+  }
+
+
+</script>

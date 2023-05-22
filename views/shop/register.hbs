@@ -1,0 +1,96 @@
+<!--================Login Box Area =================-->
+<section class="login_box_area section-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img"
+                    style="background-image: url('/img/logo/Screenshot 2023-04-02 082650.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                    {{!-- 000624 --}}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>REGISTER</h3>
+
+                    {{!-- FORM START --}}
+                    <form class="row login_form" action="/register" method="post" id="contactForm">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Fullname"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Fullname'" required>
+                        </div>
+                        <div class="col-md-12 form-group" style="text-align: left;">
+                            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Phone Number"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'"
+                                value="{{phoneNumber}}" readonly required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Password'" required>
+                        </div>
+                        <span id="password-strength-text"></span>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                placeholder="Confirm Password" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Confirm Password'" required>
+                        </div>
+                        <span id="err"></span>
+
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" onclick="return validation()" id="submit"
+                                class="button button-login w-100">Register</button>
+                            <a href="/login">Already have an account?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--================End Login Box Area =================-->
+
+
+<script>
+    function validation() {
+
+    let userName = document.getElementById('name').value.trim();
+    let phone = document.getElementById('phone').value.trim();
+    let password = document.getElementById('password').value.trim();
+    let confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+    if (userName == '' || phone == '' || password == '' || confirmPassword == '') {
+        return false;
+    } else if (password !== confirmPassword) {
+        document.getElementById('err').innerHTML = 'Password does not match';
+        return false;
+    }else {
+        return true;
+    }
+}
+</script>
+
+
+
+<script>
+  // Function to check the password strength
+  function checkPasswordStrength() {
+    const password = document.getElementById("password").value;
+    const passwordStrengthText = document.getElementById("password-strength-text");
+
+    // Define a regular expression pattern to check for password strength
+    const strongPasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+    if (password.match(strongPasswordPattern)) {
+      passwordStrengthText.innerHTML = "Strong password";
+      passwordStrengthText.style.color = "green";
+    } else {
+      passwordStrengthText.innerHTML = "Weak password";
+      passwordStrengthText.style.color = "red";
+    }
+  }
+
+  // Attach the checkPasswordStrength function to the 'input' event of the password input field
+  document.getElementById("password").addEventListener("input", checkPasswordStrength);
+</script>

@@ -1,0 +1,291 @@
+{{!-- loader css --}}
+
+<style>
+  .loader {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+
+  }
+
+  .pl {
+    width: 6em;
+    height: 6em;
+  }
+
+  .pl__ring {
+    animation: ringA 2s linear infinite;
+  }
+
+  .pl__ring--a {
+    stroke: #f42f25;
+  }
+
+  .pl__ring--b {
+    animation-name: ringB;
+    stroke: #f49725;
+  }
+
+  .pl__ring--c {
+    animation-name: ringC;
+    stroke: #255ff4;
+  }
+
+  .pl__ring--d {
+    animation-name: ringD;
+    stroke: #f42582;
+  }
+
+  /* Animations */
+  @keyframes ringA {
+
+    from,
+    4% {
+      stroke-dasharray: 0 660;
+      stroke-width: 20;
+      stroke-dashoffset: -330;
+    }
+
+    12% {
+      stroke-dasharray: 60 600;
+      stroke-width: 30;
+      stroke-dashoffset: -335;
+    }
+
+    32% {
+      stroke-dasharray: 60 600;
+      stroke-width: 30;
+      stroke-dashoffset: -595;
+    }
+
+    40%,
+    54% {
+      stroke-dasharray: 0 660;
+      stroke-width: 20;
+      stroke-dashoffset: -660;
+    }
+
+    62% {
+      stroke-dasharray: 60 600;
+      stroke-width: 30;
+      stroke-dashoffset: -665;
+    }
+
+    82% {
+      stroke-dasharray: 60 600;
+      stroke-width: 30;
+      stroke-dashoffset: -925;
+    }
+
+    90%,
+    to {
+      stroke-dasharray: 0 660;
+      stroke-width: 20;
+      stroke-dashoffset: -990;
+    }
+  }
+
+  @keyframes ringB {
+
+    from,
+    12% {
+      stroke-dasharray: 0 220;
+      stroke-width: 20;
+      stroke-dashoffset: -110;
+    }
+
+    20% {
+      stroke-dasharray: 20 200;
+      stroke-width: 30;
+      stroke-dashoffset: -115;
+    }
+
+    40% {
+      stroke-dasharray: 20 200;
+      stroke-width: 30;
+      stroke-dashoffset: -195;
+    }
+
+    48%,
+    62% {
+      stroke-dasharray: 0 220;
+      stroke-width: 20;
+      stroke-dashoffset: -220;
+    }
+
+    70% {
+      stroke-dasharray: 20 200;
+      stroke-width: 30;
+      stroke-dashoffset: -225;
+    }
+
+    90% {
+      stroke-dasharray: 20 200;
+      stroke-width: 30;
+      stroke-dashoffset: -305;
+    }
+
+    98%,
+    to {
+      stroke-dasharray: 0 220;
+      stroke-width: 20;
+      stroke-dashoffset: -330;
+    }
+  }
+
+  @keyframes ringC {
+    from {
+      stroke-dasharray: 0 440;
+      stroke-width: 20;
+      stroke-dashoffset: 0;
+    }
+
+    8% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -5;
+    }
+
+    28% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -175;
+    }
+
+    36%,
+    58% {
+      stroke-dasharray: 0 440;
+      stroke-width: 20;
+      stroke-dashoffset: -220;
+    }
+
+    66% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -225;
+    }
+
+    86% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -395;
+    }
+
+    94%,
+    to {
+      stroke-dasharray: 0 440;
+      stroke-width: 20;
+      stroke-dashoffset: -440;
+    }
+  }
+
+  @keyframes ringD {
+
+    from,
+    8% {
+      stroke-dasharray: 0 440;
+      stroke-width: 20;
+      stroke-dashoffset: 0;
+    }
+
+    16% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -5;
+    }
+
+    36% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -175;
+    }
+
+    44%,
+    50% {
+      stroke-dasharray: 0 440;
+      stroke-width: 20;
+      stroke-dashoffset: -220;
+    }
+
+    58% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -225;
+    }
+
+    78% {
+      stroke-dasharray: 40 400;
+      stroke-width: 30;
+      stroke-dashoffset: -395;
+    }
+
+    86%,
+    to {
+      stroke-dasharray: 0 440;
+      stroke-width: 20;
+      stroke-dashoffset: -440;
+    }
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+<link rel="icon" type="image/png" href="/images2/icons/favicon.png" />
+<link rel="stylesheet" type="text/css" href="/vendor2/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/fonts2/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/fonts2/iconic/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" type="text/css" href="/fonts2/linearicons-v1.0.0/icon-font.min.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/animsition/css/animsition.min.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/daterangepicker/daterangepicker.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/animsition/css/animsition.min.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/MagnificPopup/magnific-popup.css">
+<link rel="stylesheet" type="text/css" href="/vendor2/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="/css2/util.css">
+<link rel="stylesheet" type="text/css" href="/css2/main.css">
+
+
+
+
+
+
+
+{{!-- old templates including admin's --}}
+
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link
+  href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+  rel="stylesheet">
+<!-- Vendor CSS Files -->
+<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+<!-- Template Main CSS File -->
+<link href="/assets/css/style.css" rel="stylesheet">
+<link rel="icon" href="/img/Fevicon.png" type="image/png">
+<link rel="stylesheet" href="/vendors/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/vendors/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="/vendors/themify-icons/themify-icons.css">
+<link rel="stylesheet" href="/vendors/linericon/style.css">
+<link rel="stylesheet" href="/vendors/owl-carousel/owl.theme.default.min.css">
+<link rel="stylesheet" href="/vendors/owl-carousel/owl.carousel.min.css">
+<link rel="stylesheet" href="/vendors/nice-select/nice-select.css">
+<link rel="stylesheet" href="/vendors/nouislider/nouislider.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link href="/css/model.css" rel="stylesheet">
+<script defer src="/js/model.js"></script>

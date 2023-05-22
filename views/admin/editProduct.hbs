@@ -1,0 +1,93 @@
+<main id="main" class="main">
+
+  <div class="container w-50">
+    <h1 class="mt-5 mb-3" style="text-align: center;">Edit Product</h1>
+    <form method="post" action="/admin/products/edit/{{product._id}}" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Product Title</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{product.productName}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" required>{{product.description}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Category
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {{#each category}}
+            <a style="cursor: pointer;" id="catList" class="dropdown-item"
+              onclick="select('{{this.name}}', '{{this._id}}')">{{this.name}}</a>
+            {{/each}}
+          </div>
+        </div> <br>
+        <input type="text" class="form-control" id="category" name="category" readonly value="{{product.category.name}}"
+          required>
+        <input type="hidden" class="form-control" id="categoryId" name="categoryId" readonly
+          value="{{product.category._id}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <div class="input-group">
+
+          <input type="text" class="form-control" id="price" name="price" value="{{product.productPrice}}"
+            pattern="[0-9]*" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="discount">Discount</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="discount" value="{{product.discountPercentage}}"
+            name="discount">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Stock</label>
+        <div class="input-group">
+          <input type="number" class="form-control" id="stock" value="{{product.stock}}" name="stock">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image1">Image</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="image" src="/uploads/{{product.images}}" name="productImage"
+            required>
+          <label class="custom-file-label" for="image">Choose file</label>
+        </div>
+      </div>
+
+      <button onclick="return validate()" type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+</main>
+
+
+<script>
+  function select(categoryName, id) {
+    let category = document.getElementById("category");
+    let categoryId = document.getElementById("categoryId");
+    category.value = categoryName;
+    categoryId.value = id;
+    //console.log(categoryName, id)
+  }
+
+
+  function validate() {
+    let name = document.getElementById("name").value.trim();
+    let desc = document.getElementById("description").value.trim();
+    if (name == "" || desc == "") {
+      return false;
+    } else {
+      return true;
+    }
+  }
+</script>

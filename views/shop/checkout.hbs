@@ -1,0 +1,326 @@
+<!--================Checkout Area =================-->
+
+<div class="container-fluid pl-5 pr-5 pt-3">
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+    aria-label="breadcrumb" class="  ml-1">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/cart">Cart</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+    </ol>
+</nav>
+
+<section class="checkout_area section-margin--small mt-1">
+    <div >
+        <div class="billing_details mt-0">
+            <div class="row ">
+                <div class="col-lg-8 ">
+                    <h3>SHIPPING ADDRESS</h3>
+                    <div class="card card-body ">
+                        <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                            <div class="col-md-12 form-group p_star">
+                                <select class="country_select" id="address-list" onchange="updateAddress()">
+                                    <option value="1">Choose Address</option>
+                                    {{#each address}}
+                                    <option value="{{this._id}}">{{this.name}}, {{this.houseName}}, {{this.city}},
+                                        {{this.pincode}}</option>
+                                    {{/each}}
+
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <label for="name">First name</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                                <span class="placeholder" data-placeholder="First name"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <label for="lname">Last name</label>
+                                <input type="text" class="form-control" id="lname" name="Lname">
+                                <span class="placeholder" data-placeholder="Last name"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="houseName">Phone Number</label>
+                                <input type="text" class="form-control" id="phone" name="phone" pattern="[0-9]*"
+                                    minlength="10" maxlength="10">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="houseName">House No./ Building Name</label>
+                                <input type="text" class="form-control" id="houseName" name="houseName">
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <label for="state">State</label>
+                                <input type="text" class="form-control" id="state" name="state">
+                                <span class="placeholder"></span>
+                            </div>
+                            <div class="col-md-6 form-group p_star">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" name="city">
+                                <span class="placeholder"></span>
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <label for="landMark">Landmark</label>
+                                <input type="text" class="form-control" id="landMark" name="landMark">
+                                <span class="placeholder" data-placeholder="Address line 01"></span>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="pincode">Postal Code/ Zipcode</label>
+                                <input type="text" class="form-control" id="pincode" name="pincode">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mt-5">
+                    <div class="order_box">
+                        <ul class="list list_2">
+                            <li><a href="#">Subtotal <span>₹<span id="amount">{{totalAmount}}</span></span></a></li>
+                            <li><a href="#">Shipping <span>Flat rate: $<span id="shipping">50.00</span></span></a></li>
+                            <li><a href="#">Total <span>₹<span id="total"></span></a></li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option5" name="selector" value="razorpay" checked>
+                                <label for="f-option5">Razorpay</label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option6" name="selector" value="paypal">
+                                <label for="f-option6">Paypal </label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option7" name="selector" value="cod">
+                                <label for="f-option7">Cash on Delivery </label>
+                                <div class="check"></div>
+                            </div>
+
+                        </div>
+                        <div class="creat_account">
+
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="btn button button-paypal" onclick="payment()" style="color: white;">Proceed to
+                                Payment</a>
+                        </div>
+                    </div>
+
+                    <div class="card card-body mt-5">
+
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<!--================End Checkout Area =================-->
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+
+{{!-- scripts for updation of address --}}
+<script>
+    function updateAddress() {
+        let addressId = document.getElementById('address-list').value;
+        alert('huh')
+        $.ajax({
+            url: '/getAnAddress',
+            method: 'POST',
+            data: {
+                addressId: addressId
+            },
+            success: (address) => {
+                alert(address)
+                let fullName = address.name.split(' ');
+                let fname = fullName[0], lname = fullName[1]
+
+                document.getElementById('name').value = fname
+                document.getElementById('lname').value = lname
+                document.getElementById('state').value = address.state;
+                document.getElementById('city').value = address.city;
+                document.getElementById('landMark').value = address.area;
+                document.getElementById('houseName').value = address.houseName;
+                document.getElementById('pincode').value = address.pincode;
+                document.getElementById('phone').value = address.phone;
+            }
+        })
+    }
+</script>
+
+
+{{!-- scripts for verify paymant and razorpay --}}
+<script>
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verifyPayment',
+            method: "POST",
+            data: {
+                payment,
+                order
+            }
+        })
+    }
+
+    function rejectOrder(payment, order) {
+        $.ajax({
+            url: '/rejectPayment',
+            method: "POST",
+            data: {
+                payment,
+                order
+            }
+        })
+    }
+
+
+    function razorpayPayment(order) {
+        var options = {
+            "key": "rzp_test_MTk5iQyefsRP1C", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "TRENDLY", //your business name
+            "description": "Test Transaction",
+            "image": '/img/logo/Screenshot_2023-04-02_082650-removebg-preview.png',
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                if (response.razorpay_payment_id) {
+                    alert(response.razorpay_payment_id);
+                    alert(response.razorpay_order_id);
+                    alert(response.razorpay_signature);
+
+                    verifyPayment(response, order);
+                    window.location.href = '/confirm';
+                } else {
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+                    rejectOrder(response, order);
+                }
+
+            },
+            "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                "name": "Gokul krishna", //your customer's name
+                "email": "gokul@example.com",
+                "contact": "9000090000"  //Provide the customer's phone number for better conversion rates 
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+
+        rzp1.open();
+    }
+
+
+
+
+
+
+
+
+
+    //this script contains the things that send to the server for payment processes.
+
+    function payment() {
+
+        let fname = document.getElementById('name').value.trim();
+        let lname = document.getElementById('lname').value.trim();
+        let houseName = document.getElementById('houseName').value.trim();
+        let state = document.getElementById('state').value.trim();
+        let city = document.getElementById('city').value.trim();
+        let area = document.getElementById('landMark').value.trim();
+        let pincode = document.getElementById('pincode').value.trim();
+        let phone = document.getElementById('phone').value.trim();
+        let name = fname + ' ' + lname;
+
+        alert('ji')
+
+
+        let address = {
+            name,
+            phone,
+            houseName,
+            city,
+            area,
+            state,
+            pincode
+        }
+
+        let paymentMethod;
+        let radioBtn = document.getElementsByName('selector');
+
+        for (let i = 0; i < radioBtn.length; i++) {
+            if (radioBtn[i].checked) {
+                paymentMethod = radioBtn[i].value;
+                break;
+            }
+        }
+
+        alert(paymentMethod)
+
+
+        $.ajax({
+            url: '/payment',
+            method: 'POST',
+            data: {
+                address,
+                paymentMethod
+            },
+            success: function (response) {
+
+                if (response.codSuccess) {
+                    window.location.href = '/confirm'
+                } else {
+                    razorpayPayment(response);
+                }
+
+
+                // window.location.href = '/confirm'
+            }
+        })
+
+    }
+
+</script>
+
+
+
+
+{{!-- scripts to calculate the amounts in front End --}}
+<script>
+    let a = +document.getElementById('amount').innerText;
+    let b = +document.getElementById('shipping').innerText;
+    let c = a + b;
+    document.getElementById('total').innerText = c;
+</script>

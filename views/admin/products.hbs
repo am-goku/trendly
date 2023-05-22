@@ -1,0 +1,98 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item active">List</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Customers</h5>
+
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Option</th>
+                                    {{!-- <th scope="col">List/Unlist</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each products}}
+                                <tr>
+                                    <th scope="row" class="index"></th>
+                                    <td> {{this.productName}} </td>
+
+                                    <td> {{this.category.name}} </td>
+
+                                    <td> {{this.stock}} </td>
+
+                                    <td>
+                                        <a class="btn btn-primary" href="/admin/products/edit/{{this._id}}">Edit</a>
+                                    </td>
+
+                                    {{!-- <td>
+                                        <a class="btn btn-secondary"
+                                            href="/admin/products/unlist/{{this._id}}">Unlist</a>
+                                    </td> --}}
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    let index = document.getElementsByClassName('index');
+
+    for (let i = 0; i < index.length; i++) {
+        index[i].innerHTML = i + 1;
+    }
+</script>
+
+{{!--
+<script>
+    function block() {
+        console.log('hiiiiiiiiiiiiiiii')
+        $.ajax({
+            method: "POST",
+            url: '/admin/customers/block',
+            data: {
+                id: this._id
+            }
+        },
+            console.log(data)).done(function (response) {
+                // handle success response here
+                console.log(response);
+            }).fail(function (error) {
+                // handle error response here
+                console.log(error);
+            });
+    }
+
+</script> --}}

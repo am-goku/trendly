@@ -1,0 +1,170 @@
+{{!-- New templates --}}
+
+<script src="/vendor2/jquery/jquery-3.2.1.min.js"></script>
+<script src="/vendor2/animsition/js/animsition.min.js"></script>
+<script src="/vendor2/bootstrap/js/popper.js"></script>
+<script src="/vendor2/bootstrap/js/bootstrap.min.js"></script>
+<script src="/vendor2/select2/select2.min.js"></script>
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+    })
+</script>
+<script src="/vendor2/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<script src="/vendor2/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        $(this).css('position', 'relative');
+        $(this).css('overflow', 'hidden');
+        var ps = new PerfectScrollbar(this, {
+            wheelSpeed: 1,
+            scrollingThreshold: 1000,
+            wheelPropagation: false,
+        });
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+</script>
+<script src="/js2/main.js"></script>
+<!--===============================================================================================-->
+
+
+
+
+{{!-- FROM SINGLE PRODUCT PAGE --}}
+<!--===============================================================================================-->
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<script src="/vendor2/daterangepicker/moment.min.js"></script>
+	<script src="/vendor2/daterangepicker/daterangepicker.js"></script>
+	<script src="/vendor2/slick/slick.min.js"></script>
+	<script src="/js2/slick-custom.js"></script>
+	<script src="/vendor2/parallax100/parallax100.js"></script>
+	<script>
+        $('.parallax100').parallax100();
+	</script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+		        delegate: 'a', // the selector for gallery item
+		        type: 'image',
+		        gallery: {
+		        	enabled:true
+		        },
+		        mainClass: 'mfp-fade'
+		    });
+		});
+	</script>
+	<script src="/vendor2/isotope/isotope.pkgd.min.js"></script>
+	<script src="/vendor2/sweetalert/sweetalert.min.js"></script>
+	<script>
+		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+	
+	</script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+
+
+{{!-- Old templates including Admin's --}}
+
+<!-- Vendor JS Files -->
+<script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/chart.js/chart.umd.js"></script>
+<script src="/assets/vendor/echarts/echarts.min.js"></script>
+<script src="/assets/vendor/quill/quill.min.js"></script>
+<script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="/assets/vendor/php-email-form/validate.js"></script>
+<!-- Template Main JS File -->
+<script src="/assets/js/main.js"></script>
+<script src="/vendors/jquery/jquery-3.2.1.min.js"></script>
+<script src="/vendors/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="/vendors/skrollr.min.js"></script>
+<script src="/vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="/vendors/nice-select/jquery.nice-select.min.js"></script>
+<script src="/vendors/jquery.ajaxchimp.min.js"></script>
+<script src="/vendors/mail-script.js"></script>
+<script src="/public/adminscripts/main.js"></script>

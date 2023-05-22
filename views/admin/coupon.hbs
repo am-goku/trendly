@@ -1,0 +1,102 @@
+<main class="main" id="main">
+
+    <section class="section container-fluid">
+
+        <div class="card card-body" id="addCoup" style="display: none;">
+            <h4>ADD NEW COUPON</h4>
+            <form action="/admin/add-coupon" method="POST">
+                <label for="code">Coupon Code:</label>
+                <input class="form-control" type="text" id="code" name="code" required>
+            
+                <label for="discount">Discount:</label>
+                <input class="form-control"  type="number" id="discount" name="discount" required>
+
+                <label for="min">Min. Amount:</label>
+                <input class="form-control"  type="number" id="min" name="min" required>
+
+                <label for="max">Max. Amount:</label>
+                <input class="form-control"  type="number" id="max" name="max" required>
+            
+                <label for="startDate">Starting Date:</label>
+                <input class="form-control"  type="date" id="startDate" name="startDate" required>
+            
+                <label for="expireDate">Expiration Date:</label>
+                <input class="form-control"  type="date" id="expireDate" name="expireDate" required>
+            
+            <div class="d-flex pt-5">
+                <div style="width: 10vw; height: 5vh;" class=" d-flex pr-1">
+                    <button type="submit" class="form-control btn-primary">Add Coupon</button>
+                </div>
+                <div style="width: 10vw; height: 5vh;" class="d-flex pl-1">
+                    <button type="button" class="form-control btn-danger" onclick="deCoup()">Cancel</button>
+                </div>
+            </div>
+                
+            </form>
+        </div>
+
+        <div onclick="coup()" class="card card-body" id="coupBtn">
+            <button>Add Coupon</button>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">COUPONS</h5>
+
+                        <table class="table datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Discount</th>
+                                    <th scope="col">Min. Amount</th>
+                                    <th scope="col">Max. Amount</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Expire Date</th>
+                                    <th scope="col">Optons</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each coupon}}
+                                <tr>
+                                    <td>{{this.code}}</td>
+                                    <td>{{this.discount}}</td>
+                                    <td>{{this.minAmount}}</td>
+                                    <td>{{this.maxAmount}}</td>
+                                    <td>{{this.startDate}}</td>
+                                    <td>{{this.expireDate}}</td>
+                                    <td><a class="btn btn-danger" href="/admin/removeCoupon?couponId={{this._id}}" >Remove</a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+
+{{!-- scripts to enable and desable the add coupon form --}}
+<script>
+    let coup = () => {
+        document.getElementById('addCoup').style.display = 'flex';
+        document.getElementById('coupBtn').style.display = 'none';
+    }
+    let deCoup = () => {
+        document.getElementById('addCoup').style.display = 'none';
+        document.getElementById('coupBtn').style.display = 'flex';
+    }
+</script>
+
+

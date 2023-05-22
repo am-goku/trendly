@@ -1,0 +1,45 @@
+<!--================Login Box Area =================-->
+<section class="login_box_area section-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img"
+                    style="background-image: url('/img/logo/Screenshot 2023-04-02 082650.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                    {{!-- 000624 --}}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Login to Admin Panel</h3>
+
+                    <form class="row login_form" action="/admin/login" method="post" id="contactForm">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" required>
+                        </div>
+                        <div class=" col-md-12 form-group" style="text-align: left;">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Password'" minlength="4" required>
+                            {{#if errMsg}}
+                            <span style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">Invalid
+                                Username or Password</span>
+                            {{/if}}
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="button button-login w-100">Log In</button>
+                            <a href="/admin/forgotpassword">Forgot Password?</a>
+                            {{!-- <a href="/register/phone">New Here?</a> --}}
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Login Box Area =================-->
+
+
+<script src="/js/formValidation.js"></script>
