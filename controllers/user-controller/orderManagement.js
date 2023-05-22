@@ -33,11 +33,15 @@ const orderManagement = {
         let customer = user = req.session.user;
         let userId = req.session.user._id;
         userHelper.getOrders(userId).then((response) => {
-            let orders = response.order
-            for(let i = 0; i < orders.length; i++) {
-                orders[i].no = orders[i].products.length;
+            if(response){
+                let orders = response.order
+                for(let i = 0; i < orders.length; i++) {
+                    orders[i].no = orders[i].products.length;
+                }
+                res.render('shop/orders', {orders, customer, user })
+            } else {
+                res.render('shop/orders', {noOrders: true, customer, user})
             }
-            res.render('shop/orders', {orders, customer, user })
         })
     },
 

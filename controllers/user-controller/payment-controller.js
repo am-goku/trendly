@@ -17,10 +17,11 @@ const paymentController = {
             let address = req.body.address;
             let paymentMethod = req.body.paymentMethod;
             let userId = req.session.user._id;
+            let coupon = req.body.coupon;
             console.log('eneterd the payment section');
 
             if(paymentMethod === 'cod'){
-                paymentHelper.completeOrder(userId, address, paymentMethod).then((response) => {
+                paymentHelper.completeOrder(userId, address, paymentMethod, coupon).then((response) => {
                     // next();
                     console.log('cod', response);
                     req.session.lastOrder = response.order[response.order.length-1];
@@ -28,7 +29,7 @@ const paymentController = {
                     res.status(200).send({codSuccess: 'true'});
                 })
             } else if (paymentMethod === 'razorpay') {
-                paymentHelper.completeOrder(userId, address, paymentMethod).then((response) => {
+                paymentHelper.completeOrder(userId, address, paymentMethod, coupon).then((response) => {
                     console.log('rzp', response);
                     req.session.lastOrder = response.order[response.order.length-1];
                     let orderId = req.session.lastOrder._id;

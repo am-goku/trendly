@@ -157,7 +157,7 @@ module.exports = {
     getOrders: (userId) => {
         return new Promise((resolve, reject) => {
             order.findOne({userId: userId}).populate('order.items.product').lean().exec().then((response) => {
-                console.log('orderpage:::', response.order[0].products[0].product);
+                // console.log('orderpage:::', response.order[0].products[0].product);
                 resolve(response);
             })
         })

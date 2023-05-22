@@ -293,10 +293,11 @@
         $.ajax({
             url: '/payment',
             method: 'POST',
-            data: {
-                address,
-                paymentMethod
-            },
+            data: JSON.stringify({
+                address: address,
+                paymentMethod: paymentMethod
+            }),
+            contentType: 'application/json',
             success: function (response) {
 
                 if (response.codSuccess) {

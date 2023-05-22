@@ -13,7 +13,7 @@ const orderHelper = {
             return new Promise(async (resolve, reject) => {
                 // Get the user's order
                 const orderColl = await orderCollection.findOne({ userId: userId, 'order._id': orderId });
-                // console.log(order);
+                console.log('its order collection',orderColl);
                 let order;
                 for(let i=0; i<orderColl.order.length; i++) {
                     if(orderColl.order[i]._id == orderId) {

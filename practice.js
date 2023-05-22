@@ -4,6 +4,15 @@
 // const day = String(today.getDate()).padStart(2, '0');
 // const dateOnly = `${year}-${month}-${day}`;
 
+const { type } = require("jquery");
 
 
 
+function genarateOrderNo() {
+    let min = 10000, max = 99999;
+    let randomNo = Math.floor(Math.random() * (max - min + 1)) + min;
+    let OrderNo = 'TDLY'+randomNo;
+    return OrderNo;
+}
+
+console.log(genarateOrderNo());

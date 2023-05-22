@@ -1,10 +1,17 @@
 const mongoose = require('mongoose');
-const customer = require('../../models/user-model');
 const bcrypt = require('bcrypt');
+const emailValidator = require('email-validator');
+
+//importing helpers
 const userHelper = require('./userHelper');
+const validator = require('validator');
 
 //importing models
 const cartCollection = require('../../models/cart-model');
+const customer = require('../../models/user-model');
+
+
+
 
 
 
@@ -17,10 +24,12 @@ module.exports = {
             return new Promise(async (resolve, reject) => {
                 let loginStatus = false;
                 let response = {}, user;
-                if(userData.phone) {
-                    user = await customer.findOne({ phone: userData.phone });
+                              
+                if(emailValidator.validate(userData.phone)) {
+                    user = await customer.findOne({ email: userData.phone });
                 } else {
-                    user = await customer.findOne({ email: userData.email });
+                    console.log('its error in login');
+                    user = await customer.findOne({ phone: userData.phone });
                 }
                 if (user) {
                     bcrypt.compare(userData.password, user.password).then(async (status) => {
