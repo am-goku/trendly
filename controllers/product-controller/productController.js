@@ -40,26 +40,56 @@ module.exports = {
     //   })
     // },
 
-    showProducts: (req, res, next) => {
-      try{
-          let customer = req.session.user;
-          const currentPage = parseInt(req.query.page) || 1; // Get the current page from the query parameters, default to 1 if not provided
-          const itemsPerPage = 5; // Number of products to display per page
+    // showProducts: (req, res, next) => {
+    //   try{
+    //       let customer = req.session.user;
+    //       const currentPage = parseInt(req.query.page) || 1; // Get the current page from the query parameters, default to 1 if not provided
+    //       const itemsPerPage = 5; // Number of products to display per page
 
-          productHelper.showProducts(currentPage, itemsPerPage).then((result) => {
-            const products = result.products;
-            const totalPages = result.totalPages;
+    //       productHelper.showProducts(currentPage, itemsPerPage).then((result) => {
+    //         const products = result.products;
+    //         const totalPages = result.totalPages;
             
           
-            res.render('shop/products', { products, productsActive: true, customer, currentPage, totalPages});
-          }).catch((err) => {
+    //         res.render('shop/products', { products, productsActive: true, customer, currentPage, totalPages});
+    //       }).catch((err) => {
+    //         console.log(err);
+    //         // Handle the error
+    //       });
+    //   } catch (err) {
+    //     console.log('getproducts error::: ', err);
+    //   }
+    // },
+    showProducts: (req, res, next) => {
+      try {
+        let customer = req.session.user;
+        const currentPage = parseInt(req.query.page) || 1; // Get the current page from the query parameters, default to 1 if not provided
+        const itemsPerPage = 5; // Number of products to display per page
+    
+        // Retrieve the filter parameters from the query parameters
+        const sortBy = req.query.sort || ""; // Sort parameter
+        const priceRange = req.query.price || ""; // Price range parameter
+        const color = req.query.color || ""; // Gender parameter
+        const category = req.query.cat || ""; // Tag parameter
+    
+        // Call the productHelper function with the filter parameters
+        productHelper.showFilteredProducts(currentPage, itemsPerPage, { sortBy, priceRange, color, category })
+          .then((result) => {
+            const products = result.products;
+            const totalPages = result.totalPages;
+            const filterOptions = result.filterOptions;
+    
+            res.render('shop/products', { products, productsActive: true, customer, currentPage, totalPages, filterOptions });
+          })
+          .catch((err) => {
             console.log(err);
             // Handle the error
           });
       } catch (err) {
-        console.log('getproducts error::: ', err);
+        console.log('showProducts error:', err);
       }
     },
+    
     
 
 

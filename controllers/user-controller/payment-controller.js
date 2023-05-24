@@ -1,7 +1,3 @@
-//importing razorpay
-// const Razorpay = require('razorpay');
-
-
 
 
 
@@ -17,12 +13,11 @@ const paymentController = {
             let address = req.body.address;
             let paymentMethod = req.body.paymentMethod;
             let userId = req.session.user._id;
-            let coupon = req.body.coupon;
+            let coupon = req.session.couponActive ? req.session.couponActive : null;
             console.log('eneterd the payment section');
 
             if(paymentMethod === 'cod'){
                 paymentHelper.completeOrder(userId, address, paymentMethod, coupon).then((response) => {
-                    // next();
                     console.log('cod', response);
                     req.session.lastOrder = response.order[response.order.length-1];
                     console.log('sessinorder', req.session.lastOrder);
@@ -40,10 +35,6 @@ const paymentController = {
                     paymentHelper.generateRazorpay(orderId, total).then((resp) => {
                         res.status(200).json(resp);
                     })
-
-
-                    
-                    // next();
                 })
             } else {
                 res.send(404, {message: 'paypal'})

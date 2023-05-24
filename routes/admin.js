@@ -83,6 +83,10 @@ router.get('/category/delete/:id', adminController.loginCheck, categoryControlle
 //order management
 router.get('/orders', adminController.loginCheck, orderManagement.showOrders)
 
+router.get('/orders/details', adminController.loginCheck, orderManagement.getOrderDetails);
+
+router.get('/manageOrder', adminController.loginCheck, orderManagement.manageOrder);
+
 
 
 //coupon management

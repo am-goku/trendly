@@ -1,3 +1,5 @@
+
+
 <!-- Shoping Cart -->
 {{!-- <form class="bg0 p-t-75 p-b-85"> --}}
     <div class="container-fluid pt-3">
@@ -93,7 +95,7 @@
                     </div>
 
                     <div class="flex-w flex-m m-r-20 m-tb-5">
-                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
+                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" oninput="checkCoupon()" type="text" name="coupon"
                             placeholder="Coupon Code" id="couponCode">
 
                         <div onclick="checkCoupon()" id="apply"
@@ -132,13 +134,13 @@
                     </div>
 
                     <div class="flex-w flex-t bor12 p-t-15 p-b-30">
-                        <div class="size-208">
+                        <div class="size-208 " id="discN" style="display: none;">
                             <span class="stext-110 cl2">
                                 Discount:
                             </span>
                         </div>
 
-                        <div class="size-209">
+                        <div class="size-209 " id="disc" style="display: none;">
                             <span class="mtext-110 cl2">
                                 ₹- <span id="discount"></span>
                             </span>
@@ -185,10 +187,10 @@
                         </div>
                     </div>
 
-                    <a onclick="checkout()" href="/checkout" style="color: white;"
-                        class="btn btn-secondary flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                    <button onclick="checkout()" style="color: white;"
+                        class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                         Proceed to Checkout
-                    </a>
+                    </button>
                 </div>
 
 
@@ -286,10 +288,9 @@
                         console.log(item[i])
                         total[i].innerHTML = item[i].product.productPrice * item[i].quantity;
                         subtotal += (item[i].product.productPrice * item[i].quantity)
-
                     }
                     console.log(subtotal)
-                    document.getElementById('subtotal').innerHTML = subtotal
+                    document.getElementById('subtotal').innerHTML = subtotal;
                     update();
                     rtn = true;
                     //console.log(res);
@@ -309,55 +310,67 @@
 
 
 <script>
+    let coupon = {
+        code: '',
+        discount: 0
+    };
     function checkCoupon() {
-        let code = document.getElementById('couponCode').value;
-
-        $.ajax({
-            url: '/check-coupon',
-            method: 'POST',
-            data: {
-                code: code
-            },
-            success: function (res) {
-                if (res.valid) {
-                    alert('hi')
-                    //document.getElementById('couponCode').style.cursor = not-allowed;
-                    document.getElementById('discount').innerText = res.discount;
-                    document.getElementById('cancel').style.display = 'block';
-                    document.getElementById('apply').style.display = 'none';
-                    update();
-                } else {
-                    document.getElementById('couponErr').innerHTML = res.message;
-                }
-            },
-        })
+        let code = document.getElementById('couponCode').value.trim();
+        
+        if(code === ''){
+            document.getElementById('couponErr').innerHTML = ''
+            document.getElementById('couponErr').style.color = 'red';
+            document.getElementById('discount').innerText = '';
+            document.getElementById('disc').style.display='none';
+            document.getElementById('discN').style.display='none';
+            coupon.discount = 0;
+            coupon.code = '';
+        } else {
+            $.ajax({
+                url: '/check-coupon',
+                method: 'POST',
+                data: {
+                    code: code
+                },
+                success: function (res) {
+                    if (res.valid) {
+                        document.getElementById('disc').style.display='';
+                        document.getElementById('discN').style.display='';
+                        //document.getElementById('couponCode').style.cursor = not-allowed;
+                        document.getElementById('discount').innerText = res.discount;
+                        document.getElementById('cancel').style.display = 'flex';
+                        document.getElementById('apply').style.display = 'none';
+                        document.getElementById('couponErr').innerHTML = 'Applied';
+                        document.getElementById('couponErr').style.color = 'green';
+                        coupon.discount = res.discount;
+                        coupon.code = res.code;
+                        update();
+                    } else {
+                        document.getElementById('couponErr').innerHTML = res.message;
+                        document.getElementById('couponErr').style.color = 'red';
+                        document.getElementById('discount').innerText = '';
+                        document.getElementById('disc').style.display='none';
+                        document.getElementById('discN').style.display='none';
+                        coupon.discount = 0;
+                        coupon.code = '';
+                    }
+                },
+            })
+        }
     }
-
-
-
 
     function cancelCoupon() {
         let code = document.getElementById('couponCode').value;
+        document.getElementById('couponErr').style.color = 'red';
 
-        $.ajax({
-            url: '/cancel-coupon',
-            method: 'POST',
-            data: {
-                code: code
-            },
-            success: function (res) {
-                if (res.status) {
-                    document.getElementById('couponCode').value = '';
-                    //document.getElementById('couponCode').style.cursor = allowed;
-                    document.getElementById('discount').innerText = '';
-                    update();
-                    document.getElementById('cancel').style.display = 'none';
-                    document.getElementById('applay').style.display = 'block';
-
-
-                }
-            }
-        })
+        document.getElementById('couponCode').value = '';
+        //document.getElementById('couponCode').style.cursor = allowed;
+        document.getElementById('discount').innerText = '';
+        update();
+        document.getElementById('cancel').style.display = 'none';
+        document.getElementById('apply').style.display = 'flex';
+        document.getElementById('disc').style.display='none';
+        document.getElementById('discN').style.display='none';
     }
 
 
@@ -367,5 +380,11 @@
 <script>
     function setCoupon(couponCode) {
         document.getElementById('couponCode').value = couponCode;
+    }
+</script>
+
+<script>
+    function checkout(){
+        window.location.href = '/checkout';
     }
 </script>

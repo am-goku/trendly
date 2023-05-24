@@ -10,6 +10,10 @@ const orderSchema = new mongoose.Schema({
         ref: customer
     },
     order: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: customer
+        },
         orderNo: {
             type: String,
             unique: true
@@ -31,7 +35,6 @@ const orderSchema = new mongoose.Schema({
             productTotal: {
                 type: Number
             },
-
         }],
         totalAmount:{
             type: Number,

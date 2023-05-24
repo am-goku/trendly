@@ -1,4 +1,6 @@
+const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
+const coupon = require('./coupon');
 
 
 
@@ -40,7 +42,8 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     usedCoupons: [{
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: coupon
     }]
 }, {collection: 'users'});
 

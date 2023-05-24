@@ -49,6 +49,7 @@ const paymentHelper = {
     /* The `completeOrder` function is a helper function that takes in three parameters: `userId`,
     `address`, and `paymentMethod`. */
     completeOrder: async (userId, address, paymentMethod, coupon) => {
+        try{
         console.log('this is the address pass for payment', address);
         const cart = await shopping_cart.findOne({userId: userId}).populate('items.product');
         let totalAmount = 0, date = Date.now();
@@ -64,22 +65,27 @@ const paymentHelper = {
         //discount applying and tax towards total amount (pending)
             const shipping = 50; // setting it as a constant for now
             totalAmount += shipping;
-            totalAmount = totalAmount - coupon.discount;
+            if(coupon){
+                totalAmount = totalAmount - coupon.discount;
+                await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
+            }
 
         //getting order collection
             let orderCollection = await order.findOne({userId: userId});
         //updating or creating order
             return new Promise((resolve, reject) => {
                 if(orderCollection){ 
-                    order.updateOne({userId: userId}, {$push: {order: {orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon.discount}}})
+                    order.updateOne({userId: userId}, {$push: {order: {user: userId, orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon ? coupon.discount : 0}}})
                     .then(async (response) => {
-                        await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon.code}});
+                        if(coupon){
+                            await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
+                        }
                         order.findOne({userId: userId}).populate('order.items.product').lean().then((res) => {
                             resolve(res);
                         })
                     })
                 } else {
-                    order.create({userId: userId, order:[{orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon.discount}]})
+                    order.create({userId: userId, order:[{user: userId, orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon ? coupon.discount : 0}]})
                     .then((response) => {
                         order.findOne({userId: userId}).populate('order.items.product').lean().then((res) => {
                             resolve(res);
@@ -87,6 +93,9 @@ const paymentHelper = {
                     })
                 }
             })
+        } catch (err) {
+            console.log('Error in Helper while processing with order', err);
+        }
     },
 
 

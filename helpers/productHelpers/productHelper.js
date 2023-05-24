@@ -40,29 +40,123 @@ module.exports = {
     field of each product with the corresponding category document from the `category` collection.
     The function returns a Promise that resolves with an object containing the list of products and
     the total number of pages. If an error occurs, the Promise is rejected with the error. */
-    showProducts: (currentPage, itemsPerPage) => {
-        return new Promise((resolve, reject) => {
-          product.find()
-            .populate('category')
-            .lean()
-            .skip((currentPage - 1) * itemsPerPage) // Skip the appropriate number of documents based on the current page
-            .limit(itemsPerPage) // Limit the number of documents per page
-            .exec()
-            .then((products) => {
-              product.countDocuments().exec().then((totalCount) => { // Get the total count of products
-                const totalPages = Math.ceil(totalCount / itemsPerPage);
-                resolve({ products, totalPages });
-              }).catch((err) => {
-                reject(err);
-              });
-            })
-            .catch((err) => {
+    // showProducts: (currentPage, itemsPerPage) => {
+    //     return new Promise((resolve, reject) => {
+    //       product.find()
+    //         .populate('category')
+    //         .lean()
+    //         .skip((currentPage - 1) * itemsPerPage) // Skip the appropriate number of documents based on the current page
+    //         .limit(itemsPerPage) // Limit the number of documents per page
+    //         .exec()
+    //         .then((products) => {
+    //           product.countDocuments().exec().then((totalCount) => { // Get the total count of products
+    //             const totalPages = Math.ceil(totalCount / itemsPerPage);
+    //             resolve({ products, totalPages });
+    //           }).catch((err) => {
+    //             reject(err);
+    //           });
+    //         })
+    //         .catch((err) => {
+    //           reject(err);
+    //         });
+    //     });
+    //   },
+      
+    // showFilteredProducts: (currentPage, itemsPerPage, sortBy, priceRange, color, category) => {
+    //   return new Promise((resolve, reject) => {
+    //     let query = product.find().populate('category').lean();
+    
+    //     // Apply filters based on the provided parameters
+    //     if (sortBy === "price_asc") {
+    //       query = query.sort({ price: 1 });
+    //     } else if (sortBy === "price_desc") {
+    //       query = query.sort({ price: -1 });
+    //     }
+    
+    //     if (priceRange) {
+    //       const [minPrice, maxPrice] = priceRange.split("-");
+    //       if(maxPrice){
+    //         query = query.where("productPrice").gte(minPrice).lte(maxPrice);
+    //       } else {
+    //         query = query.where("productPrice").gte(minPrice);
+    //       }
+          
+    //     }
+    
+    //     if (color) {
+    //       query = query.where("color").equals(color);
+    //     }
+    
+    //     if (category) {
+    //       query = query.where("category.name").equals(category);
+    //     }
+    
+    //     query
+    //       .skip((currentPage - 1) * itemsPerPage)
+    //       .limit(itemsPerPage)
+    //       .exec()
+    //       .then((products) => {
+    //         product.countDocuments(query.getQuery()).exec().then((totalCount) => {
+    //           const totalPages = Math.ceil(totalCount / itemsPerPage);
+    //           resolve({ products, totalPages });
+    //         }).catch((err) => {
+    //           reject(err);
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         reject(err);
+    //       });
+    //   });
+    // },
+    
+    showFilteredProducts: (currentPage, itemsPerPage, filterOptions) => {
+      return new Promise((resolve, reject) => {
+        let query = product.find().populate('category').lean();
+        const { sortBy, priceRange, color, category } = filterOptions;
+    
+        // Apply filters based on the provided parameters
+        if (sortBy === "price_asc") {
+          query = query.sort({ productPrice: 1 });
+        } else if (sortBy === "price_desc") {
+          query = query.sort({ productPrice: -1 });
+        }
+    
+        if (priceRange) {
+          const [minPrice, maxPrice] = priceRange.split("-");
+          if (minPrice) {
+            query = query.where("productPrice").gte(parseFloat(minPrice));
+          }
+          if (maxPrice) {
+            query = query.where("productPrice").lte(parseFloat(maxPrice));
+          }
+        }
+    
+        if (color) {
+          query = query.where("color").equals(color);
+        }
+    
+        if (category) {
+          query = query.where("category.name").equals(category);
+        }
+    
+        query
+          .skip((currentPage - 1) * itemsPerPage)
+          .limit(itemsPerPage)
+          .exec()
+          .then((products) => {
+            product.countDocuments(query.getQuery()).exec().then((totalCount) => {
+              const totalPages = Math.ceil(totalCount / itemsPerPage);
+              resolve({ products, totalPages, filterOptions });
+            }).catch((err) => {
               reject(err);
             });
-        });
-      },
-      
-
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    
 
 
       /* `showProductsAdmin` is a function that retrieves all products from the database and returns

@@ -157,12 +157,15 @@ router.post('/rejectPayment', (req, res) => {
 router.get('/order/details', orderManagement.getAnOrder);
 
 
+router.post('/cancelOrder', orderManagement.cancelOrder);
+router.post('returnOrder', )
+
+
 
 // coupon management
 router.post('/check-coupon', couponManagement.checkCoupon);
 
 router.post('/cancel-coupon', couponManagement.cancelCoupon );
-
 
 
 

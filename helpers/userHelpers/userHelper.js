@@ -156,7 +156,10 @@ module.exports = {
     //order section
     getOrders: (userId) => {
         return new Promise((resolve, reject) => {
-            order.findOne({userId: userId}).populate('order.items.product').lean().exec().then((response) => {
+            order.findOne({userId: userId})
+            .sort({ 'order.date': 1 })
+            .populate('order.items.product')
+            .lean().exec().then((response) => {
                 // console.log('orderpage:::', response.order[0].products[0].product);
                 resolve(response);
             })
