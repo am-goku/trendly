@@ -1,6 +1,3 @@
-
-
-
 // importing helper functions
 const userHelper = require('../../helpers/userHelpers/userHelper');
 const paymentHelper = require('../../helpers/userHelpers/paymentHelper');

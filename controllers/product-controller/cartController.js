@@ -90,6 +90,12 @@ const cartController = {
 
 
 
+    /* `removeItem` is a function in the `cartController` object that is used to remove an item from
+    the user's cart. It takes in the `req`, `res`, and `next` parameters. It first gets the `userId`
+    from the `req.session.user._id` and the `itemId` from the `req.params.id`. It then calls the
+    `removeItem` function from the `cartHelper` module, passing in the `userId` and `itemId`. Once
+    the item is removed from the cart, it redirects the user to the cart page using
+    `res.redirect('/cart')`. */
     removeItem: (req, res, next) => {
         let userId = req.session.user._id
         let itemId = req.params.id;
@@ -97,12 +103,18 @@ const cartController = {
             console.log(response)
             res.redirect('/cart')
 
-        })
-
-        
+        })  
     },
 
 
+    /* `checkProduct` is a function in the `cartController` object that is used to check if a product
+    is already in the user's cart. It takes in the `req`, `res`, and `next` parameters. It first
+    gets the `userId` from the `req.session.user._id`. If there is no user session, it sends a
+    response with `productInCart` set to `false`. It then gets the `productDetails` from the
+    `req.body`. It calls the `checkProduct` function from the `cartHelper` module, passing in the
+    `userId` and `productDetails`. Once the product is checked, it sends a response with
+    `productInCart` set to `true` if the product is already in the cart, or logs a message to the
+    console if the product is not in the cart. */
     checkProduct: (req, res, next) => {
         let userId = req.session.user._id;
 

@@ -223,6 +223,13 @@ module.exports = {
     },
 
 
+    /* `searchProduct` is a function that takes in three parameters: `keyword`, `page`, and
+    `itemsPerPage`. It searches for products in the database whose `productName` field matches the
+    given `keyword` using a regular expression with case-insensitive matching. It uses pagination to
+    limit the number of products returned per page and skips the appropriate number of documents
+    based on the current page. The function returns a Promise that resolves with an object
+    containing the list of products and the total number of matching products. If an error occurs,
+    the Promise is rejected with the error. */
     searchProduct: (keyword, page, itemsPerPage) => {
         try {
           return new Promise((resolve, reject) => {

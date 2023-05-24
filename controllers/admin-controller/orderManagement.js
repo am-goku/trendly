@@ -4,6 +4,10 @@ const userHelper = require('../../helpers/userHelpers/orderHelper');
 
 
 module.exports = {
+    /* This is a controller function that is responsible for rendering the orders page for the admin.
+    It first calls the `getOrders()` function from the `orderHelper` module to retrieve all the
+    orders. Then, it formats the date of each order and renders the `admin/orders` view with the
+    `orders` data. If there is an error, it logs the error to the console. */
     showOrders: (req, res, next) => {
         try {
             orderHelper.getOrders().then((orders) => {
@@ -26,6 +30,13 @@ module.exports = {
         }
     },
 
+    /* This is a controller function that is responsible for getting the details of a specific order
+    and rendering the `admin/orderDetails` view with the order data. It takes in the `req` and `res`
+    objects as parameters and uses the `query` property of the `req` object to retrieve the
+    `orderId` and `userId` of the order. It then calls the `getOrderDetails()` function from the
+    `orderHelper` module, passing in the `orderId` and `userId` as arguments. Once the order details
+    are retrieved, it renders the `admin/orderDetails` view with the order data and the `admin`
+    object from the `req.session` object. If there is an error, it logs the error to the console. */
     getOrderDetails: (req, res, next) => {
         try{
             let orderId = req.query.orderId;
@@ -44,6 +55,13 @@ module.exports = {
     },
 
 
+    /* `manageOrder` is a controller function that is responsible for updating the status of an order.
+    It takes in the `req` and `res` objects as parameters and uses the `query` property of the `req`
+    object to retrieve the `orderStatus`, `orderId`, and `userId` of the order. It then calls the
+    `manageOrder()` function from the `orderHelper` module, passing in the `orderStatus`, `orderId`,
+    and `userId` as arguments. Once the order status is updated, it redirects to the
+    `admin/orderDetails` view with the `orderId` and `userId` as query parameters. The updated order
+    status is logged to the console. */
     manageOrder: (req, res) => {
         let orderStatus = req.query.status;
         let orderId = req.query.orderId;
@@ -53,6 +71,5 @@ module.exports = {
             console.log('response after changing the order status:', response);
             res.redirect('/admin/orders/details?orderId='+orderId+'&userId='+userId);
         })
-
     }
 }

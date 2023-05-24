@@ -10,6 +10,10 @@ let admin = true;
 
 module.exports = {
 
+    /* `loginCheck` is a middleware function that checks if the `admin` session variable is set. If it
+    is set, it calls the `next()` function to move on to the next middleware function. If it is not
+    set, it redirects the user to the `/admin/login` route. This function is used to protect routes
+    that require authentication, ensuring that only authenticated users can access them. */
     loginCheck: (req, res, next) => {
         if(req.session.admin){
             next();
@@ -19,6 +23,9 @@ module.exports = {
     },
 
 
+    /* This code defines a function called `getHome` that checks if the `admin` session variable is
+    set. If it is set, it renders the `admin/dashboard` view with the `title` and `admin` variables
+    passed as parameters. If it is not set, it redirects the user to the `/admin/login` route. */
     getHome: (req, res, next) => {
         if(req.session.admin){
             res.render('admin/dashboard', {title, admin});

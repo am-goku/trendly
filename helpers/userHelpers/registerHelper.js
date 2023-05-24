@@ -60,6 +60,12 @@ module.exports = {
     },
 
 
+    /* `checkEmailAddress` is a function that takes in an email parameter and returns a promise. The
+    function searches for a user in the database with the email provided using the `findOne` method
+    of the `user` model. If a user is found, the promise resolves to the user object, otherwise it
+    resolves to `null`. If there is an error while checking for the user, it logs the error to the
+    console. This function is used to check the availability of an email address before registering
+    a new user to ensure that no two users have the same email address. */
     checkEmailAddress: (email) => {
         return new Promise((resolve, reject) => {
             user.findOne({ email: email}).then((response) => {resolve(response)})

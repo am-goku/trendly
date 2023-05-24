@@ -56,6 +56,11 @@ module.exports = {
     },
 
 
+    /* This code defines a function called `removeCoupon` that handles a GET request to remove a coupon
+    from the database. It first extracts the coupon ID from the request query parameters, then uses
+    the `couponCollection.deleteOne()` method to delete the document with the provided ID from the
+    `coupon` collection. If the deletion is successful, it redirects the user to the `/admin/coupon`
+    page. If there is an error, it logs the error and redirects the user to the `/admin` page. */
     removeCoupon: (req, res, next) => {
         try {
             let couponId = req.query.couponId;
@@ -68,7 +73,6 @@ module.exports = {
             console.log('Controller Error while removing coupon ::', err);
             res.redirect('/admin');
         }
-
     }
 
 

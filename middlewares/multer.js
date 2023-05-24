@@ -2,6 +2,10 @@ const multer = require('multer');
 
 
 
+/* This code is defining a disk storage engine for Multer, a middleware for handling file uploads in
+Node.js. The `fileStorage` object specifies the destination directory for uploaded files, the
+filename format for uploaded files (which includes a timestamp and the original filename), and a
+file filter function that checks the file type and only allows jpeg and png files to be uploaded. */
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, './uploads');
@@ -20,7 +24,7 @@ const fileStorage = multer.diskStorage({
           return;
         }
     }
-  });
+});
 
 const upload = multer({storage: fileStorage});
 

@@ -127,6 +127,11 @@ const cartHelper = {
     },
 
 
+    /* This is a function in a cartHelper object that removes an item from the cart collection based on
+    the userId and itemId provided. It uses the findOneAndUpdate method to find the cart document
+    with the given userId and then removes the item with the given itemId using the  operator.
+    It returns a promise that resolves with the updated cart document after the item has been
+    removed. */
     removeItem: (userId, itemId) => {
         return new Promise((resolve, reject) => {
             cart.findOneAndUpdate({userId: userId}, {$pull: {items: {_id: itemId}}}).then((res)=> {
@@ -137,6 +142,10 @@ const cartHelper = {
     },
 
 
+    /* `checkProduct` is a function in the `cartHelper` object that checks if a given product with
+    specific variants (size and color) is already present in the user's cart or not. It takes two
+    parameters, `userId` and `productDetails` (an object containing `productId`, `size`, and
+    `color`). */
     checkProduct: (userId, productDetails) => {
         try {
 

@@ -82,9 +82,6 @@ router.get('/products', productController.showProducts);
 
 router.get('/products/:id', productController.findProduct);
 
-router.get('/product/sortL', productController.sortLProduct );
-
-router.get('/product/sortH', productController.sortHProduct );
 
 
 

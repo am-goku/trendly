@@ -69,6 +69,10 @@ const orderHelper = {
         }
     },
 
+    /* `returnOrder` is a function that takes in two parameters `orderId` and `userId`. It attempts to
+    update the `orderCollection` by setting the `status` field of the order with the given `orderId`
+    and `userId` to "return-pending". It returns a promise that resolves with the response from the
+    update operation. If there is an error, it logs the error to the console. */
     returnOrder: (orderId, userId) => {
         try{
             return new Promise((resolve, reject) => {

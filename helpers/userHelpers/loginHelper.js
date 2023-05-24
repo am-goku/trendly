@@ -103,6 +103,12 @@ module.exports = {
     },
 
 
+    /* `loginUserByOtp` is a function that takes in a `phone` parameter. It is an asynchronous function
+    that returns a Promise. The function first finds a user with the given phone number in the
+    `customer` collection in the database using the `findOne` method of the `customer` model. It
+    then returns a Promise that resolves to an object containing the user and their cart details if
+    the user is found. If there is an error while finding the user or their cart details, the
+    function logs an error message to the console and resolves the Promise with a status of false. */
     loginUserByOtp: async (phone) => {
         try{
             let response = {};

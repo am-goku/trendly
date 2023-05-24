@@ -122,6 +122,17 @@ let loginController = {
     },
 
 
+    /* `verifyOtpLogin` is a controller method that handles the verification of OTP (One-Time Password)
+    for login. It takes in the request, response, and next middleware function as parameters. Inside
+    the method, it retrieves the phone number and OTP from the request body and passes it to the
+    `verifyOtp` function in the `otpController` module. If the OTP is verified successfully, it
+    calls the `loginUserByOtp` function in the `loginHelper` module to log in the user. If the login
+    is successful, it sets the `loggedIn` value in the session object to `true` and sets the `user`
+    value in the session object to the user data returned by the `loginUserByOtp` function. It also
+    sends a JSON response with a `valid` value of `true`. If the OTP is invalid, it sends a JSON
+    response with a message indicating that the OTP is invalid and a `valid` value of `false`. If an
+    error occurs, it logs the error to the console and sends a JSON response with a message
+    indicating that something went wrong and a `valid` value of `false`. */
     verifyOtpLogin: (req, res, next) => {
         let userData = {
             phone: req.body.phone,
