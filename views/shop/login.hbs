@@ -1,58 +1,119 @@
 <!--================Login Box Area =================-->
 <div class="container pl-5 pr-5">
-<section class="login_box_area section-margin mt-3">
-    <div class="container" style="border-radius: 10%;">
-        <div class="row">
-            <div class="col-lg-6  ">
-                <div class="login_box_img d-none d-lg-block"
-                    style="background-image: url('/img/logo/Screenshot 2023-04-02 082650.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+    <section class="login_box_area section-margin mt-3">
+        <div class="container" style="border-radius: 10%;">
+            <div class="row">
+                <div class="col-lg-6  ">
+                    <div class="login_box_img d-none d-lg-block"
+                        style="background-image: url('/img/logo/Screenshot 2023-04-02 082650.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="login_form_inner">
-                    <h3>Log in to enter</h3>
+                <div class="col-lg-6">
+                    <div class="login_form_inner">
+                        <h3>Log in to enter</h3>
 
-                    <form class="row login_form" action="/login" method="post" id="contactForm">
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone / Email"
-                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone / Email'">
-                        </div>
-                        <div class=" col-md-12 form-group" style="text-align: left;">
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Password" onfocus="this.placeholder = ''"
-                                onblur="this.placeholder = 'Password'" minlength="4" required>
-                            {{#if errMsg}}
-                            <span style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">Invalid
-                                Credentials</span>
-                            {{/if}}
-                            {{#if blocked}}
-                            <span style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">This
-                                account has been blocked</span>
-                            {{/if}}
-                        </div>
+                        <form class="row login_form" action="/login" method="post" id="contactForm">
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="phone" name="phone"
+                                    placeholder="Phone / Email" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Phone / Email'">
+                            </div>
+                            <div class=" col-md-12 form-group" style="text-align: left;">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Password" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Password'" minlength="4" required>
+                                <input type="text" class="form-control" id="otpField" name="otp"
+                                    placeholder="Enter OTP" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Enter OTP'" minlength="4" style="display: none;">
+                                    <span id="er" style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;"></span>
+                                {{#if errMsg}}
+                                <span
+                                    style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">Invalid
+                                    Credentials</span>
+                                {{/if}}
+                                {{#if blocked}}
+                                <span
+                                    style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">This
+                                    account has been blocked</span>
+                                {{/if}}
+                            </div>
 
 
-                        <div class="col-md-12 form-group" >
-                            <button type="submit" value="submit" class="button button-login w-100" >Log In</button>
-                        </div>
-                    </form>
-                    <div style="text-align: center;">
-                            <a style="color: gray;" href="/forgotPassword" >Forgot Password?</a>
+                            <div class="col-md-12 form-group">
+                                <button type="submit" value="submit" id="loginBtn" class="button button-login w-100 mb-1">Log In</button><br>
+                                <a type="button" onclick="verifyOtp()" id="otpBtn" style="display: none;" class="button button-login w-100">Verify OTP</a><br>
+                                <a type="button" onclick="loginWithOtp()" style="color: white;" id="sendOtpBtn" class=" form-group button button-login w-100">Log with OTP</a>
+                            </div>
+
+                        </form>
+                        <div style="text-align: center;">
+                            <a style="color: gray;" href="/forgotPassword">Forgot Password?</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a style="color: gray;" href="/register/phone">New Here?</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </div>
 <!--================End Login Box Area =================-->
 
 
-<script src="/js/formValidation.js"></script>
-
 
 <script>
-    
+
+    function loginWithOtp() {
+        let phone = document.getElementById("phone").value.trim();
+        let test = +phone;
+        
+        if (test === NaN) {
+            document.getElementById("er").innerHTML = 'Enter a valid phone number';
+            return;
+        } else {
+
+            $.ajax({
+                url: '/loginOtp?phone='+phone,
+                method: 'POST',
+                success: function(response) {
+                    if(response.valid == false) {
+                        document.getElementById("er").innerHTML = response.message;
+                    } else {
+                        document.getElementById("password").style.display = "none";
+                        document.getElementById("otpField").style.display = "flex";
+                        document.getElementById("loginBtn").style.display = "none";
+                        document.getElementById("sendOtpBtn").style.display = "none";
+                        document.getElementById("otpBtn").style.display = "block";
+                        document.getElementById("phone").value = phone;
+                        document.getElementById("phone").readOnly = true;
+                    }
+                }
+            })
+        }
+    }
+
+
+    function verifyOtp() {
+        let phone = document.getElementById("phone").value.trim();
+        let otp = document.getElementById("otpField").value.trim();
+        $.ajax({
+            url: '/verifyOtpLogin',
+            method: 'POST',
+            data: {
+                phone: phone,
+                otp: otp
+            },
+            success: function(response) {
+                if(response.valid == true) {
+                    window.location.href = '/';
+                } else {
+                    document.getElementById("er").innerHTML = response.message;
+                }
+            }
+        })
+    }
+
 </script>
+
+
+<script src="/js/formValidation.js"></script>

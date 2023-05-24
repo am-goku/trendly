@@ -27,7 +27,6 @@ module.exports = {
     },
 
     postRegister: async (req, res, next) => {
-
         let userData = req.body;
         userData.password = await bcrypt.hash(userData.password, 10);
         await registerHelper.doRegister(userData);
@@ -63,7 +62,7 @@ module.exports = {
         let userData = req.body;
         otpController.verifyOtp(userData).then((status) => {
             console.log(status);
-            if(status.valid) {
+            if(status) {
                 otpValid = true;
                 res.redirect('/register');
                 // res.render('shop/register', {title: 'Register', phoneNumber});
@@ -72,7 +71,22 @@ module.exports = {
                 res.render('shop/otp-form', {title, otpMsg: 'Invalid Otp', phoneNumber});
             }
         }) 
+    },
+
+
+    checkEmail: (req, res) => {
+        let email = req.body.email;
+        registerHelper.checkEmailAddress(email).then((response) => {
+            console.log(response);
+            if(response) {
+                res.status(200).json({message: 'Email is alredy registered', availability: false});
+            } else {
+                res.status(200).json({availability: true});
+            }
+        })
     }
+
+
 
 
 }

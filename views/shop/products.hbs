@@ -33,18 +33,16 @@
 						Search
 					</div>
 				</div>
-				
-				<!-- Search product -->
+
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<form action="/searchProduct" method="get">
-						<div class="bor8 dis-flex p-l-15">
-							<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="keyword" placeholder="Search">
-							<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-								<i class="zmdi zmdi-search"></i>
-							</button>
-						</div>
-					</form>
+					<div class="bor8 dis-flex p-l-15">
+						<input oninput="performSearch()" id="searchInput" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" placeholder="Search">
+						<button  class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+					</div>
 				</div>
+
 
 				<!-- Filter -->
 				<div class="dis-none panel-filter w-full p-t-10">
@@ -55,22 +53,16 @@
 							</div>
 
 							<ul>
-								<li class="p-b-6">
-									<a href="/products" class="filter-link stext-106 trans-04">
-										Default
-									</a>
+								<li class="p-b-6 d-flex">
+									<input type="radio" name="sort" value="" onchange="filter()" checked> &nbsp; Default
 								</li>
 
-								<li class="p-b-6">
-									<a href="/products?sort=price_asc" class="filter-link stext-106 trans-04">
-										Price: Low to High
-									</a>
+								<li class="p-b-6 d-flex">
+									<input type="radio" name="sort" value="asc" onchange="filter()" > &nbsp; Price Low to High
 								</li>
 
-								<li class="p-b-6">
-									<a href="/products?sort=price_desc" class="filter-link stext-106 trans-04">
-										Price: High to Low
-									</a>
+								<li class="p-b-6 d-flex">
+									<input type="radio" name="sort" value="desc" onchange="filter()"> &nbsp; Price: High to Low
 								</li>
 							</ul>
 						</div>
@@ -82,37 +74,37 @@
 
 							<ul>
 								<li class="p-b-6">
-									<a href="/products" class="filter-link stext-106 trans-04 filter-link-active">
+									<a onclick="filter('')" class="filter-link stext-106 trans-04 filter-link-active">
 										All
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products?price=0-1000" class="filter-link stext-106 trans-04">
+									<a onclick="filter('0-1000')" class="filter-link stext-106 trans-04">
 										Below 1000
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products?price=1000-2000" class="filter-link stext-106 trans-04">
+									<a onclick="filter('1000-2000')" class="filter-link stext-106 trans-04">
 										1000 - 2000
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products?price=2000-3000" class="filter-link stext-106 trans-04">
+									<a onclick="filter('2000-3000')" class="filter-link stext-106 trans-04">
 										2000 - 3000
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products?price=3000-5000" class="filter-link stext-106 trans-04">
+									<a onclick="filter('3000-5000')" class="filter-link stext-106 trans-04">
 										3000 - 5000
 									</a>
 								</li>
 
 								<li class="p-b-6">
-									<a href="/products?price=5000" class="filter-link stext-106 trans-04">
+									<a onclick="filter('5000')" class="filter-link stext-106 trans-04">
 										5000 and Above
 									</a>
 								</li>
@@ -123,91 +115,64 @@
 							<div class="mtext-102 cl2 p-b-15">
 								Color
 							</div>
-
 							<ul>
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: black;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="/products?color=black" class="filter-link stext-106 trans-04">
-										Black
-									</a>
+								<li class="p-b-6 d-flex" style="cursor: pointer;">
+									<input onchange="filter()" type="checkbox" name="color" value="black">
+									Black
 								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: blue;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="/products?color=blue" class="filter-link stext-106 trans-04 filter-link-active">
-										Blue
-									</a>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="color" value="blue">
+									Blue
 								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: green;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="/products?color=green" class="filter-link stext-106 trans-04">
-										Green
-									</a>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="color" value="green">
+									Green
 								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: white;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="/products?color=white" class="filter-link stext-106 trans-04">
-										White
-									</a>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="color" value="white">
+									White
 								</li>
-
-								<li class="p-b-6">
-									<span class="fs-15 lh-12 m-r-6" style="color: red;">
-										<i class="zmdi zmdi-circle"></i>
-									</span>
-
-									<a href="/products?color=red" class="filter-link stext-106 trans-04">
-										Red
-									</a>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="color" value="red">
+									Red
 								</li>
 							</ul>
 						</div>
+
 
 						<div class="filter-col4 p-b-27">
 							<div class="mtext-102 cl2 p-b-15">
 								Categories
 							</div>
-
-							<div class="flex-w p-t-4 m-r--5">
-								<a href="/products?cat=men" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+							<ul>
+								<li class="p-b-6 d-flex" style="cursor: pointer;">
+									<input onchange="filter()" type="checkbox" name="category" value="men">
 									Men
-								</a>
-
-								<a href="/products?cat=women" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								</li>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="category" value="Women">
 									Women
-								</a>
-
-								<a href="/products?cat=kids" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								</li>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="category" value="Kids">
 									Kids
-								</a>
-
-								<a href="/products?cat=watch" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-									Watch
-								</a>
-
-								<a href="/products?cat=shoes" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+								</li>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="category" value="footwears">
 									Footwears
-								</a>
-							</div>
+								</li>
+								<li class="p-b-6 d-flex">
+									<input onchange="filter()" type="checkbox" name="category" value="watch">
+									Watch
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
-
+			<div style="text-align: center; display: none;" id="xxx" >
+				<h5>No Product Found</h5>
+			</div>
 			<div class="row isotope-grid">
 				{{#each products}}
 						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
@@ -367,3 +332,180 @@
 		});
 	</script>
 <!--===============================================================================================-->
+
+<script>
+	function hi(){
+		alert("hi");
+	}
+</script>
+
+
+<script>
+	function updateUI(searchResults) {
+		var searchResultsContainer = document.querySelector('.isotope-grid');
+		searchResultsContainer.innerHTML = ''; // Clear previous results
+
+		searchResults.forEach(function (result) {
+			var resultItem = document.createElement('div');
+			resultItem.classList.add('col-sm-6', 'col-md-4', 'col-lg-3', 'p-b-35', 'isotope-item', 'women');
+
+			var block2 = document.createElement('div');
+			block2.classList.add('block2');
+
+			var block2Pic = document.createElement('div');
+			block2Pic.classList.add('block2-pic', 'hov-img0');
+
+			var image = document.createElement('img');
+			image.setAttribute('src', '/uploads/' + result.images);
+			image.setAttribute('alt', 'IMG-PRODUCT');
+			block2Pic.appendChild(image);
+
+			var block2Btn = document.createElement('a');
+			block2Btn.classList.add('block2-btn', 'flex-c-m', 'stext-103', 'cl2', 'size-102', 'bg0', 'bor2', 'hov-btn1', 'p-lr-15', 'trans-04', 'js-show-modal1');
+			block2Btn.textContent = 'Quick View';
+			block2Pic.appendChild(block2Btn);
+
+			var block2Txt = document.createElement('div');
+			block2Txt.classList.add('block2-txt', 'flex-w', 'flex-t', 'p-t-14');
+
+			var block2TxtChild1 = document.createElement('div');
+			block2TxtChild1.classList.add('block2-txt-child1', 'flex-col-l');
+
+			var productNameLink = document.createElement('a');
+			productNameLink.setAttribute('href', '/products/' + result._id);
+			productNameLink.classList.add('stext-104', 'cl4', 'hov-cl1', 'trans-04', 'js-name-b2', 'p-b-6');
+			productNameLink.textContent = result.productName;
+			block2TxtChild1.appendChild(productNameLink);
+
+			var productPriceSpan = document.createElement('span');
+			productPriceSpan.classList.add('stext-105', 'cl3');
+			productPriceSpan.textContent = '₹ ' + result.productPrice;
+			block2TxtChild1.appendChild(productPriceSpan);
+
+			block2Txt.appendChild(block2TxtChild1);
+
+			var block2TxtChild2 = document.createElement('div');
+			block2TxtChild2.classList.add('block2-txt-child2', 'flex-r', 'p-t-3');
+
+			var wishlistLink = document.createElement('a');
+			wishlistLink.setAttribute('href', '#');
+			wishlistLink.classList.add('btn-addwish-b2', 'dis-block', 'pos-relative', 'js-addwish-b2');
+
+			var iconHeart1 = document.createElement('img');
+			iconHeart1.classList.add('icon-heart1', 'dis-block', 'trans-04');
+			iconHeart1.setAttribute('src', '/images2/icons/icon-heart-01.png');
+			iconHeart1.setAttribute('alt', 'ICON');
+			wishlistLink.appendChild(iconHeart1);
+
+			var iconHeart2 = document.createElement('img');
+			iconHeart2.classList.add('icon-heart2', 'dis-block', 'trans-04', 'ab-t-l');
+			iconHeart2.setAttribute('src', '/images2/icons/icon-heart-02.png');
+			iconHeart2.setAttribute('alt', 'ICON');
+			wishlistLink.appendChild(iconHeart2);
+			block2TxtChild2.appendChild(wishlistLink);
+
+			block2Txt.appendChild(block2TxtChild2);
+
+			block2.appendChild(block2Pic);
+			block2.appendChild(block2Txt);
+
+			resultItem.appendChild(block2);
+
+			searchResultsContainer.appendChild(resultItem);
+		});
+	}
+
+</script>
+
+<script>
+	function performSearch() {
+		var keyword = document.getElementById('searchInput').value.trim();
+
+		// Perform AJAX request to searchProduct endpoint
+		$.ajax({
+			url: '/searchProduct',
+			method: 'POST',
+			data: { keyword: keyword },
+			success: function (response) {
+				// Handle the search results here
+				console.log(response);
+				// Update the UI with the search results
+				// ...
+
+				let searchResults = response.products;
+				if(searchResults.length == 0){
+					document.getElementById('xxx').style.display = 'block';
+					updateUI(searchResults);
+				} else {
+					document.getElementById('xxx').style.display = 'none';
+					updateUI(searchResults);
+				}
+
+				
+			},
+			error: function (xhr, status, error) {
+				// Handle the error case
+				console.log(error);
+			}
+		});
+	}
+
+</script>
+
+
+{{!-- <script>
+	let color = []
+	function filter() {
+		
+
+		let colorCheckBox = document.getElementsByName("color");
+		for(let i=0; i<colorCheckBox.length; i++) {
+			if(colorCheckBox.checked){
+				color.push(colorCheckBox[i].value);
+			}
+		}
+
+		console.log(color)
+	}
+</script> --}}
+
+<script>
+	var color = []; // Array to store selected checkbox values
+	var category = [];
+	var priceRange = [];
+
+
+	function filter(price = '') {
+		//color filter
+		var checkboxes = document.querySelectorAll('input[name="color"]:checked');
+		color = Array.from(checkboxes).map(checkbox => checkbox.value);
+		//category filter
+		var categoryCheckboxes = document.querySelectorAll('input[name="category"]:checked');
+		category = Array.from(categoryCheckboxes).map(checkbox => checkbox.value);
+		//price range
+		let [min, max] = price.split('-');
+		priceRange = [+min, +max];
+		//sorting
+		let sort = document.querySelector('input[name="sort"]:checked').value;
+
+		$.ajax({
+			url: '/filterProducts',
+			method: 'POST',
+			data: {
+				color: JSON.stringify(color),
+				category: JSON.stringify(category),
+				priceRange: JSON.stringify(priceRange),
+				sort: sort
+			},
+			success: function (response) {
+				if (response) {
+					let filteredProducts = response.products;
+					updateUI(filteredProducts)
+				}
+			}
+		})
+
+
+		console.log(color, category, priceRange, sort);
+	}
+</script>

@@ -228,7 +228,7 @@
 
 {{!-- return order scripts --}}
 <script>
-    function cancelOrder(orderId) {
+    function returnOrder(orderId) {
         $.ajax({
             url: '/returnOrder?orderId='+orderId,
             method: 'POST',

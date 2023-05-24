@@ -15,6 +15,8 @@ const customer = require('../../models/user-model');
 
 
 
+
+
 module.exports = {
 
     /* This is a function called `doLogin` that takes in a parameter `userData`. It is an asynchronous
@@ -80,5 +82,48 @@ module.exports = {
             console.log('Error while setting Active status of the user: '+ err);
         }
     },
+
+
+    /* `otpLogin` is a function that takes in a `phone` parameter. It returns a Promise that resolves
+    to a user object if a user with the given phone number is found in the `customer` collection in
+    the database. If there is an error while finding the user, the function logs an error message to
+    the console. */
+    otpLogin: (phone) => {
+        try {
+            return new Promise((resolve, reject) => {
+                customer.findOne({phone: phone}).then((user) => {
+                    resolve(user);
+                }).catch((err) => {
+                    console.log('Error in helper while otp login inside promise: '+ err);
+                })
+            })
+        } catch (err) {
+            console.log('Error in helper while otp login: '+ err);
+        }
+    },
+
+
+    loginUserByOtp: async (phone) => {
+        try{
+            let response = {};
+            let user = await customer.findOne({phone: phone});
+            return new Promise((resolve, reject) => {
+                cartCollection.findOne({userId: user._id}).then((userCart) => {
+                    if(userCart){
+                        response.userCart = userCart;
+                    }
+                    response.user = user;
+                    response.status = true;
+                    resolve(response);
+                }).catch((err) => {
+                    response.status = false;
+                    resolve(response);
+                    console.log("error in helper (inside return) while getting user after otp verified: ", err);
+                })
+            })
+        } catch (err) {
+            console.log("error in helper while getting user after otp verified: ", err);
+        }
+    }
 
 }

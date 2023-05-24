@@ -23,6 +23,10 @@
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'"
                                 value="{{phoneNumber}}" readonly required>
                         </div>
+                        <div class="col-md-12 form-group" style="text-align: left;">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'"  required>
+                        </div>
                         <div class="col-md-12 form-group">
                             <input type="password" class="form-control" id="password" name="password"
                                 placeholder="Password" onfocus="this.placeholder = ''"
@@ -54,21 +58,45 @@
 
 <script>
     function validation() {
+        let flag = false;
+        alert('ji')
+        let userName = document.getElementById('name').value.trim();
+        let phone = document.getElementById('phone').value.trim();
+        let password = document.getElementById('password').value.trim();
+        let email = document.getElementById('email').value.trim();
+        let confirmPassword = document.getElementById('confirmPassword').value.trim();
 
-    let userName = document.getElementById('name').value.trim();
-    let phone = document.getElementById('phone').value.trim();
-    let password = document.getElementById('password').value.trim();
-    let confirmPassword = document.getElementById('confirmPassword').value.trim();
-
-    if (userName == '' || phone == '' || password == '' || confirmPassword == '') {
-        return false;
-    } else if (password !== confirmPassword) {
-        document.getElementById('err').innerHTML = 'Password does not match';
-        return false;
-    }else {
-        return true;
+        if (userName == '' || phone == '' || password == '' || confirmPassword == '' || email == '') {
+            return false;
+        } else if (password !== confirmPassword) {
+            document.getElementById('err').innerHTML = 'Password does not match';
+            return false;
+        } else {
+            $.ajax({
+                url: '/checkUserEmail',
+                method: 'POST',
+                data: { email: email },
+                success: function (response) {
+                    if (response.available) {
+                        callback(true);
+                    } else {
+                        document.getElementById('err').innerHTML = response.message;
+                        callback(false);
+                    }
+                }
+            });
+        }
     }
-}
+
+    validation(function(flag) {
+        if(flag) {
+            return true;
+        } else {
+            return false;
+        }
+    })
+
+
 </script>
 
 

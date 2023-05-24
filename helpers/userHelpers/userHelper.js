@@ -8,6 +8,7 @@ const loginController = require('../../controllers/user-controller/login-control
 const user_address = require('../../models/address-model');
 
 const order = require('../../models/order-model');
+const cart = require('../../models/cart-model');
 
 module.exports = {
 
@@ -128,8 +129,14 @@ module.exports = {
     getAddress: (userId) => {
         try{
             return new Promise((resolve, reject) => {
-                user_address.findOne({userId: userId}).lean().then((response) => {
-                    resolve(response);
+                user_address.findOne({userId: userId}).lean().then((userAddress) => {
+                    cart.findOne({userId: userId}).then((cart) => {
+                        resolve(userAddress, cart);
+                    }).catch((err) => {
+                        console.log('Error (inside return) in getting cart while checkout in helper: ' + err);
+                    })
+                }).catch((err) => {
+                    console.log('Error (outside) in getting cart while checkout in helper',err);
                 })
             })
         } catch(err){

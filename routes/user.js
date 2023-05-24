@@ -44,6 +44,8 @@ router.post('/otpVarification', registerConteroller.otpVerification);
 
 router.post('/resendOtp', otpController.resendOtp);
 
+router.post('/checkUserEmail', registerConteroller.checkEmail);
+
 
 
 
@@ -51,6 +53,10 @@ router.post('/resendOtp', otpController.resendOtp);
 router.get('/login', userController.getLoginUserStatus, loginController.getLogin);
 
 router.post('/login',userController.checkBlockedStatus, loginController.postLogin);
+
+router.post('/loginOtp', userController.checkBlockedStatus, loginController.otpLogin);
+
+router.post('/verifyOtpLogin', loginController.verifyOtpLogin)
 
 
 
@@ -85,7 +91,9 @@ router.get('/product/sortH', productController.sortHProduct );
 
 
 //search products
-router.get("/searchProduct", productController.searchProduct)
+router.post("/searchProduct", productController.searchProduct)
+
+router.post('/filterProducts', productController.filterProducts )
 
 
 
@@ -158,7 +166,8 @@ router.get('/order/details', orderManagement.getAnOrder);
 
 
 router.post('/cancelOrder', orderManagement.cancelOrder);
-router.post('returnOrder', )
+router.post('/returnOrder', orderManagement.returnOrder)
+
 
 
 

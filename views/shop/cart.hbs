@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 <!-- Shoping Cart -->
 {{!-- <form class="bg0 p-t-75 p-b-85"> --}}
@@ -57,7 +58,7 @@
                                     </div>
                                 </td>
                                 <td class="column-5">₹ <span class="totalPrice" id="total">{{this.amount}}</span></td>
-                                <td class="column-6"><a href="/removeFromCart/{{this._id}}"
+                                <td class="column-6"><a onclick="xyz()" href="/removeFromCart/{{this._id}}"
                                         class="btn btn-danger">Remove</a></td>
                             </tr>
                             {{/each}}
@@ -386,5 +387,27 @@
 <script>
     function checkout(){
         window.location.href = '/checkout';
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+<script>
+
+    
+    function xyz() {
+        
+        Toastify({
+            text: 'Product added to cart !',
+            duration: 3000,
+            gravity: 'top',
+            position: 'center',
+            backgroundColor: "linear-gradient(90deg, rgba(0,36,3,1) 0%, rgba(157,49,102,1) 42%, rgba(255,0,69,1) 100%)",
+            stopOnFocus: true,
+            className: "toastify-icon",
+            close: false,
+        }).showToast();
+
     }
 </script>

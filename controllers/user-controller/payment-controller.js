@@ -8,6 +8,9 @@ const paymentHelper = require('../../helpers/userHelpers/paymentHelper');
 
 const paymentController = {
 
+    /* `doPayment` is a method of the `paymentController` object. It takes in three parameters: `req`,
+    `res`, and `next`, which are objects representing the HTTP request, response, and next
+    middleware function in the application's request-response cycle. */
     doPayment: (req, res, next) => {
         try{
             let address = req.body.address;
@@ -39,7 +42,6 @@ const paymentController = {
             } else {
                 res.send(404, {message: 'paypal'})
             }
-
         } catch (err) {
             console.log('Payment Error: ', err);
         }

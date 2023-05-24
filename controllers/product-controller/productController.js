@@ -33,33 +33,7 @@ module.exports = {
     },
 
 
-    // showProducts: (req, res, next) => {
-    //   let customer = req.session.user;
-    //   productHelper.showProducts().then((products) => {
-    //     res.render('shop/products',{products, productsActive:true, customer});
-    //   })
-    // },
-
-    // showProducts: (req, res, next) => {
-    //   try{
-    //       let customer = req.session.user;
-    //       const currentPage = parseInt(req.query.page) || 1; // Get the current page from the query parameters, default to 1 if not provided
-    //       const itemsPerPage = 5; // Number of products to display per page
-
-    //       productHelper.showProducts(currentPage, itemsPerPage).then((result) => {
-    //         const products = result.products;
-    //         const totalPages = result.totalPages;
-            
-          
-    //         res.render('shop/products', { products, productsActive: true, customer, currentPage, totalPages});
-    //       }).catch((err) => {
-    //         console.log(err);
-    //         // Handle the error
-    //       });
-    //   } catch (err) {
-    //     console.log('getproducts error::: ', err);
-    //   }
-    // },
+    
     showProducts: (req, res, next) => {
       try {
         let customer = req.session.user;
@@ -117,21 +91,22 @@ module.exports = {
 
     searchProduct: (req, res, next) => {
       const customer = user = req.session.user;
-      const keyword = req.query.keyword;
+      const keyword = req.body.keyword;
       const page = parseInt(req.query.page) || 1; // Get the current page from the query parameter
       const itemsPerPage = 5; // Define the number of items to display per page
     
       productHelper.searchProduct(keyword, page, itemsPerPage)
         .then(({ products, totalCount }) => {
           const totalPages = Math.ceil(totalCount / itemsPerPage);
-          res.render('shop/products', {
-            products,
-            customer,
-            user,
-            productsActive: true,
-            totalPages,
-            currentPage: page,
-          });
+          // res.render('shop/products', {
+          //   products,
+          //   customer,
+          //   user,
+          //   productsActive: true,
+          //   totalPages,
+          //   currentPage: page,
+          // });
+          res.status(200).json({products: products, totalPages: totalPages});
         })
         .catch(error => {
           console.log('Search product failed: ', error);
@@ -152,6 +127,47 @@ module.exports = {
       product.find().sort({productPrice: -1}).lean().then((products)=> {
         res.render('shop/products', {products, customer: req.session.user, user:req.session.user})
       })
+    },
+
+
+    filterProducts: async (req, res, next) => {
+      let color = JSON.parse(req.body.color);
+      let category = JSON.parse(req.body.category);
+      let priceRange = JSON.parse(req.body.priceRange);
+      let sort = req.body.sort;
+      
+      
+      let filter = {};
+      let sortOption = {};
+
+      if (color.length) {
+        filter.color = { $in: color };
+      }
+      if (category.length) {
+        filter.category = { $in: category };
+      }
+      if (priceRange && priceRange.length === 2) {
+        if(!priceRange[1]){
+          filter.productPrice = { $gte: priceRange[0] };
+        } else {
+          filter.productPrice = { $gte: priceRange[0], $lte: priceRange[1] };
+        }
+      }
+
+      if (sort === 'asc') {
+        sortOption = { productPrice: 1 }; // Sorting in ascending order by productName field
+      } else if (sort === 'desc') {
+        sortOption = { productPrice: -1 }; // Sorting in descending order by productName field
+      } else {
+        sortOption = { productPrice: 0 };
+      }
+
+      console.log(sortOption, filter, req.body);
+
+      let products = await product.find(filter).sort(sortOption)
+
+      res.status(200).json({products: products});
+
     }
     
 

@@ -1,3 +1,4 @@
+const { response } = require('express');
 const user = require('../../models/user-model');
 const bcrypt = require('bcrypt');
 
@@ -57,6 +58,14 @@ module.exports = {
             console.log('Error while updating password: '+ err);
         }
     },
+
+
+    checkEmailAddress: (email) => {
+        return new Promise((resolve, reject) => {
+            user.findOne({ email: email}).then((response) => {resolve(response)})
+            .catch(err => console.log('Error while checking email availability', err))
+        })
+    }
 
 
 

@@ -6,6 +6,9 @@ const loginHelper = require('../../helpers/userHelpers/loginHelper');
 // additional variables
 let errMsg = false;
 
+//importing twilio functions
+const otpController = require('./otp-controller');
+
 
 
 let loginController = {
@@ -85,6 +88,72 @@ let loginController = {
     },
 
 
+    /* `otpLogin` is a controller method that handles the request for sending an OTP (One-Time
+    Password) to the user's phone number for login verification. It takes in the request, response,
+    and next middleware function as parameters. Inside the method, it retrieves the phone number
+    from the query parameter of the request and passes it to the `otpLogin` function in the
+    `loginHelper` module. If the phone number is not registered, it sends a JSON response with a
+    message indicating that the phone number is not registered and a `valid` value of `false`. If
+    the phone number is registered, it calls the `sendOtp` function in the `otpController` module to
+    send an OTP to the user's phone number. If the OTP is sent successfully, it sends a JSON
+    response with a `valid` value of `true`. If an error occurs, it logs the error to the console
+    and sends a JSON response with a message indicating that something went wrong and a `valid`
+    value of `false`. */
+    otpLogin: (req, res, next) => {
+        try{
+            let userData = {
+                phone: req.query.phone
+            }
+            loginHelper.otpLogin(userData.phone).then((user) => {
+                if (!user) {
+                    res.status(200).json({message: 'The Phone number is not registered', valid: false});
+                } else {
+                    otpController.sendOtp(userData).then(()=> {
+                        res.status(200).json({valid: true});
+                    }).catch(err => {
+                        console.log('Error in controller of optLogin:', err);
+                        res.status(200).json({valid: false, message: 'Somethings wrong'});
+                    })
+                }
+            })
+        } catch (err) {
+            console.log('Error (outside) in controller of optLogin:', err);
+        }
+    },
+
+
+    verifyOtpLogin: (req, res, next) => {
+        let userData = {
+            phone: req.body.phone,
+            otp: req.body.otp
+        }
+        otpController.verifyOtp(userData).then((result) => {
+            if (result) {
+                loginHelper.loginUserByOtp(userData.phone).then((response) => {
+                    if(response.status){
+                        req.session.user = {
+                            _id: response.user._id,
+                            name: response.user.name,
+                            phone: response.user.phone,
+                            password: response.user.password,
+                            __v: response.user.__v,
+                            email: response.user.email,
+                            blocked: response.user.blocked,
+                            activeStatus: response.user.activeStatus,
+                            cartCount : response.userCart ? response.userCart.items.length : 0
+                        };
+                        req.session.loggedIn = true;
+
+                        res.status(200).json({valid: true});
+                    } else {
+                        res.status(200).json({valid: false, message: 'Somethings wrong in server side'});
+                    }
+                })
+            } else {
+                res.status(200).json({valid: false, message: 'Invalid OTP'});
+            }
+        })
+    }
 
 }
 
