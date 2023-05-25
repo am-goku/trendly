@@ -43,8 +43,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="magnifier"></div>
-
 						</div>
 					</div>
 				</div>
@@ -65,23 +63,25 @@
 						
 						<!--  -->
 						<div class="p-t-33">
-							<div class="flex-w flex-r-m p-b-10">
+							
+							<div class="flex-w flex-r-m p-b-10" {{#if product.size}}{{else}}hidden{{/if}}>
 								<div class="size-203 flex-c-m respon6">
 									Size
 								</div>
 
+								
 								<div class="size-204 respon6-next">
 									<div class="rs1-select2 bor8 bg0">
 										<select class="js-select2" name="time" id="size" onchange="checkProductInCart('{{product._id}}')">
 											{{#each product.size}}
 												<option value="{{this}}">{{this}}</option>
 											{{/each}}
-											
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
 								</div>
 							</div>
+							
 
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-203 flex-c-m respon6">
@@ -124,6 +124,7 @@
 								</div>
 							</div>	
 						</div>
+						<input type="hidden" value="{{product._id}}" id="productId">
 
 						<!--  -->
 						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
@@ -657,9 +658,13 @@
 					quantity: quantity,
 					color: color,
 					size: size
+				},
+				success: function(response) {
+					checkProductInCart(productId);
 				}
 			})
 			//alert('Add to cart', productId)
+			
 		}
 	</script>
 
@@ -668,8 +673,8 @@
 
 {{!-- //scripts to check weather the product is already in cart of not --}}
 <script>
+	
 	function checkProductInCart(productId) {
-		alert('hi')
 		let size = document.getElementById('size').value;
 		let color = document.getElementById('color').value;
 
@@ -682,12 +687,20 @@
 				productId: productId
 			},
 			success: function (response) {
-				alert('hello')
+				console.log(response)
 				if(response.productInCart) {
 					document.getElementById('addToCartBtn').style.display = 'none';
 					document.getElementById('viewCartBtn').style.display = 'block';
+				} else if(!response.productInCart) {
+					document.getElementById('addToCartBtn').style.display = 'block';
+					document.getElementById('viewCartBtn').style.display = 'none';
 				}
 			}
 		})
 	}
+</script>
+
+<script>
+	let productNo = document.getElementById('productId').value;
+	checkProductInCart(productNo);
 </script>

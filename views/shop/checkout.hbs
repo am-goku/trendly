@@ -144,7 +144,6 @@
 <script>
     function updateAddress() {
         let addressId = document.getElementById('address-list').value;
-        alert('huh')
         $.ajax({
             url: '/getAnAddress',
             method: 'POST',
@@ -152,7 +151,6 @@
                 addressId: addressId
             },
             success: (address) => {
-                alert(address)
                 let fullName = address.name.split(' ');
                 let fname = fullName[0], lname = fullName[1]
 
@@ -264,7 +262,6 @@
         let phone = document.getElementById('phone').value.trim();
         let name = fname + ' ' + lname;
 
-        alert('ji')
 
 
         let address = {
@@ -287,7 +284,6 @@
             }
         }
 
-        alert(paymentMethod)
 
 
         $.ajax({

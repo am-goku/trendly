@@ -23,6 +23,7 @@ const cartController = {
                 req.session.user.cart = cart;
                 req.session.user.cartCount += 1;
                 console.log(req.session.user.cartCount,'cart is: ', req.session.user);
+                res.status(200).json(cart);
             })
 
         } else {
@@ -132,6 +133,7 @@ const cartController = {
                 res.status(200).json({productInCart:response})
             } else {
                 console.log('product is available to add to cart');
+                res.status(200).json({productInCart:response})
             }
         })
     }
