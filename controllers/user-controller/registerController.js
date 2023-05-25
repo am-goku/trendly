@@ -2,7 +2,7 @@ const customer = require('../../models/user-model');
 const registerHelper = require('../../helpers/userHelpers/registerHelper');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const otpController = require('./otp-controller');
+const otpController = require('./otpController');
 
 // additional resources:
 let title = 'Register';

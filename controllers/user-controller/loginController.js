@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const loginHelper = require('../../helpers/userHelpers/loginHelper');
+const loginHelper = require('../../helpers/userHelpers/userLoginHelper');
 
 
 // additional variables
 let errMsg = false;
 
 //importing twilio functions
-const otpController = require('./otp-controller');
+const otpController = require('./otpController');
 
 
 

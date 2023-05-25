@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 const customerCollection = require('../../models/user-model');
 
 //controllers
-const loginController = require('../../controllers/user-controller/login-controller');
+const loginController = require('../../controllers/user-controller/loginController');
 
 //models
 const user_address = require('../../models/address-model');

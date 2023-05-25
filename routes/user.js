@@ -1,28 +1,28 @@
 var express = require('express');
-const userHelper = require('../controllers/user-controller/login-controller');
+const userHelper = require('../controllers/user-controller/loginController');
 var router = express.Router();
-const loginController = require('../controllers/user-controller/login-controller');
-const registerConteroller = require('../controllers/user-controller/register-controller');
-const passwordController = require('../controllers/user-controller/password-controller');
-const userController = require('../controllers/user-controller/user-controller');
-const otpController = require('../controllers/user-controller/otp-controller');
-const userMangController = require('../controllers/admin-controller/userMangController');
+const loginController = require('../controllers/user-controller/loginController');
+const registerConteroller = require('../controllers/user-controller/registerController');
+const passwordController = require('../controllers/user-controller/passwordController');
+const userController = require('../controllers/user-controller/userController');
+const otpController = require('../controllers/user-controller/otpController');
+const userMangController = require('../controllers/admin-controller/userManageController');
 const productController = require('../controllers/product-controller/productController');
 // import { otpMethods,abc } from "../controllers/user-controller/otp-controller";
 
 const cartController = require('../controllers/product-controller/cartController');
-const profileManager = require('../controllers/user-controller/profileManagement');
+const profileManager = require('../controllers/user-controller/profileManageController');
 
 //ordersControllers
-const orderManagement = require('../controllers/user-controller/orderManagement');
+const orderManagement = require('../controllers/user-controller/userOrderManageController');
 
 //paymentControllers
-const paymentController = require('../controllers/user-controller/payment-controller');
+const paymentController = require('../controllers/user-controller/paymentController');
 
 //requiring multer middleware
 const upload = require('../middlewares/multer');
 
-const couponManagement = require('../controllers/user-controller/couponManagemet')
+const couponManagement = require('../controllers/user-controller/userCouponController')
 
 
 

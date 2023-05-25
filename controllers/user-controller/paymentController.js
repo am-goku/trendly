@@ -10,9 +10,9 @@ const paymentController = {
     middleware function in the application's request-response cycle. */
     doPayment: (req, res, next) => {
         try{
-            let address = req.body.address;
-            let paymentMethod = req.body.paymentMethod;
-            let userId = req.session.user._id;
+            const address = req.body.address;
+            const paymentMethod = req.body.paymentMethod;
+            const userId = req.session.user._id;
             let coupon = req.session.couponActive ? req.session.couponActive : null;
             console.log('eneterd the payment section');
 

@@ -87,7 +87,7 @@
                             </div>
 
                         </div>
-                        <div class="payment_item active">
+                        <div class="payment_item active" hidden>
                             <div class="radion_btn">
                                 <input type="radio" id="f-option6" name="selector" value="paypal">
                                 <label for="f-option6">Paypal </label>
@@ -252,17 +252,20 @@
 
     function payment() {
 
-        let fname = document.getElementById('name').value.trim();
-        let lname = document.getElementById('lname').value.trim();
-        let houseName = document.getElementById('houseName').value.trim();
-        let state = document.getElementById('state').value.trim();
-        let city = document.getElementById('city').value.trim();
-        let area = document.getElementById('landMark').value.trim();
-        let pincode = document.getElementById('pincode').value.trim();
-        let phone = document.getElementById('phone').value.trim();
-        let name = fname + ' ' + lname;
+        const fname = document.getElementById('name').value.trim();
+        const lname = document.getElementById('lname').value.trim();
+        const houseName = document.getElementById('houseName').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const area = document.getElementById('landMark').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const name = fname + ' ' + lname;
 
-
+        if(fname == '' || lname == '' || houseName == '' || area == '' || pincode == '' || phone == '' || city == '' ||state == ''){
+            alert('Please enter')
+            return;
+        }
 
         let address = {
             name,
@@ -284,8 +287,6 @@
             }
         }
 
-
-
         $.ajax({
             url: '/payment',
             method: 'POST',
@@ -301,8 +302,6 @@
                 } else {
                     razorpayPayment(response);
                 }
-
-
                 // window.location.href = '/confirm'
             }
         })

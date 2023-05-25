@@ -1,4 +1,4 @@
-const couponCollection = require('../../models/coupon');
+const couponCollection = require('../../models/coupon-model');
 
 
 module.exports = {
@@ -64,7 +64,6 @@ module.exports = {
     removeCoupon: (req, res, next) => {
         try {
             let couponId = req.query.couponId;
-            console.log(couponId);
             couponCollection.deleteOne({_id: couponId}).then((response) => {
                 console.log(response, 'fffffff');
                 res.redirect('/admin/coupon');

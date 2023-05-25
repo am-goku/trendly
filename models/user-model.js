@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
-const coupon = require('./coupon');
+const coupon = require('./coupon-model');
 
 
 

@@ -1,5 +1,5 @@
 const userHelper = require('../../helpers/userHelpers/userHelper');
-const userManagementHelper = require('../../helpers/adminHelpers/UserManagementHelper');
+const userManagementHelper = require('../../helpers/adminHelpers/userManageHelper');
 
 // aditional variables
 const admin = true, title = 'Admin Panel';

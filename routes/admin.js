@@ -3,13 +3,13 @@ var router = express.Router();
 const adminController = require('../controllers/admin-controller/adminController')
 const loginController = require('../controllers/admin-controller/loginController');
 const productController = require('../controllers/product-controller/productController');
-const userMangController = require('../controllers/admin-controller/userMangController');
+const userMangController = require('../controllers/admin-controller/userManageController');
 const categoryController = require('../controllers/product-controller/categoryController');
-const productManage = require('../controllers/admin-controller/productManagement');
+const productManage = require('../controllers/admin-controller/productManageController');
 // const upload = require('../controllers/admin-controller/imageController');
-const orderManagement = require('../controllers/admin-controller/orderManagement');
+const orderManagement = require('../controllers/admin-controller/orderManageController');
 
-const couponManagement = require('../controllers/admin-controller/couponManagement')
+const couponManagement = require('../controllers/admin-controller/couponManageController')
 
 const upload = require('../middlewares/multer');
 

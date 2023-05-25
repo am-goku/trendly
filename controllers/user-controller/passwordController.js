@@ -1,7 +1,7 @@
 const session = require('express-session');
 
 const registerHelper = require('../../helpers/userHelpers/registerHelper');
-const otpController = require('./otp-controller');
+const otpController = require('./otpController');
 const user = require('../../models/user-model');
 
 const bcrypt = require('bcrypt');

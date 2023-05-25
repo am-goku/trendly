@@ -3,7 +3,7 @@ const userHelper = require('../../helpers/userHelpers/userHelper');
 const cart = require('../../models/cart-model')
 
 //importing helpers
-const orderHelper = require('../../helpers/userHelpers/orderHelper');
+const orderHelper = require('../../helpers/userHelpers/userOrderHelper');
 
 
 

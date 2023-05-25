@@ -1,6 +1,6 @@
 //importing helpers
 const orderHelper = require('../../helpers/adminHelpers/orderHelper');
-const userHelper = require('../../helpers/userHelpers/orderHelper');
+const userHelper = require('../../helpers/userHelpers/userOrderHelper');
 
 
 module.exports = {

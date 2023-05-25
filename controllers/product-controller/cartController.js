@@ -1,7 +1,7 @@
 const { response } = require('express');
 const cartHelper = require('../../helpers/productHelpers/cartHelper');
 const user = require('../../models/user-model');
-const couponManagement = require('../user-controller/couponManagemet');
+const couponManagement = require('../user-controller/userCouponController');
 
 const cartController = {
 

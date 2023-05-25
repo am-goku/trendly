@@ -2,7 +2,7 @@ const session = require('express-session');
 
 const loginHelper = require('../../helpers/adminHelpers/loginHelper');
 
-const otpservice = require('../user-controller/otp-controller');
+const otpservice = require('../user-controller/otpController');
 
 
 

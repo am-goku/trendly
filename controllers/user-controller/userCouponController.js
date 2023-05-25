@@ -1,4 +1,4 @@
-const couponCollection = require('../../models/coupon');
+const couponCollection = require('../../models/coupon-model');
 const cartCollection = require('../../models/cart-model');
 
 

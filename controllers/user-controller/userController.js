@@ -2,7 +2,7 @@ const session = require('express-session');
 const userHelper = require('../../helpers/userHelpers/userHelper');
 const { response } = require('express');
 
-const loginController = require('./login-controller');
+const loginController = require('./loginController');
 const categoryHelper = require('../../helpers/productHelpers/categoryHelper');
 
 //additional variables
