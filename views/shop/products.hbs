@@ -1,340 +1,350 @@
-	<!-- Product -->
-	<div class="bg0 m-t-23 p-b-140">
-		<div class="container">
-			<div class="flex-w flex-sb-m p-b-52">
-				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-						All Products
-					</button>
+<!-- Product -->
+<div class="bg0 m-t-23 p-b-140">
+	<div class="container">
+		<div class="flex-w flex-sb-m p-b-52">
+			<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+					All Products
+				</button>
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-						Women
-					</button>
+				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
+					Women
+				</button>
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-						Men
-					</button>
+				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
+					Men
+				</button>
 
-					<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-						Shoes
-					</button>
-				</div>
-
-				<div class="flex-w flex-c-m m-tb-10">
-					<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-						<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-						<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						 Filter
-					</div>
-
-					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Search
-					</div>
-				</div>
-
-				<div class="dis-none panel-search w-full p-t-10 p-b-15">
-					<div class="bor8 dis-flex p-l-15">
-						<input oninput="performSearch()" id="searchInput" class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" placeholder="Search">
-						<button  class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-							<i class="zmdi zmdi-search"></i>
-						</button>
-					</div>
-				</div>
-
-
-				<!-- Filter -->
-				<div class="dis-none panel-filter w-full p-t-10">
-					<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-						<div class="filter-col1 p-r-15 p-b-27">
-							<div class="mtext-102 cl2 p-b-15">
-								Sort By
-							</div>
-
-							<ul>
-								<li class="p-b-6 d-flex">
-									<input type="radio" name="sort" value="" onchange="filter()" checked> &nbsp; Default
-								</li>
-
-								<li class="p-b-6 d-flex">
-									<input type="radio" name="sort" value="asc" onchange="filter()" > &nbsp; Price Low to High
-								</li>
-
-								<li class="p-b-6 d-flex">
-									<input type="radio" name="sort" value="desc" onchange="filter()"> &nbsp; Price: High to Low
-								</li>
-							</ul>
-						</div>
-
-						<div class="filter-col2 p-r-15 p-b-27">
-							<div class="mtext-102 cl2 p-b-15">
-								Price
-							</div>
-
-							<ul>
-								<li class="p-b-6">
-									<a onclick="filter('')" class="filter-link stext-106 trans-04 filter-link-active">
-										All
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a onclick="filter('0-1000')" class="filter-link stext-106 trans-04">
-										Below 1000
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a onclick="filter('1000-2000')" class="filter-link stext-106 trans-04">
-										1000 - 2000
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a onclick="filter('2000-3000')" class="filter-link stext-106 trans-04">
-										2000 - 3000
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a onclick="filter('3000-5000')" class="filter-link stext-106 trans-04">
-										3000 - 5000
-									</a>
-								</li>
-
-								<li class="p-b-6">
-									<a onclick="filter('5000')" class="filter-link stext-106 trans-04">
-										5000 and Above
-									</a>
-								</li>
-							</ul>
-						</div>
-
-						<div class="filter-col3 p-r-15 p-b-27">
-							<div class="mtext-102 cl2 p-b-15">
-								Color
-							</div>
-							<ul>
-								<li class="p-b-6 d-flex" style="cursor: pointer;">
-									<input onchange="filter()" type="checkbox" name="color" value="black">
-									Black
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="color" value="blue">
-									Blue
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="color" value="green">
-									Green
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="color" value="white">
-									White
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="color" value="red">
-									Red
-								</li>
-							</ul>
-						</div>
-
-
-						<div class="filter-col4 p-b-27">
-							<div class="mtext-102 cl2 p-b-15">
-								Categories
-							</div>
-							<ul>
-								<li class="p-b-6 d-flex" style="cursor: pointer;">
-									<input onchange="filter()" type="checkbox" name="category" value="men">
-									Men
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="category" value="Women">
-									Women
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="category" value="Kids">
-									Kids
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="category" value="footwears">
-									Footwears
-								</li>
-								<li class="p-b-6 d-flex">
-									<input onchange="filter()" type="checkbox" name="category" value="watch">
-									Watch
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div style="text-align: center; display: none;" id="xxx" >
-				<h5>No Product Found</h5>
-			</div>
-			<div class="row isotope-grid">
-				{{#each products}}
-						<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-							<!-- Block2 -->
-							<div class="block2">
-								<div class="block2-pic hov-img0">
-									<img src="/uploads/{{this.images}}" alt="IMG-PRODUCT">
-
-									<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-										Quick View
-									</a>
-								</div>
-
-								<div class="block2-txt flex-w flex-t p-t-14">
-									<div class="block2-txt-child1 flex-col-l ">
-										<a href="/products/{{this._id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-											{{this.productName}}
-										</a>
-
-										<span class="stext-105 cl3">
-											₹ {{this.productPrice}}
-										</span>
-									</div>
-
-									<div class="block2-txt-child2 flex-r p-t-3">
-										<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-											<img class="icon-heart1 dis-block trans-04" src="/images2/icons/icon-heart-01.png" alt="ICON">
-											<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images2/icons/icon-heart-02.png" alt="ICON">
-										</a>
-									</div>
-
-								</div>
-							</div>
-						</div>
-				{{/each}}
+				<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
+					Shoes
+				</button>
 			</div>
 
-			<div class="flex-c-m flex-w w-full p-t-45">
-				<a href="/products?page={{less currentPage 1}}"
-					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" {{#unless (nq currentPage 1)}}
-					style="pointer-events: none; display: none; opacity: 0.5;" {{/unless}}>
-					Previous
-				</a>
-				{{#if (lt currentPage totalPages)}}
-				<a href="/products?page={{add currentPage 1}}"
-					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-					Next
-				</a>
-				{{else}}
-				<a href="/products?page={{currentPage}}" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04"
-					style="pointer-events: none; opacity: 0.5;">
-					Next
-				</a>
-				{{/if}}
+			<div class="flex-w flex-c-m m-tb-10">
+				<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+					<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+					<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+					Filter
+				</div>
+
+				<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+					<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+					<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+					Search
+				</div>
+			</div>
+
+			<div class="dis-none panel-search w-full p-t-10 p-b-15">
+				<div class="bor8 dis-flex p-l-15">
+					<input oninput="performSearch()" id="searchInput" class="mtext-107 cl2 size-114 plh2 p-r-15"
+						type="text" placeholder="Search">
+					<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+				</div>
+			</div>
+
+
+			<!-- Filter -->
+			<div class="dis-none panel-filter w-full p-t-10">
+				<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+					<div class="filter-col1 p-r-15 p-b-27">
+						<div class="mtext-102 cl2 p-b-15">
+							Sort By
+						</div>
+
+						<ul>
+							<li class="p-b-6 d-flex">
+								<input type="radio" name="sort" value="" onchange="filter()" checked> &nbsp; Default
+							</li>
+
+							<li class="p-b-6 d-flex">
+								<input type="radio" name="sort" value="asc" onchange="filter()"> &nbsp; Price Low to
+								High
+							</li>
+
+							<li class="p-b-6 d-flex">
+								<input type="radio" name="sort" value="desc" onchange="filter()"> &nbsp; Price: High to
+								Low
+							</li>
+						</ul>
+					</div>
+
+					<div class="filter-col2 p-r-15 p-b-27">
+						<div class="mtext-102 cl2 p-b-15">
+							Price
+						</div>
+
+						<ul>
+							<li class="p-b-6">
+								<a onclick="filter('', '')" class="filter-link stext-106 trans-04 filter-link-active">
+									All
+								</a>
+							</li>
+
+							<li class="p-b-6">
+								<a onclick="filter('', '0-1000')" class="filter-link stext-106 trans-04">
+									Below 1000
+								</a>
+							</li>
+
+							<li class="p-b-6">
+								<a onclick="filter('', '1000-2000')" class="filter-link stext-106 trans-04">
+									1000 - 2000
+								</a>
+							</li>
+
+							<li class="p-b-6">
+								<a onclick="filter('', '2000-3000')" class="filter-link stext-106 trans-04">
+									2000 - 3000
+								</a>
+							</li>
+
+							<li class="p-b-6">
+								<a onclick="filter('', '3000-5000')" class="filter-link stext-106 trans-04">
+									3000 - 5000
+								</a>
+							</li>
+
+							<li class="p-b-6">
+								<a onclick="filter('', '5000')" class="filter-link stext-106 trans-04">
+									5000 and Above
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="filter-col3 p-r-15 p-b-27">
+						<div class="mtext-102 cl2 p-b-15">
+							Color
+						</div>
+						<ul>
+							<li class="p-b-6 d-flex" style="cursor: pointer;">
+								<input onchange="filter()" type="checkbox" name="color" value="black">
+								Black
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="color" value="blue">
+								Blue
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="color" value="green">
+								Green
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="color" value="white">
+								White
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="color" value="red">
+								Red
+							</li>
+						</ul>
+					</div>
+
+
+					<div class="filter-col4 p-b-27">
+						<div class="mtext-102 cl2 p-b-15">
+							Categories
+						</div>
+						<ul>
+							<li class="p-b-6 d-flex" style="cursor: pointer;">
+								<input onchange="filter()" type="checkbox" name="category" value="men">
+								Men
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="category" value="Women">
+								Women
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="category" value="Kids">
+								Kids
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="category" value="footwears">
+								Footwears
+							</li>
+							<li class="p-b-6 d-flex">
+								<input onchange="filter()" type="checkbox" name="category" value="watch">
+								Watch
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
+		<div style="text-align: center; display: none;" id="xxx">
+			<h5>No Product Found</h5>
+		</div>
+		<div class="row isotope-grid">
+			{{#each products}}
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+				<!-- Block2 -->
+				<div class="block2">
+						
+					<div class="block2-pic hov-img0">
+						
+						<img src="/uploads/1684136138222_product-14.jpg.jpg" alt="PRODUCT_IMAGE">
+												
+						<a href="#"
+							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+							Quick View
+						</a>
+					</div>
+
+					<div class="block2-txt flex-w flex-t p-t-14">
+						<div class="block2-txt-child1 flex-col-l ">
+							<a href="/products/{{this._id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								{{this.productName}}
+							</a>
+
+							<span class="stext-105 cl3">
+								₹ {{this.productPrice}}
+							</span>
+						</div>
+
+						<div class="block2-txt-child2 flex-r p-t-3">
+							<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+								<img class="icon-heart1 dis-block trans-04" src="/images2/icons/icon-heart-01.png"
+									alt="ICON">
+								<img class="icon-heart2 dis-block trans-04 ab-t-l"
+									src="/images2/icons/icon-heart-02.png" alt="ICON">
+							</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+
+		<div class="flex-c-m flex-w w-full p-t-45">
+			<a href="/products?page={{less currentPage 1}}"
+				class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" {{#unless (nq currentPage
+				1)}} style="pointer-events: none; display: none; opacity: 0.5;" {{/unless}}>
+				Previous
+			</a>
+			{{#if (lt currentPage totalPages)}}
+			<a href="/products?page={{add currentPage 1}}"
+				class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+				Next
+			</a>
+			{{else}}
+			<a href="/products?page={{currentPage}}"
+				class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04"
+				style="pointer-events: none; opacity: 0.5;">
+				Next
+			</a>
+			{{/if}}
+		</div>
 	</div>
-		
+</div>
 
 
-<!--===============================================================================================-->	
-	<script src="/vendor2/jquery/jquery-3.2.1.min.js"></script>
+
 <!--===============================================================================================-->
-	<script src="/vendor2/animsition//js2/animsition.min.js"></script>
+<script src="/vendor2/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-	<script src="/vendor2/bootstrap//js2/popper.js"></script>
-	<script src="/vendor2/bootstrap//js2/bootstrap.min.js"></script>
+<script src="/vendor2/animsition//js2/animsition.min.js"></script>
 <!--===============================================================================================-->
-	<script src="/vendor2/select2/select2.min.js"></script>
-	<script>
-		$(".js-select2").each(function(){
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
+<script src="/vendor2/bootstrap//js2/popper.js"></script>
+<script src="/vendor2/bootstrap//js2/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor2/select2/select2.min.js"></script>
+<script>
+	$(".js-select2").each(function () {
+		$(this).select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $(this).next('.dropDownSelect2')
+		});
+	})
+</script>
+<!--===============================================================================================-->
+<script src="/vendor2/daterangepicker/moment.min.js"></script>
+<script src="/vendor2/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor2/slick/slick.min.js"></script>
+<script src="/js2/slick-custom.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor2/parallax100/parallax100.js"></script>
+<script>
+	$('.parallax100').parallax100();
+</script>
+<!--===============================================================================================-->
+<script src="/vendor2/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<script>
+	$('.gallery-lb').each(function () { // the containers for all your galleries
+		$(this).magnificPopup({
+			delegate: 'a', // the selector for gallery item
+			type: 'image',
+			gallery: {
+				enabled: true
+			},
+			mainClass: 'mfp-fade'
+		});
+	});
+</script>
+<!--===============================================================================================-->
+<script src="/vendor2/isotope/isotope.pkgd.min.js"></script>
+<!--===============================================================================================-->
+<script src="/vendor2/sweetalert/sweetalert.min.js"></script>
+<script>
+	$('.js-addwish-b2, .js-addwish-detail').on('click', function (e) {
+		e.preventDefault();
+	});
+
+	$('.js-addwish-b2').each(function () {
+		var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+		$(this).on('click', function () {
+			swal(nameProduct, "is added to wishlist !", "success");
+
+			$(this).addClass('js-addedwish-b2');
+			$(this).off('click');
+		});
+	});
+
+	$('.js-addwish-detail').each(function () {
+		var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+		$(this).on('click', function () {
+			swal(nameProduct, "is added to wishlist !", "success");
+
+			$(this).addClass('js-addedwish-detail');
+			$(this).off('click');
+		});
+	});
+
+	/*---------------------------------------------*/
+
+	$('.js-addcart-detail').each(function () {
+		var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+		$(this).on('click', function () {
+			swal(nameProduct, "is added to cart !", "success");
+		});
+	});
+
+</script>
+<!--===============================================================================================-->
+<script>
+	$('.js-pscroll').each(function () {
+		$(this).css('position', 'relative');
+		$(this).css('overflow', 'hidden');
+		var ps = new PerfectScrollbar(this, {
+			wheelSpeed: 1,
+			scrollingThreshold: 1000,
+			wheelPropagation: false,
+		});
+
+		$(window).on('resize', function () {
+			ps.update();
 		})
-	</script>
-<!--===============================================================================================-->
-	<script src="/vendor2/daterangepicker/moment.min.js"></script>
-	<script src="/vendor2/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="/vendor2/slick/slick.min.js"></script>
-	<script src="/js2/slick-custom.js"></script>
-<!--===============================================================================================-->
-	<script src="/vendor2/parallax100/parallax100.js"></script>
-	<script>
-        $('.parallax100').parallax100();
-	</script>
-<!--===============================================================================================-->
-	<script src="/vendor2/MagnificPopup/jquery.magnific-popup.min.js"></script>
-	<script>
-		$('.gallery-lb').each(function() { // the containers for all your galleries
-			$(this).magnificPopup({
-		        delegate: 'a', // the selector for gallery item
-		        type: 'image',
-		        gallery: {
-		        	enabled:true
-		        },
-		        mainClass: 'mfp-fade'
-		    });
-		});
-	</script>
-<!--===============================================================================================-->
-	<script src="/vendor2/isotope/isotope.pkgd.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/vendor2/sweetalert/sweetalert.min.js"></script>
-	<script>
-		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
-			e.preventDefault();
-		});
-
-		$('.js-addwish-b2').each(function(){
-			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-b2');
-				$(this).off('click');
-			});
-		});
-
-		$('.js-addwish-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-
-				$(this).addClass('js-addedwish-detail');
-				$(this).off('click');
-			});
-		});
-
-		/*---------------------------------------------*/
-
-		$('.js-addcart-detail').each(function(){
-			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
-	
-	</script>
-<!--===============================================================================================-->
-	<script>
-		$('.js-pscroll').each(function(){
-			$(this).css('position','relative');
-			$(this).css('overflow','hidden');
-			var ps = new PerfectScrollbar(this, {
-				wheelSpeed: 1,
-				scrollingThreshold: 1000,
-				wheelPropagation: false,
-			});
-
-			$(window).on('resize', function(){
-				ps.update();
-			})
-		});
-	</script>
+	});
+</script>
 <!--===============================================================================================-->
 
-{{!-- <script>
-	function hi(){
+{{!--
+<script>
+	function hi() {
 		alert("hi");
 	}
 </script> --}}
@@ -356,7 +366,7 @@
 			block2Pic.classList.add('block2-pic', 'hov-img0');
 
 			var image = document.createElement('img');
-			image.setAttribute('src', '/uploads/' + result.images);
+			image.setAttribute('src', '/uploads/' + result.images[0]);
 			image.setAttribute('alt', 'IMG-PRODUCT');
 			block2Pic.appendChild(image);
 
@@ -417,6 +427,8 @@
 
 </script>
 
+
+{{!-- searching --}}
 <script>
 	function performSearch() {
 		var keyword = document.getElementById('searchInput').value.trim();
@@ -433,7 +445,7 @@
 				// ...
 
 				let searchResults = response.products;
-				if(searchResults.length == 0){
+				if (searchResults.length == 0) {
 					document.getElementById('xxx').style.display = 'block';
 					updateUI(searchResults);
 				} else {
@@ -441,7 +453,7 @@
 					updateUI(searchResults);
 				}
 
-				
+
 			},
 			error: function (xhr, status, error) {
 				// Handle the error case
@@ -453,14 +465,30 @@
 </script>
 
 
-{{!-- <script>
+<script>
+	function pagination(currentPage, totalPages) {
+		if (currentPage < totalPages - 1) {
+			document.getElementById('nxt').style.display = 'block';
+		} else {
+			document.getElementById('nxtnxt').style.display = 'block';
+		}
+
+		if (currentPage <= 1) {
+			document.getElementById('prev').setAttribute('style', "pointer-events: none; display: none; opacity: 0.5;");
+		}
+	}
+</script>
+
+
+{{!--
+<script>
 	let color = []
 	function filter() {
-		
+
 
 		let colorCheckBox = document.getElementsByName("color");
-		for(let i=0; i<colorCheckBox.length; i++) {
-			if(colorCheckBox.checked){
+		for (let i = 0; i < colorCheckBox.length; i++) {
+			if (colorCheckBox.checked) {
 				color.push(colorCheckBox[i].value);
 			}
 		}
@@ -473,9 +501,11 @@
 	var color = []; // Array to store selected checkbox values
 	var category = [];
 	var priceRange = [];
+	var totalPages = 0;
+	var currentPage = 1;
 
 
-	function filter(price = '') {
+	function filter(page = '', price = '') {
 		//color filter
 		var checkboxes = document.querySelectorAll('input[name="color"]:checked');
 		color = Array.from(checkboxes).map(checkbox => checkbox.value);
@@ -487,6 +517,10 @@
 		priceRange = [+min, +max];
 		//sorting
 		let sort = document.querySelector('input[name="sort"]:checked').value;
+		//pagination
+		if (page) {
+			currentPage = parseInt(page);
+		}
 
 		$.ajax({
 			url: '/filterProducts',
@@ -495,11 +529,16 @@
 				color: JSON.stringify(color),
 				category: JSON.stringify(category),
 				priceRange: JSON.stringify(priceRange),
-				sort: sort
+				sort: sort,
+				currentPage: currentPage
 			},
 			success: function (response) {
 				if (response) {
 					let filteredProducts = response.products;
+					currentPage = response.currentPage;
+					totalPages = response.totalPages
+					//pagination(currentPage, totalPages);
+
 					updateUI(filteredProducts)
 				}
 			}

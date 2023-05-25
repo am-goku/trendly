@@ -44,7 +44,7 @@ module.exports = {
     postEditProduct: (req, res, next) => {
         let id = req.params.id;
         let productDetails = req.body;
-        let image = req.file;
+        let image = req.files;
 
 
         productHelper.updateProductById(id, productDetails, image).then((response)=> {

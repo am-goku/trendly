@@ -29,7 +29,7 @@ module.exports = {
     and logged to the console. */
     postAddProduct: async (req, res) => {
       let productDetails = req.body;
-      let image = req.file;
+      let image = req.files;
       console.log(image);
 
       try{
@@ -99,7 +99,11 @@ module.exports = {
     findProduct: (req, res, next) => {
       let id = req.params.id;
       productHelper.findProductById(id).then((product) => {
-        res.render('shop/singleProduct', {product, admin:false, customer:req.session.user})
+        let image1 = product.images[0];
+        let image2 = product.images[1];
+        let image3 = product.images[2];
+
+        res.render('shop/singleProduct', {product, admin:false, customer:req.session.user, image1:image1, image2:image2, image3:image3})
         console.log(product.images);
       })
     },
@@ -149,6 +153,9 @@ module.exports = {
       let category = JSON.parse(req.body.category);
       let priceRange = JSON.parse(req.body.priceRange);
       let sort = req.body.sort;
+
+      let currentPage = req.body.currentPage || 1;
+      let itemsPerPage = 5;
       
       
       let filter = {};
@@ -178,10 +185,21 @@ module.exports = {
 
       console.log(sortOption, filter, req.body);
 
-      let products = await product.find(filter).sort(sortOption)
+      let products = await product.find(filter).sort(sortOption).skip((currentPage - 1) * itemsPerPage).limit(itemsPerPage)
+      let totalCount = products.length;
+      const totalPages = Math.ceil(totalCount / itemsPerPage);
+        
+      res.status(200).json({products: products, totalPages: totalPages, currentPage: currentPage});
 
-      res.status(200).json({products: products});
+    },
 
+
+
+
+    showAllProduct: async(req, res) => {
+      await product.find({}).lean().exec().then((products) => {
+        res.render('shop/products', {customer: req.session.user, product: products})
+      })
     }
     
 

@@ -26,6 +26,10 @@ handlebars.registerHelper('add', function (a, b) {
 handlebars.registerHelper('less', function (a, b) {
   return a - b;
 });
+handlebars.registerHelper('break', function (options) {
+  // Do nothing and return an empty string
+  return '';
+});
 // handlebars.registerPartial('myPartial', '<div>{{name}}</div>');
 
 
@@ -107,7 +111,7 @@ app.use(multer({
   dest: 'image',
   storage: fileStorage,
   limits: { fileSize: 1024 * 1024 } // 1MB
-}).array('image'));
+}).array('image',3));
 
 
 // catch 404 and forward to error handler

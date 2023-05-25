@@ -10,8 +10,9 @@ module.exports = {
     `productDetails` which contains the details of the product such as name, description, price,
     discount, stock, category, color, and size; and `image` which contains the image file of the
     product. */
-    addProduct: async (productDetails, image) => {
+    addProduct: async (productDetails, images) => {
         try {
+            let imageFiles = images.map(image => image.filename);
             const newProduct = new product({
                 productName: productDetails.name,
                 description: productDetails.description,
@@ -19,7 +20,7 @@ module.exports = {
                 discountPercentage: productDetails.discount,
                 stock: productDetails.stock,
                 category: productDetails.categoryId,
-                images: image.filename,
+                images: imageFiles,
                 color: productDetails.color,
                 size: productDetails.size,
             });
@@ -201,10 +202,13 @@ module.exports = {
     `image`. It updates the product with the given `id` in the database with the new
     `productDetails` and `image`. It returns a Promise that resolves with the updated product
     document. */
-    updateProductById: (id, productDetails, image) => {
+    updateProductById: (id, productDetails, images) => {
         return new Promise(async (resolve, Reject) => {
-            console.log(id, productDetails,image);
+        
         try{
+          let imageFiles;
+          if(images){
+            imageFiles = images.map(image => image.filename)
             const updatedProduct = await product.updateOne({_id: new ObjectId(id)}, {$set:{
                 productName: productDetails.name,
                 description: productDetails.description,
@@ -212,10 +216,20 @@ module.exports = {
                 discountPercentage: productDetails.discount,
                 stock: productDetails.stock,
                 category: productDetails.categoryId,
-                images: image.filename,
+                images: imageFiles,
             }});
-
             resolve(updatedProduct);
+          } else {
+            const updatedProduct = await product.updateOne({_id: new ObjectId(id)}, {$set:{
+              productName: productDetails.name,
+              description: productDetails.description,
+              productPrice: productDetails.price,
+              discountPercentage: productDetails.discount,
+              stock: productDetails.stock,
+              category: productDetails.categoryId,
+            }});
+            resolve(updatedProduct);
+          }
         } catch(error){
             console.log(error);
         }

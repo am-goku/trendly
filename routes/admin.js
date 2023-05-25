@@ -58,14 +58,14 @@ router.post('/resetPassword', loginController.resetPassword);
 //Products
 router.get('/addproducts', productController.getAddProduct);
 
-router.post('/addProducts', upload.single('productImage'), productController.postAddProduct );
+router.post('/addProducts', upload.array('productImage'), productController.postAddProduct );
 
 
 router.get('/products', adminController.loginCheck, productManage.showProducts );
 
 router.get('/products/edit/:id', adminController.loginCheck, productManage.getEditProduct );
 
-router.post('/products/edit/:id', upload.single('productImage'), productManage.postEditProduct );
+router.post('/products/edit/:id', upload.array('productImage'), productManage.postEditProduct );
 
 
 
