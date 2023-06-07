@@ -1,0 +1,21 @@
+pagination sort filter should be interconnected
+zoom product
+confirmation for cart item removing
+no need for serial no sort
+toaster messages for every server actions
+
+Unused variables
+const let issues console.logs to be moved
+User block not working
+ui break (css tooltip,css ellipses)
+ajax implmentation missing
+Payment not working - 
+validaitons not done
+
+
+
+Banner management - not done
+Wishlist - not done
+Sales report in admin side (export to pdf, excel).
+Offer module(product offer, category offer, coupen code).
+Return option for delivered product."
