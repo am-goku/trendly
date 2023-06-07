@@ -1,3 +1,4 @@
+//importing helpers
 const couponCollection = require('../../models/coupon-model');
 
 
@@ -35,7 +36,7 @@ module.exports = {
     database operation to complete before continuing. */
     addCoupon: async (req, res, next)=> {
         try{
-            let coupon = req.body;
+            const coupon = req.body;
 
             await couponCollection.create({ 
                 code: coupon.code, 
@@ -63,7 +64,7 @@ module.exports = {
     page. If there is an error, it logs the error and redirects the user to the `/admin` page. */
     removeCoupon: (req, res, next) => {
         try {
-            let couponId = req.query.couponId;
+            const couponId = req.query.couponId;
             couponCollection.deleteOne({_id: couponId}).then((response) => {
                 console.log(response, 'fffffff');
                 res.redirect('/admin/coupon');

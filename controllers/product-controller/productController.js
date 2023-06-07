@@ -155,7 +155,7 @@ module.exports = {
       let sort = req.body.sort;
 
       let currentPage = req.body.currentPage || 1;
-      let itemsPerPage = 5;
+      let itemsPerPage = '';
       
       
       let filter = {};

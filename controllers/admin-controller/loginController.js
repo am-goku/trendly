@@ -1,7 +1,8 @@
-const session = require('express-session');
 
+//importing helpers
 const loginHelper = require('../../helpers/adminHelpers/loginHelper');
 
+//importing constrollers
 const otpservice = require('../user-controller/otpController');
 
 
@@ -15,7 +16,7 @@ const adminCredentials = {
 //additional variables
 const title = 'Admin Panel';
 let errMsg = false;
-let admin = true;
+const admin = true;
 
 
 module.exports = {

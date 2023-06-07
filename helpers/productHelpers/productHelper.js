@@ -110,7 +110,7 @@ module.exports = {
     //   });
     // },
     
-    showFilteredProducts: (currentPage, itemsPerPage, filterOptions) => {
+      showFilteredProducts: (currentPage, itemsPerPage, filterOptions) => {
       return new Promise((resolve, reject) => {
         let query = product.find().populate('category').lean();
         const { sortBy, priceRange, color, category } = filterOptions;

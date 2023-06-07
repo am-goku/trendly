@@ -176,6 +176,7 @@
 		<div style="text-align: center; display: none;" id="xxx">
 			<h5>No Product Found</h5>
 		</div>
+		<div class="container" style="overflow: auto;">
 		<div class="row isotope-grid">
 			{{#each products}}
 			<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
@@ -217,6 +218,7 @@
 			</div>
 			{{/each}}
 		</div>
+		</div>
 
 		<div class="flex-c-m flex-w w-full p-t-45">
 			<a href="/products?page={{less currentPage 1}}"
@@ -239,6 +241,33 @@
 		</div>
 	</div>
 </div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" "tabindex=-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 
@@ -342,12 +371,6 @@
 </script>
 <!--===============================================================================================-->
 
-{{!--
-<script>
-	function hi() {
-		alert("hi");
-	}
-</script> --}}
 
 
 <script>
@@ -479,23 +502,6 @@
 	}
 </script>
 
-
-{{!--
-<script>
-	let color = []
-	function filter() {
-
-
-		let colorCheckBox = document.getElementsByName("color");
-		for (let i = 0; i < colorCheckBox.length; i++) {
-			if (colorCheckBox.checked) {
-				color.push(colorCheckBox[i].value);
-			}
-		}
-
-		console.log(color)
-	}
-</script> --}}
 
 <script>
 	var color = []; // Array to store selected checkbox values

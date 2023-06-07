@@ -1,15 +1,14 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var hbs = require('express-handlebars');
-var session = require('express-session');
-var mongoose = require('mongoose');
-var db = require('./config/connection');
-var multer = require('multer');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const hbs = require('express-handlebars');
+const session = require('express-session');
+const db = require('./config/connection');
+const multer = require('multer');
+const  handlebars = require('handlebars');
 
-var handlebars = require('handlebars');
 handlebars.registerHelper('eq', function (a, b) {
   return a === b;
 });
@@ -58,10 +57,10 @@ const fileStorage = multer.diskStorage({
 
 
 
-var userRouter = require('./routes/user');
-var adminRouter = require('./routes/admin');
+const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
 
-var app = express();
+const app = express();
 
 // const upload = multer({dest: 'uploads/'});
 

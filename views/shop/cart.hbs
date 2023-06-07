@@ -34,7 +34,7 @@
                             <tr class="table_row">
                                 <td class="column-1">
                                     <div class="how-itemcart1">
-                                        <img src="/uploads/{{this.product.images}}" alt="IMG">
+                                        <img {{#each this.product.images}} src="/uploads/{{this}}" {{/each}} alt="IMG">
                                     </div>
                                 </td>
                                 <td class="column-2"><a style="color: black;"

@@ -1,12 +1,9 @@
-const session = require('express-session');
+//importing helpers
 const userHelper = require('../../helpers/userHelpers/userHelper');
-const customerCollection = require('../../models/user-model');
-
 
 //additional variables
 const title = 'Admin Panel';
-let errMsg = false;
-let admin = true;
+const admin = true;
 
 module.exports = {
 

@@ -1,16 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+//importing controllers
 const adminController = require('../controllers/admin-controller/adminController')
 const loginController = require('../controllers/admin-controller/loginController');
 const productController = require('../controllers/product-controller/productController');
 const userMangController = require('../controllers/admin-controller/userManageController');
 const categoryController = require('../controllers/product-controller/categoryController');
 const productManage = require('../controllers/admin-controller/productManageController');
-// const upload = require('../controllers/admin-controller/imageController');
 const orderManagement = require('../controllers/admin-controller/orderManageController');
-
 const couponManagement = require('../controllers/admin-controller/couponManageController')
 
+//importing middlewares
 const upload = require('../middlewares/multer');
 
 

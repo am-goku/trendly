@@ -34,7 +34,7 @@
 
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit" class="button button-login w-100">Submit</button>
-                                <a id="resendOtp" onclick="resendOTP()">Resend OTP</a>
+                                <a id="resendOtp" onclick="resendOTP()" style="cursor: pointer;">Resend OTP</a>
                             </div>
                         </form>
                 </div>
@@ -44,6 +44,32 @@
 </section>
 <!--================End Login Box Area =================-->
 
+
+
+
+<script>
+
+    function setTime(t) {
+        return new Promise ((resolve, reject) => {
+            await setTimeout((
+                document.getElementById('timer').innerHTML = t;
+            ),1000).then((res) => resolve(res));
+        })
+    }
+
+
+
+    function timer() {
+        let i = 10;
+        while (i>0) {
+            await setTime(i).then((res) => {
+                i++;
+            })
+        }
+        
+    }; timer();
+    
+</script>
 
 
 
