@@ -1,5 +1,15 @@
 <main id="main" class="main">
 
+  <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+        </nav>
+  </div>
+
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">ADD PRODUCT</h5>
@@ -8,7 +18,7 @@
       <form class="row g-3" action="/admin/addProducts" method="post" enctype="multipart/form-data">
         <div class="col-md-12">
           <label for="name" class="form-label">Product Title</label>
-          <input type="text" class="form-control" id="name" name="name" maxlength="40" required>
+          <input type="text" class="form-control" id="name" name="name" maxlength="200" required>
         </div>
 
         <div class="col-md-12">

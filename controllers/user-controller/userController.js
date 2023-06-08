@@ -41,7 +41,13 @@ module.exports = {
     login page with a `blocked` parameter set to `true`. If the phone number is not blocked, it
     calls the `next()` function to pass control to the next middleware function. */
     checkBlockedStatus:  (req, res, next) => {
-        let phone = req.body.phone;
+        let phone;
+        if(req.session.user){
+            phone = req.session.user.phone;
+        } else {
+            phone = req.body.phone;
+        }
+
          userHelper.findBlockStatus(phone).then((response) => {
             if(response){
                 if (response.blocked) {

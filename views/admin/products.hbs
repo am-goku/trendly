@@ -1,3 +1,11 @@
+<style>
+    #dataTable td{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+</style>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -16,9 +24,9 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Customers</h5>
+                        <h5 class="card-title">PRODUCTS</h5>
 
-                        <table class="table datatable">
+                        <table class="table datatable" id="dataTable">
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
@@ -33,7 +41,7 @@
                                 {{#each products}}
                                 <tr>
                                     <th scope="row" class="index"></th>
-                                    <td> {{this.productName}} </td>
+                                    <td style="width: 100px; text-overflow: ellipsis;">{{this.productName}}</td>
 
                                     <td> {{this.category.name}} </td>
 
@@ -65,6 +73,8 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+
 
 
 <script>
@@ -75,24 +85,4 @@
     }
 </script>
 
-{{!--
-<script>
-    function block() {
-        console.log('hiiiiiiiiiiiiiiii')
-        $.ajax({
-            method: "POST",
-            url: '/admin/customers/block',
-            data: {
-                id: this._id
-            }
-        },
-            console.log(data)).done(function (response) {
-                // handle success response here
-                console.log(response);
-            }).fail(function (error) {
-                // handle error response here
-                console.log(error);
-            });
-    }
 
-</script> --}}

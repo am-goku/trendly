@@ -6,7 +6,6 @@ toaster messages for every server actions
 
 Unused variables
 const let issues console.logs to be moved
-User block not working
 ui break (css tooltip,css ellipses)
 ajax implmentation missing
 Payment not working - 

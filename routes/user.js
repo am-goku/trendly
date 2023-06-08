@@ -91,9 +91,9 @@ router.post('/filterProducts', productController.filterProducts )
 ///////////////// CART MANAGEMENT SECTION //////////////////////////////////
 
 //Routes to SHOW and ADD products to cart
-router.get('/cart', userController.userLoginStatus, cartController.showCart)
+router.get('/cart', userController.userLoginStatus, userController.checkBlockedStatus, cartController.showCart)
 
-router.post('/addtoCart', userController.userLoginStatus, cartController.addtoCart);
+router.post('/addtoCart', userController.userLoginStatus, userController.checkBlockedStatus, cartController.addtoCart);
 
 
 // Function to ADD and REDUCE to the quantity of the products by one i database.
@@ -114,9 +114,9 @@ router.post('/checkProductInCart', cartController.checkProduct);
 
 //profile of customers
 
-router.get('/profile', userController.userLoginStatus, userController.getProfile);
+router.get('/profile', userController.userLoginStatus, userController.checkBlockedStatus, userController.getProfile);
 
-router.post('/updateProfile', upload.single('userImage'), profileManager.updateProfile );
+router.post('/updateProfile', userController.userLoginStatus, userController.checkBlockedStatus, upload.single('userImage'), profileManager.updateProfile );
 
 router.post('/check-password', passwordController.checkPassword )
 
@@ -128,19 +128,19 @@ router.post('/updatePassword', passwordController.changePassword)
 
 //Address management
 
-router.post('/addAddress', profileManager.addAddress);
+router.post('/addAddress', userController.userLoginStatus, userController.checkBlockedStatus, profileManager.addAddress);
 
-router.get('/deleteAddress/:id', profileManager.deleteAddress);
+router.get('/deleteAddress/:id', userController.userLoginStatus, userController.checkBlockedStatus, profileManager.deleteAddress);
 
-router.post('/getAnAddress', profileManager.getAnAddrress);
+router.post('/getAnAddress',userController.userLoginStatus, userController.checkBlockedStatus, profileManager.getAnAddrress);
 
 
 
 //checkout section
 
-router.get('/checkout', userController.userLoginStatus, orderManagement.showAddress);
+router.get('/checkout', userController.userLoginStatus,userController.checkBlockedStatus, orderManagement.showAddress);
 
-router.get('/orders', userController.userLoginStatus, orderManagement.showOrders);
+router.get('/orders', userController.userLoginStatus,userController.checkBlockedStatus, orderManagement.showOrders);
 
 
 router.post('/verifyPayment', (req, res) => {
@@ -153,11 +153,11 @@ router.post('/rejectPayment', (req, res) => {
 
 
 //order management section
-router.get('/order/details', orderManagement.getAnOrder);
+router.get('/order/details', userController.userLoginStatus, userController.checkBlockedStatus, orderManagement.getAnOrder);
 
 
-router.post('/cancelOrder', orderManagement.cancelOrder);
-router.post('/returnOrder', orderManagement.returnOrder)
+router.post('/cancelOrder', userController.userLoginStatus, userController.checkBlockedStatus, orderManagement.cancelOrder);
+router.post('/returnOrder', userController.userLoginStatus, userController.checkBlockedStatus, orderManagement.returnOrder)
 
 
 
@@ -194,9 +194,9 @@ router.get('/lol', (req, res)=> {
     res.render('shop/orderDetails');
 })
 
-router.post('/payment', paymentController.doPayment)
+router.post('/payment', userController.userLoginStatus, userController.checkBlockedStatus, paymentController.doPayment)
 
-router.get('/confirm', userController.userLoginStatus, (req, res)=> {
+router.get('/confirm', userController.userLoginStatus,userController.checkBlockedStatus, (req, res)=> {
     res.render('shop/confirmation', {order: req.session.lastOrder, customer: req.session.user});
 })
 

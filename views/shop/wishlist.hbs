@@ -1,0 +1,209 @@
+    <div class="container-fluid pt-3">
+
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+            aria-label="breadcrumb" class="pl-4 pr-5 pb-3 ml-1">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Whishlist</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            {{#if wishlist}}{{else}}
+                            <tr class="table_head">
+                                <th class="column-1">Product</th>
+                                <th class="column-2"></th>
+                                {{!-- <th class="column-2">Varient</th> --}}
+                                <th class="column-3">Price</th>
+                                {{!-- <th class="column-4">Quantity</th> --}}
+                                {{!-- <th class="column-5">Total</th> --}}
+                                <th class="column-5">Option</th>
+                            </tr>
+                            {{/if}}
+
+                            {{#each products}}
+                            <tr class="table_row">
+                                <td class="column-1">
+                                    <div class="how-itemcart1">
+                                        <img {{#each this.product.images}} src="/uploads/{{this}}" {{/each}} alt="IMG">
+                                    </div>
+                                </td>
+                                <td class="column-2"><a style="color: black;"
+                                        href="/products/{{this.product._id}}">{{this.product.productName}}</a></td>
+                                {{!-- <td class="column-2">{{this.size}} , {{this.color}}</td> --}}
+                                <td class="column-3">₹ <span id="price">{{this.product.productPrice}}</span></td>
+                                {{!-- <td class="column-4">
+                                    <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
+                                            onclick="return minusQuantity('{{this._id}}', '{{this.product._id}}' )">
+                                            <i class="fs-16 zmdi zmdi-minus"></i>
+                                        </div>
+
+                                        <input class="mtext-104 cl3 txt-center num-product" type="number"
+                                            name="num-product1" id="quantity" value="{{this.quantity}}">
+
+                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
+                                            onclick="return addQuantity('{{this._id}}', '{{this.product._id}}')">
+                                            <i class="fs-16 zmdi zmdi-plus"></i>
+                                        </div>
+                                    </div>
+                                </td> --}}
+                                {{!-- <td class="column-5">₹ <span class="totalPrice" id="total">{{this.amount}}</span></td> --}}
+                                <td class="column-6"><a onclick="xyz()" href="/removeFromWishlist/{{this._id}}"
+                                        class="btn btn-danger">Remove</a></td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                    </div>
+
+                    {{#if emptyCart}}
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm"
+                            style="text-align: center; justify-content: center;">
+                            <h6>The cart is empty ! &nbsp&nbsp&nbsp <a href="/products">Continue Shopping</a></h6>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+
+            {{#if emptyCart}}{{else}}
+            <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                    <h4 class="mtext-109 cl2 p-b-30">
+                        Cart Totals
+                    </h4>
+
+                    <div class="flex-w flex-t bor12 p-b-13">
+                        <div class="size-208">
+                            <span class="stext-110 cl2">
+                                Subtotal:
+                            </span>
+                        </div>
+
+                        <div class="size-209">
+                            <span class="mtext-110 cl2">
+                                ₹ <span id="subtotal">{{subtotal}}</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex-w flex-m m-r-20 m-tb-5">
+                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" oninput="checkCoupon()" type="text" name="coupon"
+                            placeholder="Coupon Code" id="couponCode">
+
+                        <div onclick="checkCoupon()" id="apply"
+                            class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                            Apply coupon
+                        </div>
+                        <div onclick="cancelCoupon()" style="display: none;" id="cancel"
+                            class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                            Cancel coupon
+                        </div>
+
+                        <span id="couponErr" style="color: rgb(177, 9, 9); margin-left: 10px;"></span>
+
+                    </div>
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    See available offers
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    {{#each coupons}}
+                                    <p style="cursor: pointer; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"
+                                        onclick="setCoupon('{{this.code}}')">Use <strong
+                                            style="color: rgba(9, 32, 162, 0.91);">{{this.code}}</strong> for purchase
+                                        more than Rs. {{this.minAmount}}</p>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                        <div class="size-208 " id="discN" style="display: none;">
+                            <span class="stext-110 cl2">
+                                Discount:
+                            </span>
+                        </div>
+
+                        <div class="size-209 " id="disc" style="display: none;">
+                            <span class="mtext-110 cl2">
+                                ₹- <span id="discount"></span>
+                            </span>
+                        </div>
+
+                        <div class="size-208">
+                            <span class="stext-110 cl2">
+                                Tax & Service::
+                            </span>
+                        </div>
+
+                        <div class="size-209">
+                            <span class="mtext-110 cl2">
+                                ₹ <span id="tax">10.00</span>
+                            </span>
+                        </div>
+
+                        <div class="size-208">
+                            <span class="stext-110 cl2">
+                                Shipping Charge:
+                            </span>
+                        </div>
+
+                        <div class="size-209">
+                            <span class="mtext-110 cl2">
+                                ₹ <span id="shipping">50.00</span>
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="flex-w flex-t p-t-27 p-b-33">
+                        <div class="size-208">
+                            <span class="mtext-101 cl2">
+                                Total:
+                            </span>
+                        </div>
+
+                        <div class="size-209 p-t-1">
+                            <span class="mtext-110 cl2">
+                                $ <span id="finalAmount">payment amount</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button onclick="checkout()" style="color: white;"
+                        class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        Proceed to Checkout
+                    </button>
+                </div>
+
+
+
+            </div>
+            {{/if}}
+
+
+
+        </div>
+    </div>
+
+
+
+<!-- Back to top -->
+<div class="btn-back-to-top" id="myBtn">
+    <span class="symbol-btn-back-to-top">
+        <i class="zmdi zmdi-chevron-up"></i>
+    </span>
+</div>

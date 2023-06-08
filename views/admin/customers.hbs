@@ -1,11 +1,13 @@
+
+
 <main id="main" class="main">
 
     <div class="pagetitle">
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                <li class="breadcrumb-item">Orders</li>
-                <li class="breadcrumb-item active"></li>
+                <li class="breadcrumb-item">Customers</li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -16,23 +18,24 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Customers</h5>
+                        <h5 class="card-title">CUSTOMERS</h5>
 
-                        <table class="table datatable">
+                        
+
+                        <table class="table datatable table-secondary table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">No</th>
+                                    {{!-- <th scope="col">No</th> --}}
                                     <th scope="col">Name</th>
                                     <th scope="col">Mobile</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Controll</th>
-                                    {{!-- <th scope="col">Optons</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 {{#each customers}}
                                 <tr>
-                                    <th scope="row" class="index"></th>
+                                    {{!-- <th scope="row" class="index"></th> --}}
                                     <td>{{this.name}}</td>
                                     <td>{{this.phone}}</td>
                                     {{#if this.activeStatus}}
@@ -43,15 +46,11 @@
                                     <td>
                                         <input type="text" hidden value="{{this._id}}" id="idField">
                                         {{#if this.blocked}}
-                                        <a class="btn btn-info" id="block" onclick="block()">Unblock</a>
+                                        <a class="btn btn-info block" id="{{this._id}}" onclick="block('{{this._id}}')">Unblock</a>
                                         {{else}}
-                                        <a class="btn btn-info" id="block" onclick="block()">Block</a>
+                                        <a class="btn btn-info block" id="{{this._id}}" onclick="block('{{this._id}}')">Block</a>
                                         {{/if}}
                                     </td>
-                                    {{!-- <td>
-                                        <a class="btn btn-primary" href="/admin/customers/edit/{{this._id}}">Edit</a>
-                                        <a class="btn btn-danger" href="/admin/customers/delete/{{this._id}}">Delete</a>
-                                    </td> --}}
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -72,32 +71,32 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-<script>
+{{!-- <script>
     let index = document.getElementsByClassName('index');
 
     for (let i = 0; i < index.length; i++) {
         index[i].innerHTML = i + 1;
     }
-</script>
+</script> --}}
 
 <script>
-    function block() {
-        let id = document.getElementById('idField').value;
-        let btn = document.getElementById('block').innerText;
+    function block(userId) {
+        //let ids = document.getElementsByClassName('idField');
+        let btn = document.getElementById(userId).innerHTML;
 
         $.ajax({
-            url: "/admin/customers/block?id=" + id,
+            url: "/admin/customers/block?id=" + userId,
             method: "POST",
             data: {
-                id: this._id
+                id: userId
             },
             success: function(res){
                 console.log(res);
 
                 if(btn == 'Block'){
-                    document.getElementById('block').innerText = 'Unblock';
+                    document.getElementById(userId).innerText = 'Unblock';
                 } else {
-                    document.getElementById('block').innerText = 'Block';
+                    document.getElementById(userId).innerText = 'Block';
                 }
                 
             }
