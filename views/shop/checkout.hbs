@@ -260,7 +260,7 @@
         const area = document.getElementById('landMark').value.trim();
         const pincode = document.getElementById('pincode').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        const name = fname + ' ' + lname;
+        const name = fname + (lname ? ' ' + lname : '');
 
         if(fname == '' || lname == '' || houseName == '' || area == '' || pincode == '' || phone == '' || city == '' ||state == ''){
             alert('Please enter')

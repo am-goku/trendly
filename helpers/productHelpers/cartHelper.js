@@ -15,9 +15,9 @@ const cartHelper = {
     addtoCart: (user, productId, quantity, color, size)=>{
         try{
             return new Promise(async (resolve, reject) => {
-                let userId = user._id;
+                const userId = user._id;
                 let totalAmount =0;
-                let activeCart = await cart.findOne({userId: userId}).populate('items.product');
+                const activeCart = await cart.findOne({userId: userId}).populate('items.product');
                 if(activeCart){
                     let prdct = await product.findOne({_id: productId});
                     let productTotal = prdct.productPrice * quantity;
@@ -33,8 +33,8 @@ const cartHelper = {
                         })
                     });
                 } else {
-                    let prdct = await product.findOne({_id: productId});
-                    let productTotal = prdct.productPrice * quantity;
+                    const prdct = await product.findOne({_id: productId});
+                    const productTotal = prdct.productPrice * quantity;
                     cart.create({userId: userId, items:[{product: productId, quantity: quantity, productTotal: productTotal, color: color, size: size}]}).then((response)=> {
                         cart.findOne({userId: userId}).populate('items.product').then((response)=> {
                             for(let i = 0; i < response.items.length; i++){
@@ -60,7 +60,7 @@ const cartHelper = {
     showCart: (user) => {
         try{
             return new Promise((resolve, reject) => {
-                let userId = user._id;
+                const userId = user._id;
                 cart.findOne({userId: userId}).populate('items.product').lean().exec().then((response)=> {
                     console.log(response);
                     resolve(response);
@@ -76,7 +76,7 @@ const cartHelper = {
         try{
             return new Promise(async (resolve, reject) => {
                 let totalAmount =0;
-                let prdct = await product.findOne({_id: productId});
+                const prdct = await product.findOne({_id: productId});
                 cart.findOneAndUpdate({userId: userId, 'items._id': itemId}, {$inc:{'items.$.quantity': 1, 'items.$.productTotal': prdct.productPrice}}).populate('items.product').then((response)=>{
                     cart.findOne({userId: userId}).populate('items.product').then((result) => {
                         for(let i = 0; i < result.items.length; i++){
@@ -104,7 +104,7 @@ const cartHelper = {
         try{
             return new Promise(async (resolve, reject) => {
                 let totalAmount=0;
-                let prdct = await product.findOne({_id: productId});
+                const prdct = await product.findOne({_id: productId});
                 cart.findOneAndUpdate({userId: userId, 'items._id': itemId}, {$inc:{'items.$.quantity': -1, 'items.$.productTotal': -prdct.productPrice}}).populate('items.product').then((response)=>{
                     cart.findOne({userId: userId}).populate('items.product').then((result) => {
                         for(let i = 0; i < result.items.length; i++){
@@ -152,13 +152,15 @@ const cartHelper = {
             return new Promise((resolve, reject) => {
                 let flag = false;
                 cart.findOne({userId: userId}).then((userCart) => {
-                    let product = userCart.items;
+                    const product = userCart?.items;
                     //checking the given product is in the cart with the same varients or not;
-                        for(let i=0; i<product.length; i++) {
-                            if(product[i].product == productDetails.productId) {
-                                if(product[i].size === productDetails.size && product[i].color === productDetails.color){
-                                    flag = true;
-                                    break;
+                        if(product){
+                            for(let i=0; i<product.length; i++) {
+                                if(product[i].product == productDetails.productId) {
+                                    if(product[i].size === productDetails.size && product[i].color === productDetails.color){
+                                        flag = true;
+                                        break;
+                                    }
                                 }
                             }
                         }

@@ -27,7 +27,7 @@ const orderHelper = {
                                     
 
                 console.log('its order collection',orderColl);
-                let order = orderColl.order[0];
+                const order = orderColl.order[0];
                 
                 console.log(order);
 
@@ -54,7 +54,6 @@ const orderHelper = {
     order with the given `orderId` and `userId` to "cancelled". */
     cancelOrder: (orderId, userId) => {
         try{
-
             return new Promise((resolve, reject) => {
                 orderCollection.updateOne(
                     { userId: userId, "order._id": orderId },
@@ -63,7 +62,6 @@ const orderHelper = {
                     resolve(response);
                 })
             })
-
         } catch(err){
             console.log('Error while canceling an Order:', err);
         }

@@ -1,5 +1,14 @@
 <!-- Shoping Cart -->
 
+<style>
+  .toolEll {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100px;
+  }
+</style>
+
 
 <section class="container-fluid pl-5 pr-5 pt-3">
     <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
@@ -9,14 +18,15 @@
             <li class="breadcrumb-item active" aria-current="page">Order</li>
         </ol>
     </nav>
+    <div style="display: flex;flex-wrap: wrap; gap: 100px;">
     {{#each orders}}
-    <div class="card ">
-        <div class="card-header">
-            Order No: {{this.orderNo}}
-        </div>
+    <div class="card" style="width: 18rem">
         <div class="card-body">
+            <div class="card-header">
+            Order No: {{this.orderNo}}
+            </div>
             {{!-- <h5 class="card-title">Special title treatment</h5> --}}
-            <p class="card-text"><span style="color:black"><h6>{{#with (lookup this.items 0)}} {{product.productName}} {{/with}}</h6></span> & {{ this.no }} more items</p>
+            <p class="card-text"><span style="color:black"><h6 class="toolEll">{{#with (lookup this.items 0)}} {{product.productName}} {{/with}}</h6></span> & {{ this.no }} more items</p>
             <p class="card-text">Amount. ₹ <span style="color: black;">{{this.totalAmount}}</span></p>
             <p class="card-text">Payment. <span style="color: green;">{{this.paymentMethod}}</span></p>
             <p class="card-text">Payment. <span style="color: rgb(208, 82, 10);">{{this.status}}</span></p>
@@ -24,7 +34,7 @@
         </div>
     </div>
     {{/each}}
-
+    </div>
     <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm"
         style="text-align: center; justify-content: center;">
         <h6><a href="/products">Continue Shopping</a></h6>

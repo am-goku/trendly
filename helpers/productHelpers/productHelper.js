@@ -1,6 +1,5 @@
 const { Reject } = require('twilio/lib/twiml/VoiceResponse');
 const product = require('../../models/product-model');
-const category = require('../../models/category-model');
 const { ObjectId } = require('mongodb');
 
 
@@ -12,7 +11,7 @@ module.exports = {
     product. */
     addProduct: async (productDetails, images) => {
         try {
-            let imageFiles = images.map(image => image.filename);
+            const imageFiles = images.map(image => image.filename);
             const newProduct = new product({
                 productName: productDetails.name,
                 description: productDetails.description,
@@ -112,7 +111,7 @@ module.exports = {
     
       showFilteredProducts: (currentPage, itemsPerPage, filterOptions) => {
       return new Promise((resolve, reject) => {
-        let query = product.find().populate('category').lean();
+        const query = product.find().populate('category').lean();
         const { sortBy, priceRange, color, category } = filterOptions;
     
         // Apply filters based on the provided parameters

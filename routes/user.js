@@ -202,6 +202,7 @@ router.get('/lol', (req, res)=> {
     res.render('shop/orderDetails');
 })
 
+//payment
 router.post('/payment', userController.userLoginStatus, userController.checkBlockedStatus, paymentController.doPayment)
 
 router.get('/confirm', userController.userLoginStatus,userController.checkBlockedStatus, (req, res)=> {

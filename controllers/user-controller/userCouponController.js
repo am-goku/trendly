@@ -14,8 +14,8 @@ module.exports = {
     checkCoupon: async (req, res, next) => {
         try{
             const { code } = req.body;
-            let userId = req.session.user._id;
-            let cart = await cartCollection.findOne({ userId: userId});
+            const userId = req.session.user._id;
+            const cart = await cartCollection.findOne({ userId: userId});
 
             couponCollection.findOne({ code })
                 .then(async (coupon) => {
@@ -63,7 +63,7 @@ module.exports = {
     cancelCoupon: (req, res) => {
         try{
             const { code } = req.body;
-            let userId = req.session.user._id;
+            const userId = req.session.user._id;
 
             couponCollection.findOne({ code })
                 .then(async (coupon) => {
@@ -87,7 +87,7 @@ module.exports = {
     response from the database query. If there is an error, it logs the error to the console. */
     getActiveCoupons: () => {
         return new Promise((resolve, reject) => {
-            let currentDate = new Date();
+            const currentDate = new Date();
             couponCollection.find({ startDate: {$lte: currentDate}, expireDate: {$gte:currentDate} }).lean()
             .then((response) => {
                 resolve(response);

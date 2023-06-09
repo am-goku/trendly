@@ -28,15 +28,11 @@ module.exports = {
     resolve before redirecting the user to the product list page. If there is an error, it is caught
     and logged to the console. */
     postAddProduct: async (req, res) => {
-      let productDetails = req.body;
-      let image = req.files;
-      console.log(image);
-
+      const productDetails = req.body;
+      const image = req.files;
       try{
-
         await productHelper.addProduct(productDetails, image);
         res.redirect('/admin/products');
-
       } catch(err){
         console.log(err);
       }
@@ -54,7 +50,7 @@ module.exports = {
     filter options. If there is an error, it logs the error to the console. */
     showProducts: (req, res, next) => {
       try {
-        let customer = req.session.user;
+        const customer = req.session.user;
         const currentPage = parseInt(req.query.page) || 1; // Get the current page from the query parameters, default to 1 if not provided
         const itemsPerPage = 5; // Number of products to display per page
     
@@ -97,12 +93,11 @@ module.exports = {
     renders the `singleProduct` view and passes in the product details, along with the `admin` and
     `customer` variables. Finally, it logs the product images to the console. */
     findProduct: (req, res, next) => {
-      let id = req.params.id;
+      const id = req.params.id;
       productHelper.findProductById(id).then((product) => {
-        let image1 = product.images[0];
-        let image2 = product.images[1];
-        let image3 = product.images[2];
-
+        const image1 = product.images[0];
+        const image2 = product.images[1];
+        const image3 = product.images[2];
         res.render('shop/singleProduct', {product, admin:false, customer:req.session.user, image1:image1, image2:image2, image3:image3})
         console.log(product.images);
       })
@@ -149,17 +144,17 @@ module.exports = {
     `product` model to find products that match the filter criteria and sorts them based on the sort
     option. The function then sends a JSON response containing the filtered products. */
     filterProducts: async (req, res, next) => {
-      let color = JSON.parse(req.body.color);
-      let category = JSON.parse(req.body.category);
-      let priceRange = JSON.parse(req.body.priceRange);
-      let sort = req.body.sort;
+      const color = JSON.parse(req.body.color);
+      const category = JSON.parse(req.body.category);
+      const priceRange = JSON.parse(req.body.priceRange);
+      const sort = req.body.sort;
 
-      let currentPage = req.body.currentPage || 1;
-      let itemsPerPage = '';
+      const currentPage = req.body.currentPage || 1;
+      const itemsPerPage = '';
       
       
-      let filter = {};
-      let sortOption = {};
+      const filter = {};
+      const sortOption = {};
 
       if (color.length) {
         filter.color = { $in: color };
@@ -185,8 +180,8 @@ module.exports = {
 
       console.log(sortOption, filter, req.body);
 
-      let products = await product.find(filter).sort(sortOption).skip((currentPage - 1) * itemsPerPage).limit(itemsPerPage)
-      let totalCount = products.length;
+      const products = await product.find(filter).sort(sortOption).skip((currentPage - 1) * itemsPerPage).limit(itemsPerPage)
+      const totalCount = products.length;
       const totalPages = Math.ceil(totalCount / itemsPerPage);
         
       res.status(200).json({products: products, totalPages: totalPages, currentPage: currentPage});

@@ -14,7 +14,7 @@ const orderManagement = {
     from the `cart` model to retrieve the total amount of the user's cart. Finally, it renders the
     `checkout` view with the user's address, customer information, and total amount of the cart. */
     showAddress: (req, res, next) => {
-        userId = req.session.user._id;
+        const userId = req.session.user._id;
 
         userHelper.getAddress(userId).then((user_address) => {
             cart.findOne({userId: req.session.user._id}).then((response) => {
@@ -35,11 +35,11 @@ const orderManagement = {
     renders the `orders` view with the user's orders and customer information. If the user has no
     orders, it renders the `orders` view with a message indicating that there are no orders. */
     showOrders: (req, res, next) => {
-        let customer = user = req.session.user;
-        let userId = req.session.user._id;
+        const customer = user = req.session.user;
+        const userId = req.session.user._id;
         userHelper.getOrders(userId).then((response) => {
             if(response){
-                let orders = response.order
+                const orders = response.order
                 for(let i = 0; i < orders.length; i++) {
                     orders[i].no = orders[i].items.length;
                 }
@@ -57,8 +57,8 @@ const orderManagement = {
     order is found, it renders the `orderDetails` view with the order details and customer
     information. */
     getAnOrder: (req, res, next) => {
-        let orderId = req.query.orderId;
-        let userId = req.session.user._id;
+        const orderId = req.query.orderId;
+        const userId = req.session.user._id;
         orderHelper.getAnOrder(orderId, userId).then((order) => {
             if(order){
                 res.render('shop/orderDetails', {order, customer: req.session.user})
@@ -75,8 +75,8 @@ const orderManagement = {
     message. */
     cancelOrder: (req, res, next) => {
         try{
-            let orderId = req.query.orderId;
-            let userId = req.session.user._id;
+            const orderId = req.query.orderId;
+            const userId = req.session.user._id;
             orderHelper.cancelOrder(orderId, userId).then((response) => {
                 res.status(200).json(response)
             }).catch((error) => {
@@ -96,8 +96,8 @@ const orderManagement = {
     successfully returned, it sends a JSON response with a status code of 200 and the response data.
     If there is an error, it logs the error and redirects to the `/order` page. */
     returnOrder: (req, res, next) => {
-        let orderId = req.query.orderId;
-        let userId = req.session.user._id;
+        const orderId = req.query.orderId;
+        const userId = req.session.user._id;
 
         orderHelper.returnOrder(orderId, userId).then((response) => {
             res.status(200).json(response);

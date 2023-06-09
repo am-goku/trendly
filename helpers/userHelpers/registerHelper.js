@@ -11,7 +11,7 @@ module.exports = {
     If there is an error while registering the new user, it logs the error to the console. */
     doRegister: async(userData) => {
         try {
-            let customer = new user(userData);
+            const customer = new user(userData);
             await customer.save();
         } catch (err) {
             console.log('Error while registering new User'+err);
@@ -27,7 +27,7 @@ module.exports = {
     is an error while checking for the user, it logs the error to the console. */
     checkUser: async(userData) => {
         try{
-            let customer = await user.findOne({phone: userData.phone});
+            const customer = await user.findOne({phone: userData.phone});
             if(customer) {
                 return true;
             } else {
@@ -49,7 +49,7 @@ module.exports = {
     updatePassword: (userData) => {
         try {
             return new Promise(async (resolve, reject) => {
-                let password = await bcrypt.hash(userData.password, 10);
+                const password = await bcrypt.hash(userData.password, 10);
                 user.updateOne({phone: userData.phone}, {$set:{password: password}}).then((response) => {
                         resolve(response);
                 })

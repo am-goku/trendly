@@ -14,7 +14,7 @@ module.exports = {
     occurs during the database operation, the function logs the error message to the console. */
     checkBlockStatus: async (id) => {
         try {
-            let customer = await user.findOne({ _id: (id) });
+            const customer = await user.findOne({ _id: (id) });
             if (customer.blocked) {
                 return new Promise(async (resolve, reject) => {
                     await user.updateOne({ _id: (id) }, { $set: { blocked: false } }).then((response) => {

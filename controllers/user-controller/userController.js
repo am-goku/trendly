@@ -101,8 +101,8 @@ module.exports = {
     parameters. If there is an error fetching the address, it logs the error to the console. */
     getProfile: async (req, res, next) => {
         try {
-            let customer = user = req.session.user;
-            let userAddress = await userHelper.getAddress(user._id);
+            const customer = user = req.session.user;
+            const userAddress = await userHelper.getAddress(user._id);
             if(userAddress){
                 let address = userAddress.address;
                 res.render('shop/profile', { user, customer, profilePage:true, address });

@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const emailValidator = require('email-validator');
 
-//importing helpers
-const userHelper = require('./userHelper');
-const validator = require('validator');
 
 //importing models
 const cartCollection = require('../../models/cart-model');
@@ -111,8 +108,8 @@ module.exports = {
     function logs an error message to the console and resolves the Promise with a status of false. */
     loginUserByOtp: async (phone) => {
         try{
-            let response = {};
-            let user = await customer.findOne({phone: phone});
+            const response = {};
+            const user = await customer.findOne({phone: phone});
             return new Promise((resolve, reject) => {
                 cartCollection.findOne({userId: user._id}).then((userCart) => {
                     if(userCart){

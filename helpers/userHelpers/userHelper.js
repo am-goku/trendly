@@ -1,12 +1,10 @@
 const { ObjectId } = require('mongodb');
-const customerCollection = require('../../models/user-model');
 
 //controllers
-const loginController = require('../../controllers/user-controller/loginController');
 
 //models
+const customerCollection = require('../../models/user-model');
 const user_address = require('../../models/address-model');
-
 const order = require('../../models/order-model');
 const cart = require('../../models/cart-model');
 
@@ -97,7 +95,7 @@ module.exports = {
     to the `user_address` MongoDB collection for the user with the given `userId`. */
     addAddress: async (userId, address) => {
         try{
-            let address_collection = await user_address.findOne({ userId: userId});
+            const address_collection = await user_address.findOne({ userId: userId});
 
             return new Promise((resolve, reject) => {
                 if(address_collection){

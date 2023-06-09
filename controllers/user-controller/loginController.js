@@ -11,7 +11,7 @@ const otpController = require('./otpController');
 
 
 
-let loginController = {
+const loginController = {
 
     
 
@@ -24,7 +24,7 @@ let loginController = {
     getLogin: (req, res, next) => {
         try{
                 console.log('hello');
-                let blocked = req.session.blocked;
+                const blocked = req.session.blocked;
                 console.log(errMsg, blocked);
                 res.render('shop/login', { title: 'Login', errMsg, blocked, loginPage:true})
                 errMsg = false, req.session.blocked = false, req.session.err = false;
@@ -43,12 +43,10 @@ let loginController = {
     in the `loginHelper` module. If the login is unsuccessful, it sets the `errMsg` value to `true`
     and redirects the user to the login page. */
     postLogin: async (req, res, next) => {
-        let userData = req.body;
+        const userData = req.body;
         loginHelper.doLogin(userData).then((response) => {
             if(response.status){
                 req.session.loggedIn = true;
-                let abc = response.user
-                // req.session.user = response.user;
                 req.session.user = {
                     _id: response.user._id,
                     name: response.user.name,
@@ -59,10 +57,7 @@ let loginController = {
                     blocked: response.user.blocked,
                     activeStatus: response.user.activeStatus,
                     cartCount : response.userCart ? response.userCart.items.length : 0
-                    
                 };
-                console.log(response.user)
-                console.log('session user::', req.session.user);
                 loginHelper.setActiveStatus(response.user, req.session.loggedIn);
                 res.redirect('/');
             } else {
@@ -81,7 +76,7 @@ let loginController = {
     user to the home page. */
     logout: (req, res, next) => {
         req.session.loggedIn = false;
-        let user = req.session.user;
+        const user = req.session.user;
         loginHelper.setActiveStatus(user, req.session.loggedIn);
         req.session.user = null;
         res.redirect('/');
@@ -101,7 +96,7 @@ let loginController = {
     value of `false`. */
     otpLogin: (req, res, next) => {
         try{
-            let userData = {
+            const userData = {
                 phone: req.query.phone
             }
             loginHelper.otpLogin(userData.phone).then((user) => {
@@ -134,7 +129,7 @@ let loginController = {
     error occurs, it logs the error to the console and sends a JSON response with a message
     indicating that something went wrong and a `valid` value of `false`. */
     verifyOtpLogin: (req, res, next) => {
-        let userData = {
+        const userData = {
             phone: req.body.phone,
             otp: req.body.otp
         }

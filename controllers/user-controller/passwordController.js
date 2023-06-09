@@ -1,8 +1,5 @@
-const session = require('express-session');
-
 const registerHelper = require('../../helpers/userHelpers/registerHelper');
 const otpController = require('./otpController');
-const user = require('../../models/user-model');
 
 const bcrypt = require('bcrypt');
 
@@ -29,9 +26,9 @@ module.exports = {
     send an OTP to the user's phone number. Finally, it renders the 'otp-form' view with the
     resetPassword, admin, and phoneNumber variables passed as arguments. */
     postForgotPassword: (req, res, next) => {
-        let userData = req.body;
+        const userData = req.body;
         phoneNumber = req.body.phone;
-        let response = registerHelper.checkUser(userData);
+        const response = registerHelper.checkUser(userData);
         if(response){
             otpController.sendOtp(userData);
             res.render('shop/otp-form', {resetPassword:true, admin:false, phoneNumber})
@@ -43,7 +40,7 @@ module.exports = {
     the update is successful, it redirects the user to the login page. If the update is not
     successful, it redirects the user to the forgot password page. */
     updatePassword: (req, res, next) => {
-        let userData = req.body;
+        const userData = req.body;
         registerHelper.updatePassword(userData).then((result) => {
             if(result){
                 res.redirect('/login');
@@ -59,7 +56,7 @@ module.exports = {
     If the OTP is not verified successfully, it renders the 'otp-form' view with an error message
     indicating that the OTP entered is invalid. */
     varifyOtp: (req, res, next) => {
-        let userData = req.body;
+        const userData = req.body;
         otpController.verifyOtp(userData).then((result) => {
             if(result){
                 res.redirect('/resetPassword');
@@ -79,11 +76,11 @@ module.exports = {
 
     checkPassword: (req, res, next) => {
         console.log('entered the area');
-        let oldPassword = req.body.oldPassword;
-        let newPassword = req.body.newPassword;
-        let user = req.session.user;
+        const oldPassword = req.body.oldPassword;
+        const newPassword = req.body.newPassword;
+        const user = req.session.user;
         console.log(req.body.oldPassword);
-        let response = {};
+        const response = {};
 
         return new Promise((resolve, reject) => {
             if(oldPassword === newPassword){
@@ -116,13 +113,13 @@ module.exports = {
     object. If they are different, it calls the `registerHelper.updatePassword` function to update
     the user's password with the new password. */
     changePassword: async(req, res, next) => {
-        let oldPassword = req.body.oldPassword;
-        let newPassword = req.body.newPassword;
-        let user = req.session.user;
+        const oldPassword = req.body.oldPassword;
+        const newPassword = req.body.newPassword;
+        const user = req.session.user;
 
         await bcrypt.compare(oldPassword, newPassword).then((status) => {
             if(status){
-                let newUserData = { phone : user.phone, password: newPassword };
+                const newUserData = { phone : user.phone, password: newPassword };
                 registerHelper.updatePassword(newUserData)
             } else {
                 res.status(200).json({})

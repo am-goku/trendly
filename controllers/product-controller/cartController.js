@@ -1,6 +1,5 @@
 const { response } = require('express');
 const cartHelper = require('../../helpers/productHelpers/cartHelper');
-const user = require('../../models/user-model');
 const couponManagement = require('../user-controller/userCouponController');
 
 const cartController = {
@@ -11,11 +10,11 @@ const cartController = {
 // updates the cart collection in the database.
     addtoCart: (req, res, next) => {
         // let data = JSON.parse(req.query.data);
-        let productId = req.body.productId;
-        let quantity = req.body.quantity;
-        let customer = req.session.user;
-        let color = req.body.color;
-        let size = req.body.size;
+        const productId = req.body.productId;
+        const quantity = req.body.quantity;
+        const customer = req.session.user;
+        const color = req.body.color;
+        const size = req.body.size;
 
         if (customer) {
             console.log(customer);
@@ -37,7 +36,7 @@ const cartController = {
 // this function sends the respose to the front end to give a reponse to the client by rendering the cart page in shop.
     showCart: (req, res, next) => {
         try{
-            let customer = req.session.user;
+            const customer = req.session.user;
             cartHelper.showCart(customer).then(async (cart) => {
                 if(cart && cart.items.length > 0){
                     let products = cart.items, total = [], subtotal = 0;
@@ -65,9 +64,9 @@ const cartController = {
 
 // This is a function which helps to add the quantity of a product in the cart by calling another function addQuantity in cartHelper.
     addQuantity: (req, res, next) => {
-        let itemId = req.query.itemId;
-        let userId = req.session.user._id;
-        let productId = req.body.productId;
+        const itemId = req.query.itemId;
+        const userId = req.session.user._id;
+        const productId = req.body.productId;
         cartHelper.addQuantity(itemId, userId, productId).then((cart) => {
             console.log('hii',cart);
             res.status(200).json({cart});
@@ -78,9 +77,9 @@ const cartController = {
 
 // This is a function which helps to reduce the quantity of a product in the cart by calling another function reduceQuantity in cartHelper.
     reduceQuantity: (req, res, next) => {
-        let itemId = req.query.itemId;
-        let userId = req.session.user._id;
-        let productId = req.body.productId;
+        const itemId = req.query.itemId;
+        const userId = req.session.user._id;
+        const productId = req.body.productId;
         cartHelper.reduceQuantity(itemId, userId, productId).then((cart) => {
             console.log(cart);
             res.status(200).json({cart: cart});
@@ -98,8 +97,8 @@ const cartController = {
     the item is removed from the cart, it redirects the user to the cart page using
     `res.redirect('/cart')`. */
     removeItem: (req, res, next) => {
-        let userId = req.session.user._id
-        let itemId = req.params.id;
+        const userId = req.session.user._id
+        const itemId = req.params.id;
         cartHelper.removeItem(userId, itemId).then((response) => {
             console.log(response)
             res.redirect('/cart')
@@ -117,7 +116,7 @@ const cartController = {
     `productInCart` set to `true` if the product is already in the cart, or logs a message to the
     console if the product is not in the cart. */
     checkProduct: (req, res, next) => {
-        let userId = req.session.user._id;
+        const userId = req.session.user._id;
 
         if(req.session.user) {
             userId = req.session.user._id;
@@ -125,7 +124,7 @@ const cartController = {
             res.status(200).json({productInCart:false});
         }
 
-        let productDetails = req.body;
+        const productDetails = req.body;
 
         cartHelper.checkProduct(userId, productDetails).then((response) => {
             console.log(response);

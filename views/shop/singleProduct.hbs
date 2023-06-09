@@ -8,7 +8,7 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
-		max-width: 100px;
+		max-width: 250px;
 	}
 </style>
 
@@ -63,7 +63,7 @@
 					
 				<div class="col-md-6 col-lg-5 p-b-30">
 					<div class="p-r-50 p-t-5 p-lr-0-lg">
-						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+						<h4 class="mtext-105 cl2 js-name-detail p-b-14 toolEll">
 							{{product.productName}}
 						</h4>
 
@@ -142,7 +142,7 @@
 
 						<!--  -->
 						
-						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
+						<div class="flex-w flex-m p-l-100 p-t-40 respon7" id="wlist">
 							<div class="flex-m bor9 p-r-10 m-r-11">
 								<a onclick="addtoWishlist('{{product._id}}')" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100 wishlistBtn" data-tooltip="Add to Wishlist">
 									<i class="zmdi zmdi-favorite"> Add to Wishlist</i>
@@ -735,7 +735,6 @@
 {{!-- scripts to add products to wishlist --}}
 <script>
 	function addtoWishlist(productId) {
-		alert('1')
 		$.ajax({
 			url: '/addToWishlist',
 			method: 'POST',
@@ -743,10 +742,9 @@
 				productId: productId
 			},
 			success: function(response) {
-				if(response.status){
-
-				} else {
-					window.location.href = '/login'
+				if(response.status == true){
+					document.getElementById('wlist').style.display = 'none';
+					document.getElementById('msg').style.display = 'block';
 				}
 			}
 		})

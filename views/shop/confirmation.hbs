@@ -1,3 +1,12 @@
+<style>
+    .toolEll {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+</style>
+
 <!--================Order Details Area =================-->
 <section class="order_details section-margin--small">
     <div class="container">
@@ -90,7 +99,7 @@
                         {{#each order.items}}
                         <tr>
                             <td>
-                                <p>{{this.product.productName}}</p>
+                                <p class="toolEll">{{this.product.productName}}</p>
                             </td>
                             <td>
                                 <h5>x {{this.quantity}}</h5>

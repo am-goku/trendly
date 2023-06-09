@@ -1,3 +1,12 @@
+<style>
+    .toolEll {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 130px;
+    }
+</style>
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
@@ -38,7 +47,7 @@
                                     </div>
                                 </td>
                                 <td class="column-2"><a style="color: black;"
-                                        href="/products/{{this.product._id}}">{{this.product.productName}}</a></td>
+                                        href="/products/{{this.product._id}}"><p class="toolEll">{{this.product.productName}}</p></a></td>
                                 <td class="column-2">{{this.size}} , {{this.color}}</td>
                                 <td class="column-3">₹ <span id="price">{{this.product.productPrice}}</span></td>
                                 <td class="column-4">

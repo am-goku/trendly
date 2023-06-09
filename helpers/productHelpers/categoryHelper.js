@@ -31,7 +31,7 @@ module.exports = {
     allCategory: () => {
         try{
             return new Promise(async (resolve, reject) => {
-                let categories = await category.find().lean().exec();
+                const categories = await category.find().lean().exec();
                 resolve (categories);
             })
         } catch(err){

@@ -8,10 +8,10 @@ const otpservice = require('../user-controller/otpController');
 
 
 //admin credentials
-const adminCredentials = {
-    username: 'amgoku',
-    password: '2483',
-}
+// const adminCredentials = {
+//     username: 'amgoku',
+//     password: '2483',
+// }
 
 //additional variables
 const title = 'Admin Panel';

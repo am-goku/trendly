@@ -5,7 +5,6 @@ const wishlistHelper = require('../../helpers/productHelpers/wishlistHelper');
 
 module.exports = {
     getWishlist: (req, res, next)=> {
-        console.log('helloooooooo');
         const userId = req.session.user._id;
         wishlistHelper.getWishlist(userId).then((response) => {
             if(response.status) {
@@ -15,7 +14,6 @@ module.exports = {
                 } else {
                     res.render('shop/wishlist', {customer: req.session.user, wishlist, emptyList:true, products: wishlist.items})
                 }
-                
             } else {
                 res.render('shop/wishlist', {customer: req.session.user, wishlist: false})
             }

@@ -38,7 +38,7 @@ module.exports = {
     `async` keyword is used to indicate that the function contains asynchronous code and may use the
     `await` keyword to wait for promises to resolve. */
     postRegister: async (req, res, next) => {
-        let userData = req.body;
+        const userData = req.body;
         userData.password = await bcrypt.hash(userData.password, 10);
         await registerHelper.doRegister(userData);
         res.redirect('/login');
@@ -74,7 +74,7 @@ module.exports = {
     form again with an error message. */
     postPhoneNumber: async (req, res, next) => {
 
-        let userData = req.body;
+        const userData = req.body;
         regUser = await registerHelper.checkUser(userData);
         if(!regUser){
             phoneNumber = userData.phone;
@@ -93,7 +93,7 @@ module.exports = {
     not. Based on the response, the controller method sets the `otpValid` flag to true or false and
     redirects the user to the registration page or renders the OTP form again with an error message. */
     otpVerification: (req, res) => {
-        let userData = req.body;
+        const userData = req.body;
         otpController.verifyOtp(userData).then((status) => {
             console.log(status);
             if(status) {
@@ -116,7 +116,7 @@ module.exports = {
     message and availability status. If the email is already registered, the message will indicate
     that and the availability status will be false. Otherwise, the availability status will be true. */
     checkEmail: (req, res) => {
-        let email = req.body.email;
+        const email = req.body.email;
         registerHelper.checkEmailAddress(email).then((response) => {
             console.log(response);
             if(response) {

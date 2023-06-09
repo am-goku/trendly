@@ -1,6 +1,3 @@
-const category = require('../../models/category-model');
-const products = require('../../models/product-model');
-
 //imported Helpers
 const categoryHelper = require('../../helpers/productHelpers/categoryHelper');
 
@@ -15,7 +12,7 @@ module.exports = {
     function is asynchronous and uses `await` to wait for the `categoryHelper.addCategory()`
     function to complete before redirecting the user. */
     addCategory: async(req, res, next) => {
-        let categoryData = req.body;
+        const categoryData = req.body;
         console.log('body: '+ categoryData.name);
         await categoryHelper.addCategory(categoryData).then((result) => {
             console.log('category added successfully');
@@ -37,9 +34,8 @@ module.exports = {
     /* `deleteCategory` is a function that handles the deletion of a category. It takes in the request,
     response, and next middleware function as parameters. */
     deleteCategory: (req, res, next) => {
-        console.log('hiiiiiiii: '+ req.params.id);
         try {
-            let id = req.params.id;
+            const id = req.params.id;
             categoryHelper.deleteCategory(id).then((result) => {
                 res.redirect('/admin/categories');
             });

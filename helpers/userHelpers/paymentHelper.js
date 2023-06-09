@@ -14,7 +14,7 @@ var instance = new Razorpay({
 //import models
 const shopping_cart = require('../../models/cart-model');
 const customer = require('../../models/user-model');
-
+const cartCollection = require('../../models/cart-model');
 const order = require('../../models/order-model');
 
 // additional functions
@@ -55,7 +55,7 @@ const paymentHelper = {
         let totalAmount = 0, date = Date.now();
 
         //genarating orderNo.
-        let orderNo = genarateOrderNo();
+        const orderNo = genarateOrderNo();
         
 
         //loop to calculate the total amount;
@@ -71,7 +71,7 @@ const paymentHelper = {
             }
 
         //getting order collection
-            let orderCollection = await order.findOne({userId: userId});
+            const orderCollection = await order.findOne({userId: userId});
         //updating or creating order
             return new Promise((resolve, reject) => {
                 if(orderCollection){ 
@@ -80,14 +80,16 @@ const paymentHelper = {
                         if(coupon){
                             await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
                         }
-                        order.findOne({userId: userId}).populate('order.items.product').lean().then((res) => {
+                        order.findOne({userId: userId}).populate('order.items.product').lean().then(async (res) => {
+                            await cartCollection.deleteOne({userId: userId});
                             resolve(res);
                         })
                     })
                 } else {
                     order.create({userId: userId, order:[{user: userId, orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon ? coupon.discount : 0}]})
                     .then((response) => {
-                        order.findOne({userId: userId}).populate('order.items.product').lean().then((res) => {
+                        order.findOne({userId: userId}).populate('order.items.product').lean().then(async (res) => {
+                            await cartCollection.deleteOne({userId: userId});
                             resolve(res);
                         })
                     })
@@ -108,7 +110,7 @@ const paymentHelper = {
     generateRazorpay: (orderId, total) => {
         return new Promise((resolve, reject) => {
             instance.orders.create({
-                amount: total,
+                amount: 100,
                 currency: "INR",
                 receipt: "Order" + orderId,
                 notes: {
@@ -118,6 +120,8 @@ const paymentHelper = {
               }).then((res) => {
                 console.log('razorpay instance:: ', res);
                 resolve(res);
+              }).catch((err) => {
+                console.log('Error creating rzp instance:: ', err);
               })
         })
     }

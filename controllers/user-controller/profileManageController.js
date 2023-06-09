@@ -12,9 +12,9 @@ module.exports = {
     profile is successfully updated, it updates the user session with the new image filename and
     redirects the user to the profile page. */
     updateProfile: (req, res, next) => {
-        let userId = req.session.user._id;
-        let newData = req.body;
-        let image = req.file;
+        const userId = req.session.user._id;
+        const newData = req.body;
+        const image = req.file;
         profileHelper.updateProfile(userId, newData, image).then((response) => {
             req.session.user.image = image.filename;
             res.redirect('/profile');
@@ -28,7 +28,7 @@ module.exports = {
     user ID and address data as arguments. Once the address is successfully added, it updates the
     user session with the new address and redirects the user to the profile page. */
     addAddress: (req, res, next) => {
-        let address = req.body;
+        const address = req.body;
         userHelper.addAddress(req.session.user._id, address).then((response) => {
             console.log(response);
             req.session.user.address = response;
@@ -44,8 +44,8 @@ module.exports = {
     function from the `userHelper` module, passing in the `id` and `userId` as arguments. Once the
     address is successfully deleted, it redirects the user to the profile page. */
     deleteAddress: (req, res, next) => {
-        let id = req.params.id;
-        let userId = req.session.user._id;
+        const id = req.params.id;
+        const userId = req.session.user._id;
         userHelper.deleteAddress(id, userId).then((response) => {
             console.log('delete response'+response);
             res.redirect('/profile');
@@ -57,8 +57,8 @@ module.exports = {
     function (`next`) as parameters. */
     getAnAddrress: (req, res, next) => {
         try{
-            let addressId = req.body.addressId;
-            let userId = req.session.user._id;
+            const addressId = req.body.addressId;
+            const userId = req.session.user._id;
             let address;
             userHelper.getAddress(userId).then((response) => {
                 let addressList = response.address;

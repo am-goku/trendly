@@ -27,8 +27,8 @@ const paymentController = {
                 paymentHelper.completeOrder(userId, address, paymentMethod, coupon).then((response) => {
                     console.log('rzp', response);
                     req.session.lastOrder = response.order[response.order.length-1];
-                    let orderId = req.session.lastOrder._id;
-                    let total = req.session.lastOrder.totalAmount
+                    const orderId = req.session.lastOrder._id;
+                    const total = req.session.lastOrder.totalAmount
                     console.log('sessinorder', req.session.lastOrder);
 
                     //razorpay
