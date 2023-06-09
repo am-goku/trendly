@@ -11,6 +11,7 @@ const productManage = require('../controllers/admin-controller/productManageCont
 const orderManagement = require('../controllers/admin-controller/orderManageController');
 const couponManagement = require('../controllers/admin-controller/couponManageController');
 const bannerManagement = require('../controllers/admin-controller/bannerManageController');
+const salesManageController = require('../controllers/admin-controller/salesManageController');
 
 //importing middlewares
 const upload = require('../middlewares/multer');
@@ -43,7 +44,7 @@ const upload = require('../middlewares/multer');
 
 
 /* GET users listing. */
-router.get('/', adminController.getHome );
+router.get('/', adminController.loginCheck, salesManageController.getDashboard );
 
 
 //login

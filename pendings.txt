@@ -4,10 +4,6 @@ confirmation for cart item removing
 no need for serial no sort
 toaster messages for every server actions
 
-Unused variables
-const let issues console.logs to be moved
-validaitons not done
-
 
 
 Sales report in admin side (export to pdf, excel).
