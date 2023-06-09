@@ -1,3 +1,17 @@
+<style>
+	.wishlistBtn :hover {
+		cursor: pointer;
+		color: cadetblue;
+	}
+
+	.toolEll {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		max-width: 100px;
+	}
+</style>
+
 <!-- Product Detail -->
 	<section class="sec-product-detail bg0 p-t-65 p-b-60">
 		<div class="container">
@@ -127,13 +141,23 @@
 						<input type="hidden" value="{{product._id}}" id="productId">
 
 						<!--  -->
+						
 						<div class="flex-w flex-m p-l-100 p-t-40 respon7">
 							<div class="flex-m bor9 p-r-10 m-r-11">
-								<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist">
-									<i class="zmdi zmdi-favorite"></i>
+								<a onclick="addtoWishlist('{{product._id}}')" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100 wishlistBtn" data-tooltip="Add to Wishlist">
+									<i class="zmdi zmdi-favorite"> Add to Wishlist</i>
 								</a>
 							</div>
 						</div>
+
+						<div class="flex-w flex-m p-l-100 p-t-40 respon7 d-none" id="msg">
+							<div class="flex-m bor9 p-r-10 m-r-11">
+								<p style="color: rgb(0, 132, 255);">
+									<i class="zmdi zmdi-favorite"> Already in Wishlist</i>
+								</p>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -703,4 +727,28 @@
 <script>
 	let productNo = document.getElementById('productId').value;
 	checkProductInCart(productNo);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+{{!-- scripts to add products to wishlist --}}
+<script>
+	function addtoWishlist(productId) {
+		alert('1')
+		$.ajax({
+			url: '/addToWishlist',
+			method: 'POST',
+			data: {
+				productId: productId
+			},
+			success: function(response) {
+				if(response.status){
+
+				} else {
+					window.location.href = '/login'
+				}
+			}
+		})
+	}
 </script>

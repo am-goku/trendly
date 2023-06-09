@@ -9,7 +9,8 @@ const userMangController = require('../controllers/admin-controller/userManageCo
 const categoryController = require('../controllers/product-controller/categoryController');
 const productManage = require('../controllers/admin-controller/productManageController');
 const orderManagement = require('../controllers/admin-controller/orderManageController');
-const couponManagement = require('../controllers/admin-controller/couponManageController')
+const couponManagement = require('../controllers/admin-controller/couponManageController');
+const bannerManagement = require('../controllers/admin-controller/bannerManageController');
 
 //importing middlewares
 const upload = require('../middlewares/multer');
@@ -94,6 +95,18 @@ router.get('/manageOrder', adminController.loginCheck, orderManagement.manageOrd
 router.get('/coupon', adminController.loginCheck, couponManagement.getCoupon);
 router.post('/add-coupon', couponManagement.addCoupon );
 router.get('/removeCoupon', couponManagement.removeCoupon );
+
+
+//banner management
+router.get('/banner', adminController.loginCheck, bannerManagement.getBanner);
+
+router.get('/addBanner', adminController.loginCheck, (req, res)=> {
+    res.render('admin/addBanner',{admin:true})
+})
+
+router.post('/addBanner', adminController.loginCheck, upload.single('bannerImage'), bannerManagement.addBanner);
+
+router.post('/removeBanner', adminController.loginCheck, bannerManagement.removeBanner);
 
 
 

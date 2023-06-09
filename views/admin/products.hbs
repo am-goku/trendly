@@ -1,8 +1,15 @@
 <style>
-    #dataTable td{
+    #dataTable td {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+    }
+
+    .toolEll {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 150px;
     }
 </style>
 
@@ -41,7 +48,7 @@
                                 {{#each products}}
                                 <tr>
                                     <th scope="row" class="index"></th>
-                                    <td style="width: 100px; text-overflow: ellipsis;">{{this.productName}}</td>
+                                    <td><p class="toolEll">{{this.productName}}</p></td>
 
                                     <td> {{this.category.name}} </td>
 

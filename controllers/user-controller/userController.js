@@ -2,8 +2,9 @@ const session = require('express-session');
 const userHelper = require('../../helpers/userHelpers/userHelper');
 const { response } = require('express');
 
-const loginController = require('./loginController');
+// const loginController = require('./loginController');
 const categoryHelper = require('../../helpers/productHelpers/categoryHelper');
+const bannerHelper = require('../../helpers/adminHelpers/bannerHelper');
 
 //additional variables
 let user = false;
@@ -69,15 +70,24 @@ module.exports = {
     Finally, it renders the `shop/index` view with the appropriate variables passed in as
     parameters. If the user is logged in, it renders the view with the `user` and `customer`
     variables, otherwise it renders the view without them. */
-    getHome: (req, res, next) => {
+    getHome: async (req, res, next) => {
         user = req.session.loggedIn;
         customer = req.session.user;
-        let category = categoryHelper.allCategory;
-        if(user){
-                res.render('shop/index', {title: 'Trendly', user, customer, homeActive:true});
-        } else {
-                res.render('shop/index', {title: 'Trendly', homeActive:true});
-        }
+        const category = await categoryHelper.allCategory;
+
+        bannerHelper.getBanner().then((banner) => {
+            if(!banner.error){
+                if(user){
+                    res.render('shop/index', {title: 'Trendly', user, customer, homeActive:true, category, banner});
+                } else {
+                    res.render('shop/index', {title: 'Trendly', homeActive:true, category, banner});
+                }
+            } else {
+                res.redirect('/products');
+            }
+        })
+
+        
     },
 
 

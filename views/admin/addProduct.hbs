@@ -134,15 +134,15 @@
       const discount = document.getElementById('discount').value.trim();
 
       if(name == '' || description == '' || category == '' || price == '' || stock == ''){
-        alert('hi')
+        
         document.getElementById('err').innerText = 'All fields are mandatory !';
         return false;
       } else {
         if(price <=0 || stock <0 || discount <0) {
-          alert('jj')
+          
           document.getElementById('err').innerText = 'Invalid entry';
           return false;
-        } alert('hi')
+        } 
         return true;
       }
   }

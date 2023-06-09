@@ -1,3 +1,12 @@
+<style>
+	.toolEll {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		max-width: 100px;
+	}
+</style>
+
 <!-- Product -->
 <div class="bg0 m-t-23 p-b-140">
 	<div class="container">
@@ -143,7 +152,7 @@
 					</div>
 
 
-					<div class="filter-col4 p-b-27">
+					{{!-- <div class="filter-col4 p-b-27">
 						<div class="mtext-102 cl2 p-b-15">
 							Categories
 						</div>
@@ -169,7 +178,7 @@
 								Watch
 							</li>
 						</ul>
-					</div>
+					</div> --}}
 				</div>
 			</div>
 		</div>
@@ -196,7 +205,7 @@
 					<div class="block2-txt flex-w flex-t p-t-14">
 						<div class="block2-txt-child1 flex-col-l ">
 							<a href="/products/{{this._id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-								{{this.productName}}
+								<p class="toolEll">{{this.productName}}</p>
 							</a>
 
 							<span class="stext-105 cl3">
@@ -240,31 +249,6 @@
 			{{/if}}
 		</div>
 	</div>
-</div>
-
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" "tabindex=-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 
 
@@ -372,7 +356,7 @@
 <!--===============================================================================================-->
 
 
-
+{{!-- UI Update --}}
 <script>
 	function updateUI(searchResults) {
 		var searchResultsContainer = document.querySelector('.isotope-grid');
@@ -406,7 +390,7 @@
 
 			var productNameLink = document.createElement('a');
 			productNameLink.setAttribute('href', '/products/' + result._id);
-			productNameLink.classList.add('stext-104', 'cl4', 'hov-cl1', 'trans-04', 'js-name-b2', 'p-b-6');
+			productNameLink.classList.add('stext-104', 'cl4', 'hov-cl1', 'trans-04', 'js-name-b2', 'p-b-6', 'toolEll');
 			productNameLink.textContent = result.productName;
 			block2TxtChild1.appendChild(productNameLink);
 

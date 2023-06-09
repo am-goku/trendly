@@ -13,6 +13,7 @@ const profileManager = require('../controllers/user-controller/profileManageCont
 const orderManagement = require('../controllers/user-controller/userOrderManageController');
 const paymentController = require('../controllers/user-controller/paymentController');
 const couponManagement = require('../controllers/user-controller/userCouponController')
+const wishlistController = require('../controllers/product-controller/wishlistController');
 
 //requiring multer middleware
 const upload = require('../middlewares/multer');
@@ -108,6 +109,13 @@ router.get('/removeFromCart/:id', cartController.removeItem );
 router.post('/checkProductInCart', cartController.checkProduct);
 
 
+
+//wishlist management
+router.get('/wishlist', userController.userLoginStatus, userController.checkBlockedStatus, wishlistController.getWishlist);
+
+router.post('/addToWishlist', userController.userLoginStatus, userController.checkBlockedStatus, wishlistController.addToWhishlist);
+
+router.post('/removeFromWishlist', wishlistController.removeFromWishlist );
 
 
 

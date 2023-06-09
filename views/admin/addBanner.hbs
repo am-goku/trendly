@@ -1,0 +1,73 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item">Banner</li>
+                <li class="breadcrumb-item active">Add</li>
+            </ol>
+        </nav>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">ADD BANNER</h5>
+
+      <!-- Multi Columns Form -->
+      <form class="row g-3" action="/admin/addBanner" method="post" enctype="multipart/form-data">
+        <div class="col-md-12">
+          <label for="name" class="form-label">Banner Title</label>
+          <input type="text" class="form-control" id="name" name="name" maxlength="200" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="subTitle" class="form-label">Sub-Title</label>
+          <input type="text" class="form-control" id="subTitle" name="subTitle">
+        </div>
+
+        <div class="col-md-6">
+          <label for="button" class="form-label">Button Name</label>
+          <input type="text" class="form-control" id="button" name="button" value="SHOP NOW" required>
+        </div>
+
+        <div class="col-md-12">
+          <label for="image" class="form-label">Banner Images</label>
+          <input type="file" class="form-control" id="image" name="bannerImage" required>
+        </div>
+
+        
+
+        <div class="col-12">
+          <p id="err" style="color: brown;"></p>
+        </div>
+
+        <div class="col-12">
+          <button onclick="return validate()" type="submit" class="btn btn-primary">Add Banner</button>
+        </div>
+      </form><!-- End Multi Columns Form -->
+
+    </div>
+  </div>
+
+</main>
+
+
+
+
+{{!-- validation --}}
+<script>
+    
+
+    function validate() {
+        const name = document.getElementById('name').value.trim();
+        const subTitle = document.getElementById('subTitle').value;
+        const button = document.getElementById('button').value.trim();
+        
+        if(name == '' || button == ''){
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
