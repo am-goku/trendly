@@ -19,6 +19,8 @@
 
 let s= 'abc', goal = 'bac';
 
+//hello
+
 var buddyStrings = function(s, goal) {
     let a = s.split('');
     let g = goal.split('');
