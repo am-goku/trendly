@@ -153,8 +153,8 @@ module.exports = {
       const itemsPerPage = '';
       
       
-      const filter = {};
-      const sortOption = {};
+      let filter = {};
+      let sortOption = {};
 
       if (color.length) {
         filter.color = { $in: color };
