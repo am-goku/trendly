@@ -9,5 +9,21 @@ module.exports = {
             console.log('Error in getting dashords', err);
             res.redirect('/admin/customers');
         })
+    },
+
+
+    getSales: (req, res, next) => {
+        const time = req.body.time;
+        salesHelper.getSales(time).then((sales)=> {
+            res.status(200).json({sales});
+        }).catch((err)=> {
+            console.log('error getting sales in controller', err);
+            res.status(200).json({error: true});
+        })
     }
+
+
+
+
+
 }

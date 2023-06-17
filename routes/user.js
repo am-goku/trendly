@@ -96,6 +96,9 @@ router.get('/cart', userController.userLoginStatus, userController.checkBlockedS
 
 router.post('/addtoCart', userController.userLoginStatus, userController.checkBlockedStatus, cartController.addtoCart);
 
+//check if the product with particular varient is inside the cart of the user or not
+router.post('/checkProductInCart', cartController.checkProduct);
+
 
 // Function to ADD and REDUCE to the quantity of the products by one i database.
 router.post('/addQuantity', cartController.addQuantity);
@@ -105,8 +108,7 @@ router.post('/reduceQuantity', cartController.reduceQuantity);
 //function to remove items from cart
 router.get('/removeFromCart/:id', cartController.removeItem );
 
-//check if the product with particular varient is inside the cart of the user or not
-router.post('/checkProductInCart', cartController.checkProduct);
+
 
 
 

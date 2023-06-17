@@ -129,6 +129,25 @@ router.post('/customers/block', (req, res)=> {
 });
 
 
+//admin dashboard management
+ router.post('/getSales', salesManageController.getSales )
+ router.post('/getRevenue' )
+ router.post('/getCustomers' )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //logout
 router.get('/logout', loginController.getLogout);
 

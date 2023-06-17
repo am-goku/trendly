@@ -116,7 +116,7 @@ const cartController = {
     `productInCart` set to `true` if the product is already in the cart, or logs a message to the
     console if the product is not in the cart. */
     checkProduct: (req, res, next) => {
-        const userId = req.session.user._id;
+        let userId ;
 
         if(req.session.user) {
             userId = req.session.user._id;

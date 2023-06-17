@@ -19,6 +19,23 @@ function convertdate(cDate, oDate) {
     return [cformattedDate, oformattedDate];
 }
 
+function setDate(date) {
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const firstDateOfMonth = new Date(currentYear, currentMonth, 1);
+    const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+
+    if (date == 'day') {
+        return currentDate.setHours(0,0,0,0);
+    } else if (date == 'month') {
+        return firstDateOfMonth;
+    } else {
+        return firstDayOfYear;
+    }
+}
+
 module.exports = {
     showSales: ()=> {
         return new Promise(async (resolve, reject)=> {
@@ -43,5 +60,27 @@ module.exports = {
             resolve(todaySale);
 
         })
+    },
+
+
+    getSales: (time)=> {
+        try{
+            const salesDate = setDate();
+            const salesDateQuery = {
+                $gte: salesDate
+            }
+            return new Promise((resolve, reject) => {
+                orderCollection.find({'order.date': salesDateQuery
+                  }).then((response)=> {
+                    resolve(response)
+                  }).catch((error)=> {
+                    console.log(error, 'mdg');
+                  })
+            });
+        } catch(err) {
+            console.log('error::', err);
+        }
     }
+
+
 }
