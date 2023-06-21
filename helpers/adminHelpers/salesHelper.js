@@ -18,17 +18,16 @@ function convertdate(cDate, oDate) {
 
     return [cformattedDate, oformattedDate];
 }
-
 function setDate(date) {
-
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
     const firstDateOfMonth = new Date(currentYear, currentMonth, 1);
     const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-
     if (date == 'day') {
-        return currentDate.setHours(0,0,0,0);
+        currentDate.setHours(0,0,0,0);
+        let result = new Date(currentDate);
+        return result;
     } else if (date == 'month') {
         return firstDateOfMonth;
     } else {
@@ -65,15 +64,19 @@ module.exports = {
 
     getSales: (time)=> {
         try{
-            const salesDate = setDate();
+            const salesDate = setDate(time);
             const salesDateQuery = {
                 $gte: salesDate
             }
             return new Promise((resolve, reject) => {
-                orderCollection.find({'order.date': salesDateQuery
-                  }).then((response)=> {
+                orderCollection.aggregate([
+                    { $unwind: '$order' },
+                    { $match: { 'order.date': { $gte: salesDate } } }
+                ])                  
+                .exec()
+                .then((response)=> {
                     resolve(response)
-                  }).catch((error)=> {
+                }).catch((error)=> {
                     console.log(error, 'mdg');
                   })
             });

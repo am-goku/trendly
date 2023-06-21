@@ -1,14 +1,34 @@
+PENDINGS
 pagination sort filter should be interconnected
 zoom product
 confirmation for cart item removing
-no need for serial no sort
 toaster messages for every server actions
-
-
-
 Sales report in admin side (export to pdf, excel).
-Offer module(product offer, category offer, coupen code).
-Return option for delivered product."
+Offer module(product offer, category offer).
+forgot password : password strength validation
+currency indicator is missing
+confirmation for remove,delete,update etc
+sales report is missing
+Offer module(product offer, category offer) is missing
+return or cancel reason
+
+NEXT WEEK TASK
+Complete testing & bug fixing.
+Keep coding standard.
+Study GIT & publish project.
+Change to https
+Check Load balancing
+Finish Ngnix tutorial & host your project. 
+http vs https
+Complete the Project & HOST Project"
+
+
+₹
+
+
+
+
+
 
 
 

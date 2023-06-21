@@ -44,7 +44,11 @@ const userSchema = new mongoose.Schema({
     usedCoupons: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: coupon
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: new Date()
+    }
 }, {collection: 'users'});
 
 

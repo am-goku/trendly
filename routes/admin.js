@@ -131,8 +131,8 @@ router.post('/customers/block', (req, res)=> {
 
 //admin dashboard management
  router.post('/getSales', salesManageController.getSales )
- router.post('/getRevenue' )
- router.post('/getCustomers' )
+//  router.post('/getRevenue' )
+//  router.post('/getCustomers' )
 
 
 

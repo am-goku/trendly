@@ -493,9 +493,10 @@
 	var priceRange = [];
 	var totalPages = 0;
 	var currentPage = 1;
+	let page_1 = '', price_1 = '';
 
-
-	function filter(page = '', price = '') {
+	function filter(page = page_1, price = price_1) {
+		page_1 = page; price_1 = price;
 		//color filter
 		var checkboxes = document.querySelectorAll('input[name="color"]:checked');
 		color = Array.from(checkboxes).map(checkbox => checkbox.value);

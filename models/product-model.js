@@ -49,11 +49,12 @@ const productSchema = new mongoose.Schema({
 
     color: [String],
 
-    size: [String]
+    size: [String],
 
-
-
-
+    addedAt: {
+        type: Date,
+        default: new Date()
+    }
 
 },{collection: 'products'})
 

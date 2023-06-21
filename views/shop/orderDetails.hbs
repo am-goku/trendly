@@ -23,7 +23,7 @@
                     </tr>
                     <tr>
                         <td>Total</td>
-                        <td >{{order.totalAmount}}</td>
+                        <td >₹{{order.totalAmount}}</td>
                     </tr>
                     <tr>
                         <td>Payment</td>
@@ -114,9 +114,9 @@
             <tr>
                 <td class="index"></td>
                 <td class="productName">{{this.product.productName}}</td>
-                <td class="productPrice">{{this.product.productPrice}}</td>
+                <td>₹<span class="productPrice">{{this.product.productPrice}}</span></td>
                 <td class="productQuantity">{{this.quantity}}</td>
-                <td class="productTotal">{{this.productTotal}}</td>
+                <td>₹<span class="productTotal">{{this.productTotal}}</span></td>
             </tr>
             {{/each}}
             <tr>
@@ -124,14 +124,14 @@
                 <td></td>
                 <td></td>
                 <td>Subtotal:</td>
-                <td id="subtotal"></td>
+                <td>₹<span id="subtotal"></span></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>Shipping:</td>
-                <td>50.00</td>
+                <td>₹50.00</td>
             </tr>
             {{#if order.discount}}
             <tr>
@@ -148,7 +148,7 @@
                 <td></td>
                 <td></td>
                 <td><b>Total:</b></td>
-                <td><b>{{order.totalAmount}}</b></td>
+                <td>₹<b>{{order.totalAmount}}</b></td>
             </tr>
 
         </tbody>
