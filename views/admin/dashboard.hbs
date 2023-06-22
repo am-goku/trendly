@@ -528,7 +528,7 @@
           </div>
 
           <div class="card-body pb-0">
-            <h5 class="card-title">Website Traffic <span>| Today</span></h5>
+            <h5 class="card-title">Paymant Methods <span>| <span id="methodDay">Today</span></span></h5>
 
             <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
@@ -749,5 +749,20 @@
     } else {
       document.getElementById('revenueDay').innerHTML = 'This Year'
     }
+  }
+</script>
+
+{{!-- scripts to update payment method --}}
+<script>
+  function getPaymentMethods() {
+    let paymentMethods = {};
+
+    $.ajax({
+      url: '/admin/getPaymentMethod',
+      method: 'POST',
+      success: function(response) {
+        
+      }
+    })
   }
 </script>
