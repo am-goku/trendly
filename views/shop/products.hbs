@@ -182,9 +182,13 @@
 				</div>
 			</div>
 		</div>
+
+		{{!-- no product Found --}}
 		<div style="text-align: center; display: none;" id="xxx">
 			<h5>No Product Found</h5>
 		</div>
+
+		{{!-- product display --}}
 		<div class="container" style="overflow: auto;">
 		<div class="row isotope-grid">
 			{{#each products}}
@@ -194,7 +198,7 @@
 						
 					<div class="block2-pic hov-img0">
 						
-						<img src="/uploads/1684136138222_product-14.jpg.jpg" alt="PRODUCT_IMAGE">
+						<img src="/uploads/{{this.images.[0]}}" alt="PRODUCT_IMAGE">
 												
 						<a href="#"
 							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">

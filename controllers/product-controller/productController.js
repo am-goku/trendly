@@ -3,11 +3,8 @@ const productHelper = require('../../helpers/productHelpers/productHelper');
 
 const product = require('../../models/product-model')
 
-// const fileUpload 
-
 //additional variables
-let errMsg = false;
-let admin = true;
+const admin = true;
 
 module.exports = {
     /* `getAddProduct` is a function that handles a GET request to display the add product page for the
