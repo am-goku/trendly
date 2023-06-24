@@ -52,7 +52,7 @@ module.exports = {
       try {
         const customer = req.session.user;
         const currentPage = parseInt(req.query.page) || 1; // Get the current page from the query parameters, default to 1 if not provided
-        const itemsPerPage = 5; // Number of products to display per page
+        const itemsPerPage = 8; // Number of products to display per page
     
         // Retrieve the filter parameters from the query parameters
         const sortBy = req.query.sort || ""; // Sort parameter
