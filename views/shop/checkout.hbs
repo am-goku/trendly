@@ -19,6 +19,7 @@
                     <h3>SHIPPING ADDRESS</h3>
                     <div class="card card-body ">
                         <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                            {{#if address}}
                             <div class="col-md-12 form-group p_star">
                                 <select class="country_select" id="address-list" onchange="updateAddress()">
                                     <option value="1">Choose Address</option>
@@ -26,9 +27,9 @@
                                     <option value="{{this._id}}">{{this.name}}, {{this.houseName}}, {{this.city}},
                                         {{this.pincode}}</option>
                                     {{/each}}
-
                                 </select>
                             </div>
+                            {{/if}}
                             <div class="col-md-6 form-group p_star">
                                 <label for="name">First name</label>
                                 <input type="text" class="form-control" id="name" name="name">

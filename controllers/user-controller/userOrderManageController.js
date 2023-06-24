@@ -18,8 +18,8 @@ const orderManagement = {
 
         userHelper.getAddress(userId).then((user_address) => {
             cart.findOne({userId: req.session.user._id}).then((response) => {
-                console.log(user_address.address[0]);
-                res.render('shop/checkout', {address: user_address.address, customer: req.session.user, totalAmount: response.totalAmount});
+                const address = user_address? user_address.address: null;
+                res.render('shop/checkout', {address: address, customer: req.session.user, totalAmount: response.totalAmount});
             })
             
         })
