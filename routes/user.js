@@ -178,6 +178,10 @@ router.post('/check-coupon', couponManagement.checkCoupon);
 router.post('/cancel-coupon', couponManagement.cancelCoupon );
 
 
+// cart and wishlist management together
+router.post('/getCount', userController.getCartOrWishlistLength);
+
+
 
 
 

@@ -7,6 +7,7 @@ const customerCollection = require('../../models/user-model');
 const user_address = require('../../models/address-model');
 const order = require('../../models/order-model');
 const cart = require('../../models/cart-model');
+const wishlist = require('../../models/wishlist-model');
 
 module.exports = {
 
@@ -167,6 +168,26 @@ module.exports = {
             .lean().exec().then((response) => {
                 // console.log('orderpage:::', response.order[0].products[0].product);
                 resolve(response);
+            })
+        })
+    },
+
+
+    //function to fetch no. of items in a cart and whishlist of a customer
+    getCartOrWishlistCount: (userId) => {
+        return new Promise((resolve, reject) => {
+            cart.findOne({userId: userId}).lean().then((cartResponse) => {
+                wishlist.findOne({user: userId}).lean().then((wishlistResponse) => {
+                    const cartLength = cartResponse.items.length;
+                    const wishlistLength = wishlistResponse.items.length;
+                    resolve({cartLength: cartLength, wishlistLength: wishlistLength});
+                }).catch((err)=> {
+                    console.log('Error getting wishlist length', err);
+                    resolve({error: true});
+                })
+            }).catch((err) => {
+                console.log('Error getting wishlist length', err);
+                resolve({error: true});
             })
         })
     }

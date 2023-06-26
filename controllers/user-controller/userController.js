@@ -112,6 +112,23 @@ module.exports = {
         } catch (err) {
             console.log('Error fetching address'+err);
         }
+    },
+
+
+    getCartOrWishlistLength: (req, res, next) => {
+        try {
+            const userId = req.session.user._id;
+            userHelper.getCartOrWishlistCount(userId).then((response) => {
+                const cartLength = response.cartLength;
+                const wishlistLength = response.wishlistLength;
+                const error = response.error || false;
+                res.status(200).json({cartLength:cartLength, wishlistLength:wishlistLength, error:error});
+            }).catch((err) => {
+                console.log('Error getting wishlist/cart length in controller', err);
+            })
+        } catch (error) {
+            console.log('Error in getCartOrWishlistLength func in controller', err);
+        }
     }
 
     

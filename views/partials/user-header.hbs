@@ -101,13 +101,11 @@
 					</div> --}}
 
 					<a href="/cart"
-						class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 {{#if customer}}{{#if cartActive}}{{else}} icon-header-noti {{/if}}{{/if}} js-show-cart"
-						data-notify="{{customer.cartCount}}">
+						class="cart icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</a>
 
-					<a href="/wishlist" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-						data-notify="0">
+					<a href="/wishlist" class="wishlist icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
 						<i class="zmdi zmdi-favorite-outline"></i>
 					</a>
 				</div>
@@ -129,13 +127,11 @@
 			</div> --}}
 
 			<a href="/cart"
-				class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 {{#if customer}}{{#if cartActive}}{{else}} icon-header-noti {{/if}}{{/if}} js-show-cart"
-				data-notify="{{customer.cartCount}}">
+				class="cart icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 js-show-cart">
 				<i class="zmdi zmdi-shopping-cart"></i>
 			</a>
 
-			<a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-				data-notify="0">
+			<a href="/wishlist" class="wishlist dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 ">
 				<i class="zmdi zmdi-favorite-outline"></i>
 			</a>
 		</div>
@@ -242,3 +238,29 @@
 		</div>
 	</div>
 </header>
+
+
+
+{{!-- scripts to count the cartitems and wishlist --}}
+<script>
+	function getCount() {
+		const cartDiv = document.getElementsByClassName('cart');
+		const wishlistDiv = document.getElementsByClassName('wishlist');
+		$.ajax({
+			url: '/getCount',
+			method: 'POST',
+			success: function(response) {
+				console.log(response)
+				if(!response.error){
+					for (let i = 0; i < cartDiv.length; i++) {
+						cartDiv[i].classList.add('icon-header-noti');
+						wishlistDiv[i].classList.add('icon-header-noti');
+
+						cartDiv[i].setAttribute('data-notify', response.cartLength);
+						wishlistDiv[i].setAttribute('data-notify', response.wishlistLength);
+					}
+				}
+			}
+		})
+	}; getCount();
+</script>
