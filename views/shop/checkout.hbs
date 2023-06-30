@@ -120,8 +120,6 @@
 
                     </div>
                 </div>
-
-                
             </div>
         </div>
     </div>
@@ -173,13 +171,26 @@
 {{!-- scripts for verify paymant and razorpay --}}
 <script>
 
-    function verifyPayment(payment, order) {
+    function verifyPayment(payment, orderDetails) {
+        console.log(orderDetails.address)
         $.ajax({
-            url: '/verifyPayment',
+            url: '/rzpPayment',
             method: "POST",
             data: {
                 payment,
-                order
+                orderDetails,
+                address: orderDetails.address,
+                coupon: orderDetails.coupon,
+                amount: orderDetails.finalAmount,
+                orderNo: orderDetails.receipt
+            },
+            success: function(response) {
+                if (response.rzpStatus){
+                    window.location.href = '/confirm';
+                } else {
+                    alert('Something went wrong..!')
+                    window.location.href = '/checkout'
+                }
             }
         })
     }
@@ -199,21 +210,23 @@
     function razorpayPayment(order) {
         var options = {
             "key": "rzp_test_MTk5iQyefsRP1C", // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "amount": order.finalAmount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "TRENDLY", //your business name
             "description": "Test Transaction",
             "image": '/img/logo/Screenshot_2023-04-02_082650-removebg-preview.png',
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "order_Id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
                 if (response.razorpay_payment_id) {
+                    
                   // alert(response.razorpay_payment_id);
                   // alert(response.razorpay_order_id);
                   // alert(response.razorpay_signature);
 
                     verifyPayment(response, order);
-                    window.location.href = '/confirm';
                 } else {
+                    alert(order._id)
+                    console.log(order)
                    // alert(response.error.code);
                    // alert(response.error.description);
                    // alert(response.error.source);
@@ -281,7 +294,7 @@
             pincode
         }
 
-        let paymentMethod;
+        let paymentMethod ;
         let radioBtn = document.getElementsByName('selector');
 
         for (let i = 0; i < radioBtn.length; i++) {
@@ -300,13 +313,11 @@
             }),
             contentType: 'application/json',
             success: function (response) {
-
                 if (response.codSuccess) {
                     window.location.href = '/confirm'
                 } else {
                     razorpayPayment(response);
                 }
-                // window.location.href = '/confirm'
             }
         })
 

@@ -178,8 +178,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             cart.findOne({userId: userId}).lean().then((cartResponse) => {
                 wishlist.findOne({user: userId}).lean().then((wishlistResponse) => {
-                    const cartLength = cartResponse.items.length;
-                    const wishlistLength = wishlistResponse.items.length;
+                    const cartLength = cartResponse? cartResponse.items.length : 0;
+                    const wishlistLength = wishlistResponse? wishlistResponse.items.length : 0;
                     resolve({cartLength: cartLength, wishlistLength: wishlistLength});
                 }).catch((err)=> {
                     console.log('Error getting wishlist length', err);

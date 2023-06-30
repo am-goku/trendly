@@ -211,6 +211,8 @@ router.get('/lol', (req, res)=> {
 //payment
 router.post('/payment', userController.userLoginStatus, userController.checkBlockedStatus, paymentController.doPayment)
 
+router.post('/rzpPayment', userController.userLoginStatus, userController.checkBlockedStatus, paymentController.doRzpPayment)
+
 router.get('/confirm', userController.userLoginStatus,userController.checkBlockedStatus, (req, res)=> {
     res.render('shop/confirmation', {order: req.session.lastOrder, customer: req.session.user});
 })

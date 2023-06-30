@@ -14,8 +14,8 @@ var instance = new Razorpay({
 //import models
 const shopping_cart = require('../../models/cart-model');
 const customer = require('../../models/user-model');
-const cartCollection = require('../../models/cart-model');
 const order = require('../../models/order-model');
+const couponCollection = require('../../models/coupon-model');
 
 // additional functions
     //1-----checking the ordernumber is unique or not
@@ -40,6 +40,10 @@ const order = require('../../models/order-model');
                 genarateOrderNo();
             }
         }
+
+//additional variables
+        //tax and shipping charges
+        const tax = 100, shipping = 50;
     
 
 
@@ -63,8 +67,7 @@ const paymentHelper = {
                 totalAmount += (cart.items[i].product.productPrice * cart.items[i].quantity);
             }
         //discount applying and tax towards total amount (pending)
-            const shipping = 50; // setting it as a constant for now
-            totalAmount += shipping;
+            totalAmount += shipping + tax;
             if(coupon){
                 totalAmount = totalAmount - coupon.discount;
                 await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
@@ -75,21 +78,41 @@ const paymentHelper = {
         //updating or creating order
             return new Promise((resolve, reject) => {
                 if(orderCollection){ 
-                    order.updateOne({userId: userId}, {$push: {order: {user: userId, orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon ? coupon.discount : 0}}})
-                    .then(async (response) => {
+                    order.updateOne({userId: userId}, {$push: {order: {
+                        user: userId,
+                        orderNo: orderNo,
+                        items: cart.items,
+                        totalAmount: totalAmount,
+                        userId: userId, date: date,
+                        paymentMethod: paymentMethod,
+                        address: address,
+                        discount: coupon ? coupon.discount : 0,
+                        shippingCharge: shipping,
+                        taxAmount: tax
+                    }}}).then(async (response) => {
                         if(coupon){
                             await customer.updateOne({userId: userId}, {$push: {usedCoupons: coupon._id}});
                         }
                         order.findOne({userId: userId}).populate('order.items.product').lean().then(async (res) => {
-                            await cartCollection.deleteOne({userId: userId});
+                            await shopping_cart.deleteOne({userId: userId});
                             resolve(res);
                         })
                     })
                 } else {
-                    order.create({userId: userId, order:[{user: userId, orderNo: orderNo, items: cart.items, totalAmount: totalAmount, userId: userId, date: date, paymentMethod: paymentMethod, address: address, discount: coupon ? coupon.discount : 0}]})
-                    .then((response) => {
+                    order.create({userId: userId, order:[{
+                        user: userId,
+                        orderNo: orderNo,
+                        items: cart.items,
+                        totalAmount: totalAmount,
+                        userId: userId, date: date,
+                        paymentMethod: paymentMethod,
+                        address: address,
+                        discount:coupon ? coupon.discount : 0,
+                        shippingCharge: shipping,
+                        taxAmount: tax
+                    }]}).then((response) => {
                         order.findOne({userId: userId}).populate('order.items.product').lean().then(async (res) => {
-                            await cartCollection.deleteOne({userId: userId});
+                            await shopping_cart.deleteOne({userId: userId});
                             resolve(res);
                         })
                     })
@@ -110,7 +133,7 @@ const paymentHelper = {
     generateRazorpay: (orderId, total) => {
         return new Promise((resolve, reject) => {
             instance.orders.create({
-                amount: 100,
+                amount: total*100,
                 currency: "INR",
                 receipt: "Order" + orderId,
                 notes: {
@@ -124,6 +147,91 @@ const paymentHelper = {
                 console.log('Error creating rzp instance:: ', err);
               })
         })
+    },
+
+    getTotalAmount: (userId, coupon) => {
+        return new Promise(async(resolve, reject) => {
+            const orderNo = genarateOrderNo();
+            const usedCoupon = await couponCollection.findOne({code: coupon});
+            shopping_cart.findOne({userId: userId}).then((res) => {
+                let finalAmount = (res.totalAmount + shipping + tax)- (usedCoupon? usedCoupon.discount : 0);
+                const response = {finalAmount: finalAmount, orderNo: orderNo,}
+                resolve(response);
+            }).catch((err) => {
+                console.log('Error getting cart total amount:: ', err);
+                resolve({error: true});
+            })
+        })
+    },
+
+
+
+
+    rzpPayment: async (userId, address, paymentMethod, couponCode, orderNo, amount) => {
+        console.log(orderNo);
+        try {
+            const cart = await shopping_cart.findOne({ userId: userId }).populate('items.product');
+            let date = Date.now();
+            const coupon = couponCollection.findOne({ code: couponCode });
+            const orderCollection = await order.findOne({ userId: userId });
+            //updating or creating order
+            return new Promise((resolve, reject) => {
+                if (orderCollection) {
+                    order.updateOne({ userId: userId }, {
+                        $push: {
+                            order: {
+                                user: userId,
+                                orderNo: orderNo,
+                                items: cart.items,
+                                totalAmount: amount,
+                                userId: userId, date: date,
+                                paymentMethod: paymentMethod,
+                                address: address,
+                                discount: coupon ? coupon.discount : 0,
+                                shippingCharge: shipping,
+                                taxAmount: tax
+                            }
+                        }
+                    }).then(async (response) => {
+                        if (coupon) {
+                            await customer.updateOne({ userId: userId }, { $push: { usedCoupons: coupon._id } });
+                        }
+                        order.findOne({ userId: userId }).populate('order.items.product').lean().then(async (order) => {
+                            await shopping_cart.deleteOne({ userId: userId });
+                            resolve({ status: true, ...order });
+                        })
+                    }).catch((err) => {
+                        console.log('Error in rzp paymant 1', err);
+                        resolve({ status: false })
+                    })
+                } else {
+                    order.create({
+                        userId: userId, order: [{
+                            user: userId,
+                            orderNo: orderNo,
+                            items: cart.items,
+                            totalAmount: amount,
+                            userId: userId, date: date,
+                            paymentMethod: paymentMethod,
+                            address: address,
+                            discount: coupon ? coupon.discount : 0,
+                            shippingCharge: shipping,
+                            taxAmount: tax
+                        }]
+                    }).then((response) => {
+                        order.findOne({ user: userId }).populate('order.items.product').lean().then(async (order) => {
+                            await shopping_cart.deleteOne({ userId: userId });
+                            resolve({ status: true, ...order });
+                        })
+                    }).catch((err) => {
+                        console.log('Error in rzp paymant 2', err);
+                        resolve({ status: false })
+                    })
+                }
+            })
+        } catch (error) {
+            console.log('Error in rzpPayment::', error);
+        }
     }
 
 

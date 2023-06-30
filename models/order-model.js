@@ -65,6 +65,12 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        shippingCharge: {
+            type: Number
+        },
+        taxAmount: {
+            type: Number
+        }
     }]
     
 },{collection: 'orders'});
