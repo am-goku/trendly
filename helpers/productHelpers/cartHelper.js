@@ -136,7 +136,9 @@ const cartHelper = {
         return new Promise((resolve, reject) => {
             cart.findOneAndUpdate({userId: userId}, {$pull: {items: {_id: itemId}}}).then((res)=> {
                 console.log('from helper: ' + res);
-                resolve (res);
+                cart.findOne({userId: userId}).lean().then((response)=> {
+                    resolve (response);
+                })
             })
         })
     },

@@ -98,11 +98,11 @@ const cartController = {
     `res.redirect('/cart')`. */
     removeItem: (req, res, next) => {
         const userId = req.session.user._id
-        const itemId = req.params.id;
-        cartHelper.removeItem(userId, itemId).then((response) => {
+        const itemId = req.query.itemId;
+        cartHelper.removeItem(userId, itemId).then((cart) => {
             console.log(response)
-            res.redirect('/cart')
-
+            // res.redirect('/cart')
+            res.status(200).json({cart: cart});
         })  
     },
 

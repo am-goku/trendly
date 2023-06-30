@@ -106,7 +106,7 @@ router.post('/reduceQuantity', cartController.reduceQuantity);
 
 
 //function to remove items from cart
-router.get('/removeFromCart/:id', cartController.removeItem );
+router.post('/removeFromCart', cartController.removeItem );
 
 
 

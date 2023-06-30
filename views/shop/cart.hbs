@@ -85,7 +85,7 @@
                             {{/if}}
 
                             {{#each products}}
-                            <tr class="table_row">
+                            <tr class="table_row" id="tableRaw{{this._id}}">
                                 <td class="column-1">
                                     <div class="how-itemcart1">
                                         <img {{#each this.product.images}} src="/uploads/{{this}}" {{/each}} alt="IMG">
@@ -96,24 +96,7 @@
                                 <td class="column-2">{{this.size}} , {{this.color}}</td>
                                 <td class="column-3">₹ <span id="price">{{this.product.productPrice}}</span></td>
                                 <td class="column-4">
-                                    {{!-- <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
-                                            onclick="return minusQuantity('{{this._id}}', '{{this.product._id}}' )">
-                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                        </div>
-
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                            name="num-product1" id="quantity" value="{{this.quantity}}">
-
-                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
-                                            onclick="return addQuantity('{{this._id}}', '{{this.product._id}}')">
-                                            <i class="fs-16 zmdi zmdi-plus"></i>
-                                        </div>
-                                    </div> --}}
-
-
                                     <div class="quantity-div">
-
 										<div class="q-less animated-element" onclick="less_quantity('{{this._id}}','{{this.product._id}}')">
 											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
@@ -123,12 +106,10 @@
 										<div class="q-add animated-element" onclick="add_quantity('{{this._id}}','{{this.product._id}}')">
 											<i class="fs-16 zmdi zmdi-plus"></i>
 										</div>
-										
 									</div>
-
                                 </td>
                                 <td class="column-5">₹ <span class="totalPrice" id="total">{{this.amount}}</span></td>
-                                <td class="column-6"><a onclick="xyz()" href="/removeFromCart/{{this._id}}"
+                                <td class="column-6"><a data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="removeItem('{{this._id}}')"
                                         class="btn btn-danger">Remove</a></td>
                             </tr>
                             {{/each}}
@@ -256,7 +237,7 @@
 
                         <div class="size-209 p-t-1">
                             <span class="mtext-110 cl2">
-                                $ <span id="finalAmount">payment amount</span>
+                                ₹ <span id="finalAmount">payment amount</span>
                             </span>
                         </div>
                     </div>
@@ -512,5 +493,62 @@
         }
         document.getElementById(itemId).value = quantity;
     }
+
+</script>
+
+{{!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> --}}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" "tabindex=-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmation</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this Item from Cart ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="remove(false)">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="remove(true)" data-bs-dismiss="modal">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let modal = document.getElementById('exampleModal');
+let bootstrapModal = new bootstrap.Modal(modal);
+function toggleModal() {
+  bootstrapModal.toggle();
+}
+
+let currentItem ;
+
+function removeItem(itemId){
+    currentItem = itemId;
+}
+function remove(remove){
+    if(remove){
+        $.ajax({
+            url: '/removeFromCart?itemId='+currentItem,
+            method: 'POST',
+            success: function(response){
+                const cart = response.cart;
+                alert(cart.totalAmount)
+                document.getElementById('tableRaw'+currentItem).style.display = 'none';
+                document.getElementById('subtotal').innerText = cart.totalAmount;
+                window.location.reload();
+                update();
+                checkCoupon();
+                currentItem = null;
+            }
+        })
+    } else {
+        currentItem = null;
+    }
+}
 
 </script>
