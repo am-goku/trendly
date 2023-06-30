@@ -49,7 +49,7 @@ module.exports = {
     updatePassword: (userData) => {
         try {
             return new Promise(async (resolve, reject) => {
-                const password = await bcrypt.hash(userData.password, 10);
+                const password = await bcrypt.hash(userData.confirmPassword, 10);
                 user.updateOne({phone: userData.phone}, {$set:{password: password}}).then((response) => {
                         resolve(response);
                 })

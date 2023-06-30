@@ -169,7 +169,7 @@
                         <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
                             placeholder="Coupon Code" id="couponCode" {{#if couponActive}} value="{{couponActive.code}}" {{/if}}>
 
-                        <div onclick="checkCoupon()" id="apply"
+                        <div onclick="checkCoupon()" {{#if couponActive}} style="display: none;" {{else}} style="display: flex;" {{/if}} id="apply"
                             class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
                             Apply coupon
                         </div>
@@ -232,7 +232,7 @@
                             </span>
                         </div>
 
-                        <div class="size-208 " id="discN" {{#if couponActive}} style="display: block;" {{else}} style="display: none;" {{/if}} >
+                        <div class="size-208 " id="discN" {{#if couponActive}} style="display: flex;" {{else}} style="display: none;" {{/if}} >
                             <span class="stext-110 cl2">
                                 Discount:
                             </span>
@@ -290,6 +290,7 @@
 
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 {{!-- script contains update, addQuantity, minusQuantity functions --}}
@@ -410,23 +411,33 @@
                 },
             })
         }
-    }; checkCoupon();
+    };
 
     function cancelCoupon() {
-        let code = document.getElementById('couponCode').value;
-        document.getElementById('couponErr').style.color = 'red';
+        $.ajax({
+            url: '/cancel-coupon',
+            method: 'POST',
+            data: {},
+            success: function(res){
+                let code = document.getElementById('couponCode').value;
+                document.getElementById('couponErr').style.color = 'red';
+                document.getElementById('couponErr').innerText = '';
 
-        document.getElementById('couponCode').value = '';
-        //document.getElementById('couponCode').style.cursor = allowed;
-        document.getElementById('discount').innerText = '';
-        update();
-        document.getElementById('cancel').style.display = 'none';
-        document.getElementById('apply').style.display = 'flex';
-        document.getElementById('disc').style.display='none';
-        document.getElementById('discN').style.display='none';
+                document.getElementById('couponCode').value = '';
+                //document.getElementById('couponCode').style.cursor = allowed;
+                document.getElementById('discount').innerText = '';
+                update();
+                document.getElementById('cancel').style.display = 'none';
+                document.getElementById('apply').style.display = 'flex';
+                document.getElementById('disc').style.display='none';
+                document.getElementById('discN').style.display='none';
+            }
+        })
     }
 
-
+    $(document).ready(function() {
+        checkCoupon();
+    });
 </script>
 
 {{!-- script contains setCoupon function --}}

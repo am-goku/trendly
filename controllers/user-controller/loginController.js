@@ -76,6 +76,7 @@ const loginController = {
     user to the home page. */
     logout: (req, res, next) => {
         req.session.loggedIn = false;
+        req.session.couponActive = null;
         const user = req.session.user;
         loginHelper.setActiveStatus(user, req.session.loggedIn);
         req.session.user = null;

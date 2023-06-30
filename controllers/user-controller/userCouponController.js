@@ -53,30 +53,16 @@ module.exports = {
 
 
 
-    /* `cancelCoupon` is a function that takes in two parameters `req` and `res`. It tries to extract
-    the coupon code and user ID from the request body and session, respectively. It then uses the
-    `couponCollection` model to find the coupon with the given code. If the coupon is found, it
-    updates the user's cart by subtracting the discount amount from the total amount and returns a
-    JSON response with a `status` of `true`. If there is an error, it returns a JSON response with a
-    `status` of `false` and an error message. If an error occurs in the try block, it logs the error
-    to the console. */
+    
+    /* The `cancelCoupon` function is responsible for canceling the active coupon. It takes in two
+    parameters, `req` and `res`, which represent the request and response objects, respectively. */
     cancelCoupon: (req, res) => {
         try{
-            const { code } = req.body;
-            const userId = req.session.user._id;
-
-            couponCollection.findOne({ code })
-                .then(async (coupon) => {
-                    await cartCollection.updateOne({userId: userId}, { $inc: { totalAmount: coupon.discount } });
-
-                    res.json({ status: true });
-                })
-                .catch((err) => {
-                    console.error(err);
-                    res.json({ status: false, message: 'An error occurred' });
-                });
+           req.session.couponActive = null;
+           res.status(200).json({status: true});
         } catch (err) {
             console.log('errror occured while canceling order:: ', err);
+            res.status(200).json({status:false});
         }
     },
 

@@ -106,15 +106,24 @@
     const password = document.getElementById("password").value;
     const passwordStrengthText = document.getElementById("password-strength-text");
 
-    // Define a regular expression pattern to check for password strength
-    const strongPasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+    var hasUppercase = /[A-Z]/.test(password);
+    var hasLowercase = /[a-z]/.test(password);
+    var hasNumber = /[0-9]/.test(password);
+    var hasSpecialChar = /[!@#$%^&*]/.test(password);
 
-    if (password.match(strongPasswordPattern)) {
-      passwordStrengthText.innerHTML = "Strong password";
-      passwordStrengthText.style.color = "green";
+    // Define a regular expression pattern to check for password strength
+    if(hasLowercase && hasUppercase && hasNumber && hasSpecialChar){
+        passwordStrengthText.innerHTML = "Strong password";
+        passwordStrengthText.style.color = "red";
+    } else if(((hasLowercase && hasUppercase) || (hasNumber && hasSpecialChar)) || ((hasLowercase && hasSpecialChar) || (hasNumber && hasUppercase))){
+        passwordStrengthText.innerHTML = "Hard password";
+        passwordStrengthText.style.color = "Orange";
+    } else if(((hasLowercase && hasNumber) || (hasUppercase && hasSpecialChar)) || ((hasLowercase && hasNumber) || (hasSpecialChar && hasUppercase))){
+        passwordStrengthText.innerHTML = "Hard password";
+        passwordStrengthText.style.color = "Orange";
     } else {
-      passwordStrengthText.innerHTML = "Weak password";
-      passwordStrengthText.style.color = "red";
+        passwordStrengthText.innerHTML = "Weak password";
+        passwordStrengthText.style.color = "red";
     }
   }
 
