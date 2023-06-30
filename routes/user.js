@@ -184,6 +184,9 @@ router.post('/getCount', userController.getCartOrWishlistLength);
 
 
 
+//Quantity management
+router.post('/getQuantity', productController.getStock);
+
 
 
 

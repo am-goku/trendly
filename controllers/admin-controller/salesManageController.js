@@ -7,7 +7,6 @@ module.exports = {
             res.render('admin/dashboard', {todaySales, admin: req.session.admin});
         }).catch((err)=> {
             console.log('Error in getting dashords', err);
-            res.redirect('/admin/customers');
         })
     },
 

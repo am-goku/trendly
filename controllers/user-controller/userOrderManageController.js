@@ -4,6 +4,8 @@ const cart = require('../../models/cart-model')
 
 //importing helpers
 const orderHelper = require('../../helpers/userHelpers/userOrderHelper');
+const couponHelper = require('../../helpers/userHelpers/couponHelper');
+const coupon = require('../../models/coupon-model');
 
 
 
@@ -15,13 +17,20 @@ const orderManagement = {
     `checkout` view with the user's address, customer information, and total amount of the cart. */
     showAddress: (req, res, next) => {
         const userId = req.session.user._id;
-
+        let couponActive = req.session.couponActive || false;
+        console.log(req.session.couponActive,"active coupon");
         userHelper.getAddress(userId).then((user_address) => {
             cart.findOne({userId: req.session.user._id}).then((response) => {
-                const address = user_address? user_address.address: null;
-                res.render('shop/checkout', {address: address, customer: req.session.user, totalAmount: response.totalAmount});
+                if(couponActive){
+                    couponHelper.checkCoupon(couponActive, response.totalAmount).then((activeCoupon)=>{
+                        const address = user_address? user_address.address: null;
+                        res.render('shop/checkout', {address: address, customer: req.session.user, totalAmount: response.totalAmount, activeCoupon: activeCoupon});
+                    })
+                } else {
+                        const address = user_address? user_address.address: null;
+                        res.render('shop/checkout', {address: address, customer: req.session.user, totalAmount: response.totalAmount});
+                }
             })
-            
         })
     },
 

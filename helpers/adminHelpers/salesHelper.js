@@ -58,6 +58,8 @@ module.exports = {
 
             resolve(todaySale);
 
+        }).catch((err)=> {
+            console.log('Error getting dashboards:', err);
         })
     },
 

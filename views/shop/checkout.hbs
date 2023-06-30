@@ -77,8 +77,12 @@
                     <div class="order_box">
                         <ul class="list list_2">
                             <li><a href="#">Subtotal <span>₹<span id="amount">{{totalAmount}}</span></span></a></li>
-                            <li><a href="#">Shipping <span>Flat rate: $<span id="shipping">50.00</span></span></a></li>
-                            <li><a href="#">Total <span>₹<span id="total"></span></a></li>
+                            <li><a href="#">Shipping <span>Flat rate: ₹<span id="shipping">50.00</span></span></a></li>
+                            <li><a href="#">Tax <span>₹<span id="tax">100.00</span></span></a></li>
+                            {{#if activeCoupon}}
+                            <li><a href="#">Discount <span>- ₹<span id="discount">{{activeCoupon.discount}}</span></span></a></li>
+                            {{/if}}
+                            <li><a href="#">Total <span>₹ <span id="total"></span></a></li>
                         </ul>
                         <div class="payment_item">
                             <div class="radion_btn">
@@ -126,7 +130,6 @@
 </section>
 </div>
 <!--================End Checkout Area =================-->
-
 
 
 
@@ -330,8 +333,13 @@
 
 {{!-- scripts to calculate the amounts in front End --}}
 <script>
-    let a = +document.getElementById('amount').innerText;
-    let b = +document.getElementById('shipping').innerText;
-    let c = a + b;
-    document.getElementById('total').innerText = c;
+    const cartTotal= +document.getElementById('amount').innerText;
+    const shipping = +document.getElementById('shipping').innerText;
+    const tax = +document.getElementById('tax').innerText;
+    let discount = 0;
+    if(document.getElementById('discount')){
+        discount = +document.getElementById('discount').innerText;
+    }
+    const total = (cartTotal + shipping + tax) - (discount? discount : 0);
+    document.getElementById('total').innerText = total;
 </script>

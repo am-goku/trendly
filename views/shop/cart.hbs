@@ -5,6 +5,51 @@
         white-space: nowrap;
         max-width: 130px;
     }
+</style><style>
+	.quantity-div {
+		background-color: rgba(154, 172, 172, 0.567);
+		width: 10vw;
+		height: 5vh;
+		margin-bottom: 5px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.animated-element {
+		transition: transform 0.3s ease;
+	}
+
+	.animated-element.clicked {
+		transform: scale(1.2);
+	}
+
+	.q-add {
+		width: 30%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.quantity {
+		width: 40%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+
+	.q-less {
+		width: 30%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
 </style>
 
 
@@ -51,7 +96,7 @@
                                 <td class="column-2">{{this.size}} , {{this.color}}</td>
                                 <td class="column-3">₹ <span id="price">{{this.product.productPrice}}</span></td>
                                 <td class="column-4">
-                                    <div class="wrap-num-product flex-w m-l-auto m-r-0">
+                                    {{!-- <div class="wrap-num-product flex-w m-l-auto m-r-0">
                                         <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
                                             onclick="return minusQuantity('{{this._id}}', '{{this.product._id}}' )">
                                             <i class="fs-16 zmdi zmdi-minus"></i>
@@ -64,7 +109,23 @@
                                             onclick="return addQuantity('{{this._id}}', '{{this.product._id}}')">
                                             <i class="fs-16 zmdi zmdi-plus"></i>
                                         </div>
-                                    </div>
+                                    </div> --}}
+
+
+                                    <div class="quantity-div">
+
+										<div class="q-less animated-element" onclick="less_quantity('{{this._id}}','{{this.product._id}}')">
+											<i class="fs-16 zmdi zmdi-minus"></i>
+										</div>
+
+										<input class="quantity" id="{{this._id}}" type="text" name="num-product" value="{{this.quantity}}" readonly>
+
+										<div class="q-add animated-element" onclick="add_quantity('{{this._id}}','{{this.product._id}}')">
+											<i class="fs-16 zmdi zmdi-plus"></i>
+										</div>
+										
+									</div>
+
                                 </td>
                                 <td class="column-5">₹ <span class="totalPrice" id="total">{{this.amount}}</span></td>
                                 <td class="column-6"><a onclick="xyz()" href="/removeFromCart/{{this._id}}"
@@ -105,8 +166,8 @@
                     </div>
 
                     <div class="flex-w flex-m m-r-20 m-tb-5">
-                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" oninput="checkCoupon()" type="text" name="coupon"
-                            placeholder="Coupon Code" id="couponCode">
+                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
+                            placeholder="Coupon Code" id="couponCode" {{#if couponActive}} value="{{couponActive.code}}" {{/if}}>
 
                         <div onclick="checkCoupon()" id="apply"
                             class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
@@ -117,7 +178,7 @@
                             Cancel coupon
                         </div>
 
-                        <span id="couponErr" style="color: rgb(177, 9, 9); margin-left: 10px;"></span>
+                        <span id="couponErr" style="{{#if couponActive}} color: green; {{else}} color: rgb(177, 9, 9); {{/if}}  margin-left: 10px;">{{#if couponActive}} Applied {{/if}} </span>
 
                     </div>
 
@@ -144,17 +205,8 @@
                     </div>
 
                     <div class="flex-w flex-t bor12 p-t-15 p-b-30">
-                        <div class="size-208 " id="discN" style="display: none;">
-                            <span class="stext-110 cl2">
-                                Discount:
-                            </span>
-                        </div>
-
-                        <div class="size-209 " id="disc" style="display: none;">
-                            <span class="mtext-110 cl2">
-                                ₹- <span id="discount"></span>
-                            </span>
-                        </div>
+                        
+                        
 
                         <div class="size-208">
                             <span class="stext-110 cl2">
@@ -164,7 +216,7 @@
 
                         <div class="size-209">
                             <span class="mtext-110 cl2">
-                                ₹ <span id="tax">10.00</span>
+                                ₹ <span id="tax">100.00</span>
                             </span>
                         </div>
 
@@ -177,6 +229,18 @@
                         <div class="size-209">
                             <span class="mtext-110 cl2">
                                 ₹ <span id="shipping">50.00</span>
+                            </span>
+                        </div>
+
+                        <div class="size-208 " id="discN" {{#if couponActive}} style="display: block;" {{else}} style="display: none;" {{/if}} >
+                            <span class="stext-110 cl2">
+                                Discount:
+                            </span>
+                        </div>
+
+                        <div class="size-209 " id="disc" {{#if couponActive}} style="display: block;" {{else}} style="display: none;" {{/if}}>
+                            <span class="mtext-110 cl2">
+                                ₹- <span id="discount"> {{#if couponActive}} {{couponActive.discount}} {{/if}} </span>
                             </span>
                         </div>
 
@@ -228,8 +292,7 @@
 
 
 
-
-
+{{!-- script contains update, addQuantity, minusQuantity functions --}}
 <script>
 
     function update() {
@@ -245,10 +308,7 @@
 
 
     function addQuantity(itemId, productId) {
-        let quantity = document.getElementById('quantity').value;
-        console.log(quantity);
-        let rtn, subtotal = 0;
-        if (quantity > 0) {
+        let subtotal = 0;
             $.ajax({
                 url: "/addQuantity?itemId=" + itemId,
                 method: "POST",
@@ -266,27 +326,17 @@
                         subtotal = subtotal + (item[i].product.productPrice * item[i].quantity);
                     }
                     document.getElementById('subtotal').innerHTML = subtotal
-                    update()
-                    rtn = true;
+                    update();
+                    checkCoupon();
                     //console.log(res);
-                },
-                reject: function (res) {
-                    rtn = false;
-                    console.log(res);
                 }
             })
-            return rtn;
-        } else {
-            return false;
-        }
     }
 
 
 
     function minusQuantity(itemId, productId) {
-        let quantity = document.getElementById('quantity').value;
-        let rtn, subtotal = 0;
-        if (quantity >= 1) {
+        let subtotal = 0;
             $.ajax({
                 url: "/reduceQuantity?itemId=" + itemId,
                 method: "POST",
@@ -302,23 +352,16 @@
                     console.log(subtotal)
                     document.getElementById('subtotal').innerHTML = subtotal;
                     update();
-                    rtn = true;
+                    checkCoupon();
                     //console.log(res);
-                },
-                reject: function (res) {
-                    rtn = false;
-                    console.log(res);
                 }
             })
-        } else {
-            return false;
-        }
     }
 
 
 </script>
 
-
+{{!-- script contains checkCoupon and cancelCoupon functions --}}
 <script>
     let coupon = {
         code: '',
@@ -367,7 +410,7 @@
                 },
             })
         }
-    }
+    }; checkCoupon();
 
     function cancelCoupon() {
         let code = document.getElementById('couponCode').value;
@@ -386,13 +429,14 @@
 
 </script>
 
-
+{{!-- script contains setCoupon function --}}
 <script>
     function setCoupon(couponCode) {
         document.getElementById('couponCode').value = couponCode;
     }
 </script>
 
+{{!-- script redirects to checkout --}}
 <script>
     function checkout(){
         window.location.href = '/checkout';
@@ -403,10 +447,7 @@
 
 
 <script>
-
-    
     function xyz() {
-        
         Toastify({
             text: 'Product added to cart !',
             duration: 3000,
@@ -417,6 +458,48 @@
             className: "toastify-icon",
             close: false,
         }).showToast();
-
     }
+</script>
+
+
+
+{{!-- script to add and minus quantity --}}
+<script>
+    function manageQuantity(productId) {
+        return new Promise((resolve, reject) => {
+            let stock;
+            $.ajax({
+                url: '/getQuantity',
+                method: 'POST',
+                data: { productId: productId },
+                success: function (response) {
+                    stock = response.stock;
+                }
+            }).then(() => {
+                resolve(stock)
+            })
+        })
+    }
+
+
+    function add_quantity(itemId, productId) {
+        let quantity = document.getElementById(itemId).value;
+        manageQuantity(productId).then((stock) => {
+            if (quantity < stock) {
+                addQuantity(itemId, productId);
+                quantity ++;
+            }
+            document.getElementById(itemId).value = quantity;
+        })
+    }
+
+    function less_quantity(itemId, productId) {
+        let quantity = document.getElementById(itemId).value;
+        if (quantity > 1) {
+            minusQuantity(itemId, productId);
+            quantity --;
+        }
+        document.getElementById(itemId).value = quantity;
+    }
+
 </script>

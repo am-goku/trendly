@@ -92,10 +92,7 @@ module.exports = {
     findProduct: (req, res, next) => {
       const id = req.params.id;
       productHelper.findProductById(id).then((product) => {
-        const image1 = product.images[0];
-        const image2 = product.images[1];
-        const image3 = product.images[2];
-        res.render('shop/singleProduct', {product, admin:false, customer:req.session.user, image1:image1, image2:image2, image3:image3})
+        res.render('shop/singleProduct', {product, admin:false, customer:req.session.user})
         console.log(product.images);
       })
     },
@@ -191,6 +188,16 @@ module.exports = {
     showAllProduct: async(req, res) => {
       await product.find({}).lean().exec().then((products) => {
         res.render('shop/products', {customer: req.session.user, product: products})
+      })
+    },
+
+
+    getStock: (req, res, next) => {
+      const productId = req.body.productId;
+      productHelper.getStock(productId).then((stock) => {
+        res.status(200).json({stock:stock});
+      }).catch((error)=> {
+        console.log('Error in controller while getting stocks', error);
       })
     }
     

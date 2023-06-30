@@ -10,6 +10,51 @@
 		white-space: nowrap;
 		max-width: 250px;
 	}
+</style><style>
+	.quantity-div {
+		background-color: rgba(154, 172, 172, 0.567);
+		width: 10vw;
+		height: 5vh;
+		margin-bottom: 5px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.animated-element {
+		transition: transform 0.3s ease;
+	}
+
+	.animated-element.clicked {
+		transform: scale(1.2);
+	}
+
+	.q-add {
+		width: 30%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.quantity {
+		width: 40%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+
+	.q-less {
+		width: 30%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
 </style>
 
 <!-- Product Detail -->
@@ -68,7 +113,7 @@
 						</h4>
 
 						<span class="mtext-106 cl2">
-							{{product.productPrice}}
+							₹ {{product.productPrice}}
 						</span>
 
 						<p class="stext-102 cl3 p-t-23">
@@ -116,17 +161,21 @@
 
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
-									<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+
+									<div class="quantity-div">
+
+										<div class="q-less animated-element" onclick="lessQuantity()">
 											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
 
-										<input class="mtext-104 cl3 txt-center num-product" id="quantity" type="number" name="num-product" value="1">
+										<input class="quantity" id="quantity" type="text" name="num-product" value="1" readonly>
 
-										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+										<div class="q-add animated-element" onclick="addQuantity('{{product._id}}')">
 											<i class="fs-16 zmdi zmdi-plus"></i>
 										</div>
+										
 									</div>
+
 
 									<button onclick="addToCart('{{product._id}}')" id="addToCartBtn" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 										Add to cart
@@ -409,7 +458,7 @@
 	</div>
 
 	<!-- Modal1 -->
-	<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+	{{!-- <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
 		<div class="overlay-modal1 js-hide-modal1"></div>
 
 		<div class="container">
@@ -560,7 +609,16 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
+
+
+{{!-- animation scripts --}}
+	{{!-- <script>
+		var element = document.querySelector('.animated-element');
+		element.addEventListener('click', function () {
+			element.classList.toggle('clicked');
+		});
+	</script> --}}
 
 	
 
@@ -667,7 +725,7 @@
 	<script src="/js2/main.js"></script>
 
 
-
+{{!-- function to add item to cart  --}}
 	<script>
 		function addToCart(productId){
 			let quantity = document.getElementById('quantity').value;
@@ -749,4 +807,51 @@
 			}
 		})
 	}
+</script>
+
+
+
+{{!-- quantity managemnet --}}
+<script>
+	function manageQuantity(productId) {
+		return new Promise((resolve, reject) => {
+			let stock;
+			$.ajax({
+				url: '/getQuantity',
+				method: 'POST',
+				data: { productId: productId },
+				success: function (response) {
+					stock = response.stock;
+				}
+			}).then(()=> {
+				resolve(stock)
+			})
+		})
+	}
+
+
+	function addQuantity(productId) {
+		let quantity = document.getElementById('quantity').value;
+		manageQuantity(productId).then((stock) => {
+				if(quantity < stock) {
+					quantity ++;
+				} else {
+
+				}
+			document.getElementById('quantity').value = quantity;
+		})
+	}
+
+	function lessQuantity(){
+		let quantity = document.getElementById('quantity').value;
+		if(quantity > 1){
+			quantity --;
+		} else {
+			quantity = quantity;
+		}
+		document.getElementById('quantity').value = quantity;
+	}
+
+
+
 </script>

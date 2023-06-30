@@ -50,8 +50,8 @@ const cartController = {
                     console.log(products);
 
                     let coupons = await couponManagement.getActiveCoupons();
-
-                    res.render('shop/cart', { customer, products, cart, subtotal, cartActive:true, coupons });
+                    const couponActive = req.session.couponActive || false;
+                    res.render('shop/cart', { customer, products, cart, subtotal, cartActive:true, coupons, couponActive });
                 } else {
                     res.render('shop/cart', { cart, emptyCart:true, cartActive: true, customer })
                 }
@@ -116,25 +116,27 @@ const cartController = {
     `productInCart` set to `true` if the product is already in the cart, or logs a message to the
     console if the product is not in the cart. */
     checkProduct: (req, res, next) => {
-        let userId ;
+        let userId;
 
-        if(req.session.user) {
+        if (req.session.user) {
+            console.log(req.session.user);
             userId = req.session.user._id;
+            const productDetails = req.body;
+
+            cartHelper.checkProduct(userId, productDetails).then((response) => {
+                console.log(response);
+                if (response) {
+                    res.status(200).json({ productInCart: response })
+                } else {
+                    console.log('product is available to add to cart', response);
+                    res.status(200).json({ productInCart: response })
+                }
+            })
         } else {
-            res.status(200).json({productInCart:false});
+            res.status(200).json({ productInCart: false });
         }
 
-        const productDetails = req.body;
 
-        cartHelper.checkProduct(userId, productDetails).then((response) => {
-            console.log(response);
-            if(response) {
-                res.status(200).json({productInCart:response})
-            } else {
-                console.log('product is available to add to cart');
-                res.status(200).json({productInCart:response})
-            }
-        })
     }
 
 }

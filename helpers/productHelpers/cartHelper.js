@@ -165,6 +165,8 @@ const cartHelper = {
                             }
                         }
                         resolve(flag);
+                }).catch((err) => {
+                    console.log('Error in checking product', err);
                 })
             })
 

@@ -117,6 +117,9 @@ module.exports = {
 
     getCartOrWishlistLength: (req, res, next) => {
         try {
+            if(!req.session.user){
+                res.status(200).json({cartLength:0, wishlistLength:0, error:error});
+            }
             const userId = req.session.user._id;
             userHelper.getCartOrWishlistCount(userId).then((response) => {
                 const cartLength = response.cartLength;

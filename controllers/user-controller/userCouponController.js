@@ -23,7 +23,7 @@ module.exports = {
                         const currentDate = new Date();
                         if (currentDate >= coupon.startDate && currentDate <= coupon.expireDate) {
                             // Coupon is valid
-                                if(coupon.minAmount < cart.totalAmount && coupon.maxAmount > cart.totalAmount) {
+                                if(coupon.minAmount < cart.totalAmount && coupon.maxAmount > cart.totalAmount && coupon.discount < cart.totalAmount) {
                                     req.session.couponActive = coupon;
                                     res.json({ valid: true, coupon: coupon.code, discount: coupon.discount });
                                 } else {
