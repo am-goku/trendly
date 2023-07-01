@@ -278,10 +278,15 @@
 <script>
 
     function update() {
+        
         let discount = +document.getElementById('discount').innerText;
         let tax = +document.getElementById('tax').innerText;
         let shipping = +document.getElementById('shipping').innerText;
         let subtotal = +document.getElementById('subtotal').innerText;
+
+        if(subtotal == 0){
+            window.location.reload();
+        }
 
         let finalAmount = (subtotal + tax + shipping) - discount;
 
@@ -537,10 +542,8 @@ function remove(remove){
             method: 'POST',
             success: function(response){
                 const cart = response.cart;
-                alert(cart.totalAmount)
                 document.getElementById('tableRaw'+currentItem).style.display = 'none';
                 document.getElementById('subtotal').innerText = cart.totalAmount;
-                window.location.reload();
                 update();
                 checkCoupon();
                 currentItem = null;

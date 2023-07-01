@@ -136,8 +136,17 @@ const cartHelper = {
         return new Promise((resolve, reject) => {
             cart.findOneAndUpdate({userId: userId}, {$pull: {items: {_id: itemId}}}).then((res)=> {
                 console.log('from helper: ' + res);
-                cart.findOne({userId: userId}).lean().then((response)=> {
-                    resolve (response);
+                cart.findOne({userId: userId}).populate('items.product').then(async (response)=> {
+                    let totalAmount = 0;
+                    for(let i=0; i<response.items.length; i++) {
+                        totalAmount += response.items[i].quantity * response.items[i].product.productPrice
+                    }
+
+                    await cart.updateOne({userId: userId}, {$set: {totalAmount: totalAmount}});
+
+                    cart.findOne({userId: userId}).lean().then((shoppingCart)=>{
+                        resolve(shoppingCart);
+                    })
                 })
             })
         })

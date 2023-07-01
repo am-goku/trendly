@@ -30,6 +30,8 @@ const orderManagement = {
                         const address = user_address? user_address.address: null;
                         res.render('shop/checkout', {address: address, customer: req.session.user, totalAmount: response.totalAmount});
                 }
+            }).catch((error) => {
+                res.redirect('/products');
             })
         })
     },
