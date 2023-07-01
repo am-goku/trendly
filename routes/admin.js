@@ -134,6 +134,10 @@ router.post('/customers/block', (req, res)=> {
 //  router.post('/getRevenue' )
 //  router.post('/getCustomers' )
 
+router.post('/getPaymentMethod', salesManageController.getPaymentMethod);
+
+router.post('/updateGraph', salesManageController.salesForGraph)
+
 
 
 
