@@ -66,6 +66,7 @@
         let confirmPassword = document.getElementById('confirmPassword').value.trim();
 
         if (userName == '' || phone == '' || password == '' || confirmPassword == '' || email == '') {
+            document.getElementById('err').innerHTML = 'Password must contain atleast four characters';
             return false;
         } else if (password !== confirmPassword) {
             document.getElementById('err').innerHTML = 'Password does not match';
