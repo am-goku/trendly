@@ -19,12 +19,8 @@ const wishlistController = require('../controllers/product-controller/wishlistCo
 const upload = require('../middlewares/multer');
 
 
-
-
 /* GET home page. */
 router.get('/', userController.getHome);
-
-
 
 //Register
 router.get('/register', registerConteroller.getRegister);
@@ -41,9 +37,6 @@ router.post('/resendOtp', otpController.resendOtp);
 
 router.post('/checkUserEmail', registerConteroller.checkEmail);
 
-
-
-
 //login
 router.get('/login', userController.getLoginUserStatus, loginController.getLogin);
 
@@ -52,8 +45,6 @@ router.post('/login',userController.checkBlockedStatus, loginController.postLogi
 router.post('/loginOtp', userController.checkBlockedStatus, loginController.otpLogin);
 
 router.post('/verifyOtpLogin', loginController.verifyOtpLogin)
-
-
 
 //Password
 router.get('/forgotPassword', passwordController.getForgotPassword);
@@ -66,28 +57,15 @@ router.get('/resetPassword', passwordController.getResetPassword);
 
 router.post('/resetPassword', passwordController.updatePassword );
 
-
-
-
-
-
-
 //products
 router.get('/products', productController.showProducts);
 
 router.get('/products/:id', productController.findProduct);
 
-
-
-
-
-
 //search products
 router.post("/searchProduct", productController.searchProduct)
 
 router.post('/filterProducts', productController.filterProducts )
-
-
 
 ///////////////// CART MANAGEMENT SECTION //////////////////////////////////
 
@@ -108,19 +86,12 @@ router.post('/reduceQuantity', cartController.reduceQuantity);
 //function to remove items from cart
 router.post('/removeFromCart', cartController.removeItem );
 
-
-
-
-
 //wishlist management
 router.get('/wishlist', userController.userLoginStatus, userController.checkBlockedStatus, wishlistController.getWishlist);
 
 router.post('/addToWishlist', userController.userLoginStatus, userController.checkBlockedStatus, wishlistController.addToWhishlist);
 
 router.post('/removeFromWishlist', wishlistController.removeFromWishlist );
-
-
-
 
 //profile of customers
 
@@ -132,10 +103,6 @@ router.post('/check-password', passwordController.checkPassword )
 
 router.post('/updatePassword', passwordController.changePassword)
 
-
-
-
-
 //Address management
 
 router.post('/addAddress', userController.userLoginStatus, userController.checkBlockedStatus, profileManager.addAddress);
@@ -143,8 +110,6 @@ router.post('/addAddress', userController.userLoginStatus, userController.checkB
 router.get('/deleteAddress/:id', userController.userLoginStatus, userController.checkBlockedStatus, profileManager.deleteAddress);
 
 router.post('/getAnAddress',userController.userLoginStatus, userController.checkBlockedStatus, profileManager.getAnAddrress);
-
-
 
 //checkout section
 
@@ -161,50 +126,29 @@ router.post('/rejectPayment', (req, res) => {
     console.log('payment rejected');
 })
 
-
 //order management section
 router.get('/order/details', userController.userLoginStatus, userController.checkBlockedStatus, orderManagement.getAnOrder);
-
-
 router.post('/cancelOrder', userController.userLoginStatus, userController.checkBlockedStatus, orderManagement.cancelOrder);
 router.post('/returnOrder', userController.userLoginStatus, userController.checkBlockedStatus, orderManagement.returnOrder)
-
-
-
 
 // coupon management
 router.post('/check-coupon', couponManagement.checkCoupon);
 
 router.post('/cancel-coupon', couponManagement.cancelCoupon );
 
-
 // cart and wishlist management together
 router.post('/getCount', userController.getCartOrWishlistLength);
 
-
-
-
 //Quantity management
 router.post('/getQuantity', productController.getStock);
-
-
-
-
-
-
 
 //blog management
 router.get('/blog', (req, res, next) => {
     res.render('shop/blog')
 })
 
-
-
-
-
 //logout
 router.get('/logout', loginController.logout);
-
 
 //trials
 router.get('/lol', (req, res)=> {
