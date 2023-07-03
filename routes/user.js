@@ -166,5 +166,4 @@ router.get('/confirm', userController.userLoginStatus,userController.checkBlocke
 
 
 
-
 module.exports = router;

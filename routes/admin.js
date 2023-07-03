@@ -100,17 +100,6 @@ router.post('/updateGraph', salesManageController.salesForGraph);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //logout
 router.get('/logout', loginController.getLogout);
 
@@ -119,7 +108,7 @@ router.get('/logout', loginController.getLogout);
 
 
 
-
+//sample testing APIs
 router.get('/popup', (req, res) => {
 res.render('admin/popup');
 })

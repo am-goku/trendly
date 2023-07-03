@@ -29,8 +29,6 @@ handlebars.registerHelper('break', function (options) {
   // Do nothing and return an empty string
   return '';
 });
-// handlebars.registerPartial('myPartial', '<div>{{name}}</div>');
-
 
 
 // multer configuration
@@ -61,8 +59,6 @@ const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
 
 const app = express();
-
-// const upload = multer({dest: 'uploads/'});
 
 
 
