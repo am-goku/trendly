@@ -78,8 +78,11 @@ module.exports = {
         regUser = await registerHelper.checkUser(userData);
         if(!regUser){
             phoneNumber = userData.phone;
-            otpController.sendOtp(userData);
-            res.render('shop/otp-form', {title, phoneNumber});
+            otpController.sendOtp(userData).then((response) => {
+                res.render('shop/otp-form', {title, phoneNumber});
+            }).catch((err)=> {
+                res.redirect('/register/phone');
+            })
         } else {
             res.redirect('/register/phone');
         }
@@ -99,12 +102,12 @@ module.exports = {
             if(status) {
                 otpValid = true;
                 res.redirect('/register');
-                // res.render('shop/register', {title: 'Register', phoneNumber});
-                // phoneNumber = null;
             } else {
                 res.render('shop/otp-form', {title, otpMsg: 'Invalid Otp', phoneNumber});
             }
-        }) 
+        }).catch((err) => {
+            res.render('shop/otp-form', {title, otpMsg: 'Internal server error', phoneNumber});
+        })
     },
 
 

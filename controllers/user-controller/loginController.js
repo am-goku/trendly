@@ -29,6 +29,7 @@ const loginController = {
                 res.render('shop/login', { title: 'Login', errMsg, blocked, loginPage:true})
                 errMsg = false, req.session.blocked = false, req.session.err = false;
         } catch(err){
+            res.render('shop/login', { title: 'Login', errMsg, blocked, loginPage:true})
             console.log(err);
         }
     },
@@ -43,28 +44,32 @@ const loginController = {
     in the `loginHelper` module. If the login is unsuccessful, it sets the `errMsg` value to `true`
     and redirects the user to the login page. */
     postLogin: async (req, res, next) => {
-        const userData = req.body;
-        loginHelper.doLogin(userData).then((response) => {
-            if(response.status){
-                req.session.loggedIn = true;
-                req.session.user = {
-                    _id: response.user._id,
-                    name: response.user.name,
-                    phone: response.user.phone,
-                    password: response.user.password,
-                    __v: response.user.__v,
-                    email: response.user.email,
-                    blocked: response.user.blocked,
-                    activeStatus: response.user.activeStatus,
-                    cartCount : response.userCart ? response.userCart.items.length : 0
-                };
-                loginHelper.setActiveStatus(response.user, req.session.loggedIn);
-                res.redirect('/');
-            } else {
-                errMsg = true;
-                res.redirect('/login');
-            }
-        })
+        try {
+            const userData = req.body;
+            loginHelper.doLogin(userData).then((response) => {
+                if (response.status) {
+                    req.session.loggedIn = true;
+                    req.session.user = {
+                        _id: response.user._id,
+                        name: response.user.name,
+                        phone: response.user.phone,
+                        password: response.user.password,
+                        __v: response.user.__v,
+                        email: response.user.email,
+                        blocked: response.user.blocked,
+                        activeStatus: response.user.activeStatus,
+                        cartCount: response.userCart ? response.userCart.items.length : 0
+                    };
+                    loginHelper.setActiveStatus(response.user, req.session.loggedIn);
+                    res.redirect('/');
+                } else {
+                    errMsg = true;
+                    res.redirect('/login');
+                }
+            })
+        } catch (error) {
+            res.redirect('/login');
+        }
     },
 
 
@@ -113,6 +118,7 @@ const loginController = {
                 }
             })
         } catch (err) {
+            res.status(200).json({valid: false, message: 'Somethings wrong'});
             console.log('Error (outside) in controller of optLogin:', err);
         }
     },
@@ -130,36 +136,42 @@ const loginController = {
     error occurs, it logs the error to the console and sends a JSON response with a message
     indicating that something went wrong and a `valid` value of `false`. */
     verifyOtpLogin: (req, res, next) => {
-        const userData = {
-            phone: req.body.phone,
-            otp: req.body.otp
-        }
-        otpController.verifyOtp(userData).then((result) => {
-            if (result) {
-                loginHelper.loginUserByOtp(userData.phone).then((response) => {
-                    if(response.status){
-                        req.session.user = {
-                            _id: response.user._id,
-                            name: response.user.name,
-                            phone: response.user.phone,
-                            password: response.user.password,
-                            __v: response.user.__v,
-                            email: response.user.email,
-                            blocked: response.user.blocked,
-                            activeStatus: response.user.activeStatus,
-                            cartCount : response.userCart ? response.userCart.items.length : 0
-                        };
-                        req.session.loggedIn = true;
-
-                        res.status(200).json({valid: true});
-                    } else {
-                        res.status(200).json({valid: false, message: 'Somethings wrong in server side'});
-                    }
-                })
-            } else {
-                res.status(200).json({valid: false, message: 'Invalid OTP'});
+        try {
+            const userData = {
+                phone: req.body.phone,
+                otp: req.body.otp
             }
-        })
+            otpController.verifyOtp(userData).then((result) => {
+                if (result) {
+                    loginHelper.loginUserByOtp(userData.phone).then((response) => {
+                        if(response.status){
+                            req.session.user = {
+                                _id: response.user._id,
+                                name: response.user.name,
+                                phone: response.user.phone,
+                                password: response.user.password,
+                                __v: response.user.__v,
+                                email: response.user.email,
+                                blocked: response.user.blocked,
+                                activeStatus: response.user.activeStatus,
+                                cartCount : response.userCart ? response.userCart.items.length : 0
+                            };
+                            req.session.loggedIn = true;
+    
+                            res.status(200).json({valid: true});
+                        } else {
+                            res.status(200).json({valid: false, message: 'Somethings wrong in server side'});
+                        }
+                    }).catch((err) => {
+                        res.status(200).json({valid: false, message: 'Internal Server Error'});
+                    })
+                } else {
+                    res.status(200).json({valid: false, message: 'Invalid OTP'});
+                }
+            })
+        } catch (error) {
+            res.status(200).json({valid: false, message: 'Somethings wrong'});
+        }
     }
 
 }
