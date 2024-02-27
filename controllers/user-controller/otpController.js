@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 dotenv.config()
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
+const verifySid = process.env.TWILIO_VERIFY_SID
 const client = require('twilio')(accountSid, authToken);
 
 
@@ -29,7 +30,7 @@ const otpMethods = {
     logged to the console, and the Promise is resolved with the `verification.status` value. */
     sendOtp: (userData) => {
         return new Promise((resolve, reject) => {
-            client.verify.v2.services('VA70670a70daeef40499be2ada16f96f48')
+            client.verify.v2.services(verifySid)
                 .verifications
                 .create({to: countryCode+userData.phone, channel: 'sms'})
                 .then((verification) => {
@@ -50,7 +51,7 @@ const otpMethods = {
     valid or not. */
     verifyOtp: (userData) => {
         return new Promise((resolve, reject) => {
-            client.verify.v2.services('VA70670a70daeef40499be2ada16f96f48')
+            client.verify.v2.services(verifySid)
             .verificationChecks
             .create({ to: countryCode+userData.phone, code: userData.otp })
             .then((verification_check) =>{ 
