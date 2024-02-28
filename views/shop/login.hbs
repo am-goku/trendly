@@ -22,10 +22,11 @@
                                 <input type="password" class="form-control" id="password" name="password"
                                     placeholder="Password" onfocus="this.placeholder = ''"
                                     onblur="this.placeholder = 'Password'" minlength="4" required>
-                                <input type="text" class="form-control" id="otpField" name="otp"
-                                    placeholder="Enter OTP" onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Enter OTP'" minlength="4" style="display: none;">
-                                    <span id="er" style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;"></span>
+                                <input type="text" class="form-control" id="otpField" name="otp" placeholder="Enter OTP"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter OTP'"
+                                    minlength="4" style="display: none;">
+                                <span id="er"
+                                    style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;"></span>
                                 {{#if errMsg}}
                                 <span
                                     style="font-size: smaller; color:rgba(255, 0, 0, 0.921); margin-left: 0.5rem;">Invalid
@@ -38,11 +39,19 @@
                                 {{/if}}
                             </div>
 
+                            <div>
+                                <span>Demo user</span>
+
+                                <p style="color: blue;"><span style="color: black;">Email:</span> akhil@email.com &nbsp; <span style="color: black;">Password:</span> 123456</p>
+                            </div>
 
                             <div class="col-md-12 form-group">
-                                <button type="submit" value="submit" id="loginBtn" class="button button-login w-100 mb-1">Log In</button><br>
-                                <a type="button" onclick="verifyOtp()" id="otpBtn" style="display: none;" class="button button-login w-100">Verify OTP</a><br>
-                                <a type="button" onclick="loginWithOtp()" style="color: white;" id="sendOtpBtn" class=" form-group button button-login w-100">Log with OTP</a>
+                                <button type="submit" value="submit" id="loginBtn"
+                                    class="button button-login w-100 ">Log In</button><br>
+                                <a type="button" onclick="verifyOtp()" id="otpBtn" style="display: none;"
+                                    class="button button-login w-100">Verify OTP</a>
+                                <a type="button" onclick="loginWithOtp()" style="color: white;" id="sendOtpBtn"
+                                    class=" form-group button button-login w-100">Log with OTP</a>
                             </div>
 
                         </form>
@@ -50,6 +59,8 @@
                             <a style="color: gray;" href="/forgotPassword">Forgot Password?</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a style="color: gray;" href="/register/phone">New Here?</a>
+
+
                         </div>
                     </div>
                 </div>
@@ -66,17 +77,17 @@
     function loginWithOtp() {
         let phone = document.getElementById("phone").value.trim();
         let test = +phone;
-        
+
         if (test === NaN) {
             document.getElementById("er").innerHTML = 'Enter a valid phone number';
             return;
         } else {
 
             $.ajax({
-                url: '/loginOtp?phone='+phone,
+                url: '/loginOtp?phone=' + phone,
                 method: 'POST',
-                success: function(response) {
-                    if(response.valid == false) {
+                success: function (response) {
+                    if (response.valid == false) {
                         document.getElementById("er").innerHTML = response.message;
                     } else {
                         document.getElementById("password").style.display = "none";
@@ -103,8 +114,8 @@
                 phone: phone,
                 otp: otp
             },
-            success: function(response) {
-                if(response.valid == true) {
+            success: function (response) {
+                if (response.valid == true) {
                     window.location.href = '/';
                 } else {
                     document.getElementById("er").innerHTML = response.message;

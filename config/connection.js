@@ -6,11 +6,14 @@ function uses the `mongoose.connect()` method to establish a connection to the d
 specified URL and options. If the connection is successful, it logs a message to the console. If
 there is an error, it logs an error message to the console. */
 module.exports.connect = function(){
-mongoose.connect('mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.0', { dbName: 'trendly' })
+mongoose
+  .connect(
+    process.env.ATLAS_URI
+  )
   .then(() => {
-    console.log('Connected to Database');
+    console.log("Connected to Database");
   })
   .catch((error) => {
-    console.error('Error connecting to database:', error);
+    console.error("Error connecting to database:", error);
   });
 }

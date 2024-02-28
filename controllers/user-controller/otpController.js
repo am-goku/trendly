@@ -30,13 +30,29 @@ const otpMethods = {
     logged to the console, and the Promise is resolved with the `verification.status` value. */
     sendOtp: (userData) => {
         return new Promise((resolve, reject) => {
-            client.verify.v2.services(verifySid)
-                .verifications
-                .create({to: countryCode+userData.phone, channel: 'sms'})
-                .then((verification) => {
-                    console.log(verification.status);
-                    resolve(verification.status);
-                });
+            // client.messages.create({
+            //   body: "Hii sending from gokul",
+            //   messagingServiceSid: "MGe592e6b3868e282ce1dd58e85e5df22b",
+            //   to: countryCode+userData?.phone,
+            // }).then((messages => {
+            //     console.log(messages.status)
+            //     resolve(messages.status)
+            // })).catch((err) => {
+            //     console.log("Error sending OTP::", err)
+            // })
+            client.verify.v2
+              .services(verifySid)
+              .verifications.create({
+                to: countryCode + userData.phone,
+                channel: "sms",
+              })
+              .then((verification) => {
+                console.log(verification.status);
+                resolve(verification.status);
+              })
+              .catch((err) => {
+                    console.log("Error sending OTP::", err)
+              });
         })
     },
 
