@@ -16,7 +16,7 @@ module.exports = {
         const newData = req.body;
         const image = req.file;
         profileHelper.updateProfile(userId, newData, image).then((response) => {
-            req.session.user.image = image.filename;
+            if(image?.filename) req.session.user.image = image?.filename;
             res.redirect('/profile');
         })
     },
