@@ -17,7 +17,17 @@ module.exports = {
     updateProfile: (userId, newData, image) => {
         try{
             return new Promise((resolve, reject) => {
-                user.updateOne({_id: userId}, {$set: {name: newData.name, email: newData.email, image: image.filename }})
+                let query = {};
+
+                if(image?.filename){
+                    query["image"] = image.filename;
+                }
+
+                if(newData?.email) query["email"] = newData.email;
+
+                if(newData?.name) query["name"] = newData.name;
+
+                user.updateOne({_id: userId}, {$set: query})
                 .then((response) => {
                     resolve(response);
                 }).catch((err) => {
