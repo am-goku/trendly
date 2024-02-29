@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 /* This code exports a function named `connect` that connects to a MongoDB database using Mongoose. The
 function uses the `mongoose.connect()` method to establish a connection to the database with the

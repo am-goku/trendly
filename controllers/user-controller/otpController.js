@@ -15,11 +15,16 @@ const otpMethods = {
     function of the `otpMethods` object with the `userData`. It then logs the `userData.phone` to
     the console and sends a JSON response with a `status` property set to `true`. */
     resendOtp: (req, res) => {
-        userData = req.query;
-        otpMethods.sendOtp(userData);
-        console.log('userData : '+userData.phone);
-        res.json({status: true})
-       
+        try {
+            userData = req.query;
+            otpMethods.sendOtp(userData).then((response) => {
+                res.json({ status: true })
+            }).catch((err) => {
+                res.json({status:false})
+            })
+        } catch (error) {
+            res.json({ status: false })
+        }
     },
 
     /* `sendOtp` is a function that takes in a `userData` object as a parameter. It creates a new
@@ -73,7 +78,9 @@ const otpMethods = {
             .then((verification_check) =>{ 
                 console.log(verification_check.status);
                 resolve(verification_check.valid)
-            });
+            }).catch((error) =>{
+                reject(error);
+            })
         })
     },
 }

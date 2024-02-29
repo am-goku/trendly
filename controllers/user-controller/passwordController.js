@@ -30,8 +30,13 @@ module.exports = {
         phoneNumber = req.body.phone;
         const response = registerHelper.checkUser(userData);
         if(response){
-            otpController.sendOtp(userData);
-            res.render('shop/otp-form', {resetPassword:true, admin:false, phoneNumber})
+            otpController.sendOtp(userData).then(() => {
+                res.render('shop/otp-form', {resetPassword:true, admin:false, phoneNumber})
+            }).catch((err) => {
+                res.render('shop/otp-form', {resetPassword:false, admin:false, phoneNumber})
+            })
+        } else {
+            res.render('shop/otp-form', {resetPassword:false, admin:false, phoneNumber})
         }
     },
 
@@ -63,6 +68,8 @@ module.exports = {
             } else {
                 res.render('shop/otp-form', {title, otpMsg: 'Invalid Otp', phoneNumber})
             }
+        }).catch((error) => {
+            res.render('shop/otp-form', {title, otpMsg: 'Internal Server Error', phoneNumber})
         })
     },
 
@@ -92,18 +99,6 @@ module.exports = {
                 res.status(200).json(response);
             })
         })
-
-
-
-        // bcrypt.compare(oldPassword, user.password).then((status)=>{
-        //     console.log(status);
-        //     response.oldPasswordCheck = status;
-        //     if(oldPassword === newPassword){
-        //         response.samePasswords = true;
-        //     }
-        //     console.log(response);
-        //     res.json(response);
-        // })
     },
 
 

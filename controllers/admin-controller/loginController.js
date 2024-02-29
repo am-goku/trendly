@@ -93,6 +93,8 @@ module.exports = {
         otpservice.sendOtp(adminData).then((response) => {
             console.log(response.status);
             res.render('admin/resetPassword', {phoneNumber: adminData.phone, admin:true, notActive: true})
+        }).catch((error) => {
+            res.redirect('/admin')
         })
     },
 
@@ -120,9 +122,11 @@ module.exports = {
                 } else {
                     res.render('admin/resetPassword', {phoneNumber: phone, admin, notActive: true, optMsg: 'Invalid OTP'})
                 }
+            }).catch((error) => {
+                res.render('/admin');
             })
         } catch (er) {
-            console.log('rest password error: ', er);
+            res.render('/admin')
         }
     }
 
